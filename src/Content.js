@@ -7,17 +7,37 @@ const Content = () => {
         {
             id: 1,
             checked: false,
-            item: "First item"
+            item: "Detail user stories in markdown file"
         },
         {
             id: 2,
             checked: false,
-            item: "Second item"
+            item: "Complete React tutorial"
         },
         {
             id: 3,
             checked: false,
-            item: "Third item"
+            item: "Install and set up MongoDB"
+        },
+        {
+            id: 4,
+            checked: false,
+            item: "Create back-end codebase (server & routes)"
+        },
+        {
+            id: 5,
+            checked: false,
+            item: "Make sure all user story features are functional"
+        },
+        {
+            id: 6,
+            checked: false,
+            item: "Debug & refactor. Stylize UI"
+        },
+        {
+            id: 7,
+            checked: false,
+            item: "Deploy app & start server"
         }
     ])
 

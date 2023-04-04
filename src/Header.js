@@ -6,7 +6,7 @@ const Header = () => {
             backgroundColor: 'Mediumblue',
             color: '#fff'
         }}>
-            <h1>Groceries List</h1>
+            <h1>Bug Tracker To-Do</h1>
         </header>
     )
 }
