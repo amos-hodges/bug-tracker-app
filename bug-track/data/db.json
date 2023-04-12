@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "checked": false,
+      "item": "Detail user stories in markdown file"
+    },
+    {
+      "id": 2,
+      "checked": false,
+      "item": "Complete React tutorial"
+    },
+    {
+      "id": 3,
+      "checked": false,
+      "item": "Install and set up MongoDB"
+    },
+    {
+      "id": 4,
+      "checked": false,
+      "item": "Create back-end codebase (server & routes)"
+    },
+    {
+      "id": 5,
+      "checked": false,
+      "item": "Create front-end and connect to backend"
+    },
+    {
+      "id": 6,
+      "checked": false,
+      "item": "Make sure all user story features are functional"
+    },
+    {
+      "id": 7,
+      "checked": false,
+      "item": "Deploy app & start server"
+    }
+  ]
+}
