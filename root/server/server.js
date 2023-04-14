@@ -30,6 +30,8 @@ app.use('/', express.static(path.join(__dirname, '/public')))
 
 app.use('/', require('./routes/root'))
 
+app.use('/users', require('./routes/userRoutes'))
+
 app.all('*', (req, res) => {
     res.status(404)
     if (req.accepts('html')) {
@@ -47,7 +49,7 @@ mongoose.connection.once('open', () => {
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 })
 
-mongoose.connect.on('error', err => {
+mongoose.connection.on('error', err => {
     console.log(err)
-    logEvents(`${err.no}: ${err.code}\t${req.syscall}\t${err.hostname}`, 'mongoErrLog.log')
+    logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log')
 })
