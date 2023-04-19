@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const ticketsController = require('../controllers/ticketController')
+const ticketsController = require('../controllers/ticketsController')
 
 router.route('/')
     //same as chaining

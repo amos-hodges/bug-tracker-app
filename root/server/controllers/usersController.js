@@ -91,7 +91,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     }
     // do not want to delete any users with active tickets
     const tickets = await Ticket.findOne({ user: id }).lean().exec()
-    if (notes?.length) {
+    if (tickets?.length) {
         return res.status(400).json({ message: 'User has active tickets' })
     }
 
@@ -101,7 +101,7 @@ const deleteUser = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'USer not found' })
     }
 
-    const result = await User.deleteOne()
+    const result = await user.deleteOne()
 
     const reply = `Username ${result.username} with ID ${result._id} deleted`
 
