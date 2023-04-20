@@ -1,129 +1,38 @@
-import Header from './Header'
-import SearchItem from './SearchItem'
-import AddItem from './AddItem'
-import Content from './Content'
-import Footer from './Footer'
-import { useState, useEffect } from 'react'
-import apiRequest from './apiRequest'
-
+import { Routes, Route } from 'react-router-dom'
+import Layout from './components/Layout'
+import Public from './components/Public'
+import Login from './features/auth/Login'
+import DashboardLayout from './components/DashboardLayout'
+import Welcome from './features/auth/Welcome'
+import TicketsList from './features/tickets/TicketsList'
+import UsersList from './features/users/UsersList'
 
 function App() {
-
-  const API_URL = 'http://localhost:3500/items'
-
-  const [items, setItems] = useState([])
-  const [newItem, setNewItem] = useState('')
-  const [search, setSearch] = useState('')
-  const [fetchError, setFetchError] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-
-  //useEffect without dependencies runs everytime a component renders
-  //with empty dependencies [] it runs at load time (page reload)
-  // putting states in the dependency only runs when that dependency changes
-  // runs after everything else in the function is rendered
-  useEffect(() => {
-
-    const fetchItems = async () => {
-      try {
-        const response = await fetch(API_URL)
-        if (!response.ok) throw Error('Did not recieve expected data')
-        const listItems = await response.json()
-        setItems(listItems)
-        setFetchError(null)
-      } catch (err) {
-        setFetchError(err.message)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    setTimeout(() => {
-      (async () => await fetchItems())()
-    }, 2000)
-
-  }, [])
-
-
-
-  const addItem = async (item) => {
-    const id = items.length ? items[items.length - 1].id + 1 : 1
-    const myNewItem = { id, checked: false, item }
-    const listItems = [...items, myNewItem]
-    setItems(listItems)
-    const postOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(myNewItem)
-    }
-    const result = await apiRequest(API_URL, postOptions)
-    if (result) setFetchError(result)
-  }
-
-  const handleCheck = async (id) => {
-    const listItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item)
-    setItems(listItems)
-
-    const myItem = listItems.filter((item) => item.id === id)
-    const updateOptions = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ checked: myItem[0].checked })
-    }
-    const reqURL = `${API_URL}/${id}`
-    const result = await apiRequest(reqURL, updateOptions)
-    if (result) setFetchError(result)
-  }
-
-
-
-  const handleDelete = async (id) => {
-    //filter through each item and populate array with items whos ID does not match the id passed in
-    const listItems = items.filter((item) => item.id !== id)
-    setItems(listItems)
-
-    const deleteOptions = {
-      method: 'DELETE'
-    }
-    const reqURL = `${API_URL}/${id}`
-    const result = await apiRequest(reqURL, deleteOptions)
-    if (result) setFetchError(result)
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!newItem) return
-    addItem(newItem)
-    setNewItem('')
-  }
-
-
   return (
-    <div className="App">
-      <Header title="Bug Tracker To-Do" />
+    <Routes>
 
-      <AddItem
-        newItem={newItem}
-        setNewItem={setNewItem}
-        handleSubmit={handleSubmit}
-      />
-      <SearchItem
-        search={search}
-        setSearch={setSearch}
-      />
-      <main>
-        {isLoading && <p>Loading Items...</p>}
-        {fetchError && <p style={{ color: "red" }}>{`Error: ${fetchError}`}</p>}
-        {!fetchError && !isLoading && <Content
-          items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
-          handleCheck={handleCheck}
-          handleDelete={handleDelete}
-        />}
-      </main>
-      <Footer length={items.length} />
-    </div>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Public />} />
+        <Route path="login" element={<Login />} />
+
+        <Route path="dashboard" element={<DashboardLayout />} >
+
+          <Route index element={<Welcome />} />
+
+          <Route path="tickets">
+            <Route index element={<TicketsList />} />
+          </Route>
+
+          <Route path="users">
+            <Route index element={<UsersList />} />
+          </Route>
+
+        </Route>{/* end dashboard */}
+
+      </Route>
+
+    </Routes>
+
   );
 }
 
