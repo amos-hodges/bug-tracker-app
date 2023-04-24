@@ -8,9 +8,9 @@ const Welcome = () => {
         <section className="welcome">
             <p>{today}</p>
             <h1>Welcome</h1>
-            <p><Link to="dashboard/tickets">View Tickets</Link></p>
+            <p><Link to="/dashboard/tickets">View Tickets</Link></p>
             {/* will only be available to certain roles */}
-            <p><Link to="dashboard/users">Views User Settings</Link></p>
+            <p><Link to="/dashboard/users">Views User Settings</Link></p>
         </section>
     )
     return content
