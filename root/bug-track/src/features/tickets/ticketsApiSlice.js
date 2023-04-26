@@ -17,7 +17,7 @@ export const ticketsApiSlice = apiSlice.injectEndpoints({
             //important for working with mongodb
             // normalized data needs id property, not _id
             transformResponse: responseData => {
-                const loadedtickets = responseData.map(ticket => {
+                const loadedTickets = responseData.map(ticket => {
                     ticket.id = ticket._id
                     return ticket
                 })
@@ -37,7 +37,7 @@ export const ticketsApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetTicketsQuery
-} = apiSlice
+} = ticketsApiSlice
 // returns query result object
 export const selectTicketsResult = ticketsApiSlice.endpoints.getTickets.select()
 

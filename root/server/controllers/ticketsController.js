@@ -19,6 +19,8 @@ const getAllTickets = asyncHandler(async (req, res) => {
     res.json(ticketsWithUser)
 })
 
+// May need to create method to get individual tickets
+
 // @desc Create a new ticket
 // @route POST /tickets
 // @access Private
@@ -82,8 +84,8 @@ const updateTicket = asyncHandler(async (req, res) => {
 
 })
 
-// @desc Get all tickets
-// @route GET /tickets
+// @desc Delete a ticket
+// @route DELETE /tickets
 // @access Private
 const deleteTicket = asyncHandler(async (req, res) => {
 
