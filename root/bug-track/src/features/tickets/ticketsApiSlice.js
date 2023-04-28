@@ -33,6 +33,40 @@ export const ticketsApiSlice = apiSlice.injectEndpoints({
                     ]
                 } else return [{ type: 'ticket', id: 'LIST' }]
             }
+        }),
+        addNewNote: builder.mutation({
+            query: initialTicket => ({
+                url: '/ticket',
+                method: 'POST',
+                body: {
+                    ...initialTicket,
+                }
+            }),
+            invalidatesTags: [
+                { type: 'Ticket', id: "LIST" }
+            ]
+        }),
+        updateTicket: builder.mutation({
+            query: initialTicket => ({
+                url: '/tickets',
+                method: 'PATCH',
+                body: {
+                    ...initialTicket,
+                }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Ticket', id: arg.id }
+            ]
+        }),
+        deleteTicket: builder.mutation({
+            query: ({ id }) => ({
+                url: `/tickets`,
+                method: 'DELETE',
+                body: { id }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Ticket', id: arg.id }
+            ]
         })
     })
 })
