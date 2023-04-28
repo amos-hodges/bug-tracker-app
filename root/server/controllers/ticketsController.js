@@ -6,13 +6,13 @@ const asyncHandler = require('express-async-handler')
 // @route GET /tickets
 // @access Private
 const getAllTickets = asyncHandler(async (req, res) => {
-
+    console.log(req.body)
     const tickets = await Ticket.find().lean()
     if (!tickets?.length) {
         return res.status(400).json({ message: 'No tickets found' })
     }
 
-    const ticketsWithUser = await Promises.all(tickets.map(async (ticket) => {
+    const ticketsWithUser = await Promise.all(tickets.map(async (ticket) => {
         const user = await User.findById(ticket.user).lean().exec()
         return { ...ticket, username: user.username }
     }))
@@ -26,10 +26,11 @@ const getAllTickets = asyncHandler(async (req, res) => {
 // @access Private
 const createNewTicket = asyncHandler(async (req, res) => {
     const { user, title, text } = req.body
-
+    // console.log(user, title, text)
     //confrim data
+
     if (!user || !title || !text) {
-        return res.status(400).json({ message: 'All fields are required' })
+        return res.status(400).json({ message: 'All fields are required.' })
     }
 
     //check duplicates
@@ -42,6 +43,7 @@ const createNewTicket = asyncHandler(async (req, res) => {
     const ticket = await Ticket.create({ user, title, text })
 
     if (ticket) {
+
         return res.status(201).json({ message: 'Ticket succesfuly created' })
     } else {
         return res.status(400).json({ message: 'Invalid ticket data recieved' })
@@ -57,6 +59,7 @@ const updateTicket = asyncHandler(async (req, res) => {
 
     //confirm data
     if (!id || !user || !title || !text || typeof completed !== 'boolean') {
+        console.log(id, user, title, text, typeof completed)
         return res.status(400).json({ message: 'All field are required' })
     }
     //confirm ticket exists
