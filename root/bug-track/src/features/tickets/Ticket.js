@@ -15,7 +15,7 @@ const Ticket = ({ ticketId }) => {
 
         const updated = new Date(ticket.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
 
-        const handleEdit = () => navigate(`dashboard/tickets/${ticketId}`)
+        const handleEdit = () => navigate(`/dashboard/tickets/${ticketId}`)
 
         return (
             <tr className="table__row">

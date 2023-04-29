@@ -10,6 +10,7 @@ import EditUser from './features/users/EditUser'
 import NewUserForm from './features/users/NewUserForm'
 import EditTicket from './features/tickets/EditTicket'
 import NewTicket from './features/tickets/NewTicket'
+import Prefetch from './features/auth/Prefetch'
 
 function App() {
   return (
@@ -18,26 +19,26 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
+        <Route element={<Prefetch />}>
+          <Route path="dashboard" element={<DashboardLayout />} >
 
-        <Route path="dashboard" element={<DashboardLayout />} >
+            <Route index element={<Welcome />} />
 
-          <Route index element={<Welcome />} />
+            <Route path="users">
+              <Route index element={<UsersList />} />
+              <Route path=":id" element={<EditUser />} />
+              <Route path="new" element={<NewUserForm />} />
+            </Route>
 
-          <Route path="users">
-            <Route index element={<UsersList />} />
-            <Route path=":id" element={<EditUser />} />
-            <Route path="new" element={<NewUserForm />} />
-          </Route>
-
-          <Route path="tickets">
-            <Route index element={<TicketsList />} />
-            <Route path=":id" element={<EditTicket />} />
-            <Route path="new" element={<NewTicket />} />
-          </Route>
+            <Route path="tickets">
+              <Route index element={<TicketsList />} />
+              <Route path=":id" element={<EditTicket />} />
+              <Route path="new" element={<NewTicket />} />
+            </Route>
 
 
-        </Route>{/* end dashboard */}
-
+          </Route>{/* end dashboard */}
+        </Route>
       </Route>
 
     </Routes>

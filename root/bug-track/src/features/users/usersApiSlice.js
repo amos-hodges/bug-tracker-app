@@ -12,8 +12,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             validateStatus: (response, result) => {
                 return response.status === 200 && !result.isError
             },
-            // this is short - change to default later
-            keepUnusedDataFor: 5,
             //important for working with mongodb
             // normalized data needs id property, not _id
             transformResponse: responseData => {
@@ -59,7 +57,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         deleteUser: builder.mutation({
             query: ({ id }) => ({
                 url: '/users',
-                method: 'PATCH',
+                method: 'DELETE',
                 body: { id }
             }),
             invalidatesTags: (result, error, arg) => [
