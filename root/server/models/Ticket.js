@@ -17,7 +17,7 @@ const ticketSchema = new mongoose.Schema({
     },
     completed: {
         type: Boolean,
-        required: false
+        default: false
     },
 },
     {
@@ -27,9 +27,9 @@ const ticketSchema = new mongoose.Schema({
 
 
 // ticketSchema.plugin(AutoIncrement, {
-//     inc_field: 'ticket',
+//     inc_field: 'ticket_num',
 //     id: 'ticketNums',
-//     start_seq: 500
+//     start_seq: 0
 // })
 
 module.exports = mongoose.model('Ticket', ticketSchema)

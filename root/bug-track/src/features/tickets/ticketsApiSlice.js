@@ -32,9 +32,9 @@ export const ticketsApiSlice = apiSlice.injectEndpoints({
                 } else return [{ type: 'ticket', id: 'LIST' }]
             }
         }),
-        addNewNote: builder.mutation({
+        addNewTicket: builder.mutation({
             query: initialTicket => ({
-                url: '/ticket',
+                url: '/tickets',
                 method: 'POST',
                 body: {
                     ...initialTicket,
@@ -70,7 +70,10 @@ export const ticketsApiSlice = apiSlice.injectEndpoints({
 })
 
 export const {
-    useGetTicketsQuery
+    useGetTicketsQuery,
+    useAddNewTicketMutation,
+    useUpdateTicketMutation,
+    useDeleteTicketMutation
 } = ticketsApiSlice
 // returns query result object
 export const selectTicketsResult = ticketsApiSlice.endpoints.getTickets.select()

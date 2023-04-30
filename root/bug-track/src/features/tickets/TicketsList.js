@@ -8,7 +8,12 @@ const TicketsList = () => {
         isSuccess,
         isError,
         error
-    } = useGetTicketsQuery()
+    } = useGetTicketsQuery(undefined, {
+        pollingInterval: 15000,
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true
+    })
+
 
     let content
 
@@ -22,7 +27,7 @@ const TicketsList = () => {
         const { ids } = tickets
 
         const tableContent = ids?.length
-            ? ids.map(ticketId => <Ticket ket={ticketId} ticketId={ticketId} />)
+            ? ids.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
             : null
 
         content = (
