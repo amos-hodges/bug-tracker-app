@@ -6,7 +6,7 @@ const asyncHandler = require('express-async-handler')
 // @route GET /tickets
 // @access Private
 const getAllTickets = asyncHandler(async (req, res) => {
-    console.log(req.body)
+
     const tickets = await Ticket.find().lean()
     if (!tickets?.length) {
         return res.status(400).json({ message: 'No tickets found' })
