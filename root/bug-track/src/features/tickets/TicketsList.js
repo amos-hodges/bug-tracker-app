@@ -8,7 +8,7 @@ const TicketsList = () => {
         isSuccess,
         isError,
         error
-    } = useGetTicketsQuery(undefined, {
+    } = useGetTicketsQuery('ticketsList', {
         pollingInterval: 15000,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true

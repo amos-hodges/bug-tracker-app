@@ -33,13 +33,13 @@ const login = asyncHandler(async (req, res) => {
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '1m' }
+        { expiresIn: '10s' }
     )
 
     const refreshToken = jwt.sign(
         { "username": foundUser.username },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '1d' }
+        { expiresIn: '20s' }
     )
 
     //create secure cookie w/refresh token
@@ -74,7 +74,7 @@ const refresh = (req, res) => {
         //verify proccess is done, catch any async error
         asyncHandler(async (err, decoded) => {
             if (err) {
-                return res.status(403).josn({ message: 'Forbidden' })
+                return res.status(403).json({ message: 'Forbidden' })
             }
 
             const foundUser = await User.findOne({ username: decoded.username })
@@ -90,7 +90,7 @@ const refresh = (req, res) => {
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '1m' }
+                { expiresIn: '10s' }
             )
 
             res.json({ accessToken })

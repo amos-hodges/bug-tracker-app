@@ -44,24 +44,24 @@ const Login = () => {
             if (!err.status) {
                 setErrMsg('No Server Response')
             } else if (err.status == 400) {
-                setErrMsg('Missing Username or Password')
+                setErrMsg('Incorrect Username or Password')
             } else if (err.status == 401) {
                 setErrMsg('Unauthorized')
             } else {
                 setErrMsg(err.data?.message)
             }
-
+            errRef.current.focus()
         }
     }
 
     const handleUserInput = (e) => setUsername(e.target.value)
     const handlePwdInput = (e) => setPassword(e.target.value)
 
-    const errClass = errmsg ? "errmsg" : "offscreen"
+    const errClass = errMsg ? "errmsg" : "offscreen"
 
     if (isLoading) return <p>Loading...</p>
 
-    content = (
+    const content = (
         <section className="public">
             <header>
                 <h1>Employee Login</h1>
@@ -85,7 +85,7 @@ const Login = () => {
                         classname="form__input"
                         type="password"
                         id="password"
-                        value={username}
+                        value={password}
                         onChange={handlePwdInput}
                         required
                     />
