@@ -12,7 +12,7 @@ Bug Tracking App User Stories
 - [ ] Tickets can be maximized to there own page, where comments can be made and history viewed
 - [ ] Tickets have all relevant info (category, description, severity, importance, creator, date, etc.)
 - [x] Tickets can be created, modified
-- [ ] or deleted (only deleted by managers after it has been closed)
+- [ ] Tickets can be closed/deleted (only deleted by managers after it has been closed)
 - [ ] Tickets can be sorted by categories from within the dashboard (e.g. sort by creator, assigned to, severity etc.)
 - [ ] Each ticket will have a history, available before & after it is closed
 - [ ] Users have options to navigate to different pages from the dashboard
