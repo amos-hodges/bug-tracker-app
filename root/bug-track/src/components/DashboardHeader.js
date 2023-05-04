@@ -1,15 +1,25 @@
 import { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import {
+    faRightFromBracket,
+    faFileCirclePlus,
+    faFilePen,
+    faUserGear,
+    faUserPlus
+} from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
+
+import useAuth from '../hooks/useAuth'
 
 const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
 const TICKETS_REGEX = /^\/dashboard\/tickets(\/)?$/
 const USERS_REGEX = /^\/dashboard\/users(\/)?$/
 
 const DashboardHeader = () => {
+
+    const { isManager, isAdmin } = useAuth()
 
     const navigate = useNavigate()
     const { pathname } = useLocation()
@@ -26,6 +36,12 @@ const DashboardHeader = () => {
             navigate('/')
         }
     }, [isSuccess, navigate])
+
+    const onNewTicketClicked = () => navigate('/dashboard/tickets/new')
+    const onNewUserClicked = () => navigate('/dashboard/users/new')
+    const onTicketsClicked = () => navigate('/dashboard/tickets')
+    const onUsersClicked = () => navigate('/dashboard/users')
+
 
     if (isLoading) {
         return <p>Logging out...</p>
