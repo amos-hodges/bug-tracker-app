@@ -25,7 +25,6 @@ const TicketsList = () => {
 
     if (isError) {
         content = <p className="errmsg">{error?.data?.message}</p>
-        console.log(error?.message?.data)
     }
 
     if (isSuccess) {

@@ -12,36 +12,45 @@ import EditTicket from './features/tickets/EditTicket'
 import NewTicket from './features/tickets/NewTicket'
 import Prefetch from './features/auth/Prefetch'
 import PersistLogin from './features/auth/PersistLogin'
+import RequireAuth from './features/auth/RequireAuth'
+import { ROLES } from './config/roles'
 
 function App() {
   return (
     <Routes>
 
       <Route path="/" element={<Layout />}>
+        {/* Public Routes */}
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
+
+        {/* Protected Routes */}
         <Route element={<PersistLogin />}>
-          <Route element={<Prefetch />}>
-            <Route path="dashboard" element={<DashboardLayout />} >
+          <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}>
+            <Route element={<Prefetch />}>
+              <Route path="dashboard" element={<DashboardLayout />} >
 
-              <Route index element={<Welcome />} />
+                <Route index element={<Welcome />} />
 
-              <Route path="users">
-                <Route index element={<UsersList />} />
-                <Route path=":id" element={<EditUser />} />
-                <Route path="new" element={<NewUserForm />} />
-              </Route>
+                <Route element={<RequireAuth allowedRoles={[ROLES.Manager, ROLES.Admin]} />}>
+                  <Route path="users">
+                    <Route index element={<UsersList />} />
+                    <Route path=":id" element={<EditUser />} />
+                    <Route path="new" element={<NewUserForm />} />
+                  </Route>
+                </Route>
 
-              <Route path="tickets">
-                <Route index element={<TicketsList />} />
-                <Route path=":id" element={<EditTicket />} />
-                <Route path="new" element={<NewTicket />} />
-              </Route>
+                <Route path="tickets">
+                  <Route index element={<TicketsList />} />
+                  <Route path=":id" element={<EditTicket />} />
+                  <Route path="new" element={<NewTicket />} />
+                </Route>
 
 
-            </Route>{/* end dashboard */}
+              </Route>{/* end dashboard */}
+            </Route>
           </Route>
-        </Route>
+        </Route>{/* End Protected Routes */}
       </Route>
 
     </Routes>
