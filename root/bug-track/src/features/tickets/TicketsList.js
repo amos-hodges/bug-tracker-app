@@ -1,7 +1,11 @@
 import { useGetTicketsQuery } from './ticketsApiSlice'
 import Ticket from './Ticket'
+import useAuth from '../../hooks/useAuth'
 
 const TicketsList = () => {
+
+    const { username, isManager, isAdmin } = useAuth()
+
     const {
         data: tickets,
         isLoading,
@@ -21,14 +25,23 @@ const TicketsList = () => {
 
     if (isError) {
         content = <p className="errmsg">{error?.data?.message}</p>
+        console.log(error?.message?.data)
     }
 
     if (isSuccess) {
-        const { ids } = tickets
+        const { ids, entities } = tickets
 
-        const tableContent = ids?.length
-            ? ids.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
-            : null
+        //limit visible tickets to current user unless admin or manager
+        //will modify to accomdate employees working on the same project, tickets assigned to groups etc
+        let filteredIds
+        if (isManager || isAdmin) {
+            filteredIds = [...ids]
+        } else {
+            filteredIds = ids.filter(ticketId => entities[ticketId].username === username)
+        }
+
+        const tableContent = ids?.length && filteredIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
+
 
         content = (
             <table className="table table--notes">
