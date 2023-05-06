@@ -34,7 +34,7 @@ const createNewTicket = asyncHandler(async (req, res) => {
     }
 
     //check duplicates
-    const duplicate = await Ticket.findOne({ title }).lean().exec()
+    const duplicate = await Ticket.findOne({ title }).collation({ locale: 'en', strength: 2 }).lean().exec()
 
     if (duplicate) {
         return res.status(409).json({ message: 'Duplicate ticket title' })
@@ -69,7 +69,7 @@ const updateTicket = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'Ticket not found' })
     }
     //check duplicates
-    const duplicate = await Ticket.findOne({ title }).lean().exec()
+    const duplicate = await Ticket.findOne({ title }).collation({ locale: 'en', strength: 2 }).lean().exec()
     // allow original ticket to be renamed
     if (duplicate && duplicate?._id.toString() !== id) {
         return res.status(409).json({ message: 'Duplicate ticket found' })
