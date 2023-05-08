@@ -1,11 +1,11 @@
 const User = require('../models/User')
 const Ticket = require('../models/Ticket')
-const asyncHandler = require('express-async-handler')
+
 
 // @desc Get all tickets
 // @route GET /tickets
 // @access Private
-const getAllTickets = asyncHandler(async (req, res) => {
+const getAllTickets = async (req, res) => {
 
     const tickets = await Ticket.find().lean()
     if (!tickets?.length) {
@@ -17,14 +17,14 @@ const getAllTickets = asyncHandler(async (req, res) => {
         return { ...ticket, username: user.username }
     }))
     res.json(ticketsWithUser)
-})
+}
 
 // May need to create method to get individual tickets
 
 // @desc Create a new ticket
 // @route POST /tickets
 // @access Private
-const createNewTicket = asyncHandler(async (req, res) => {
+const createNewTicket = async (req, res) => {
     const { user, title, text } = req.body
     // console.log(user, title, text)
     //confrim data
@@ -49,12 +49,12 @@ const createNewTicket = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'Invalid ticket data recieved' })
     }
 
-})
+}
 
 // @desc Update a ticket
 // @route PATCH /tickets
 // @access Private
-const updateTicket = asyncHandler(async (req, res) => {
+const updateTicket = async (req, res) => {
     const { id, user, title, text, completed } = req.body
 
     //confirm data
@@ -85,12 +85,12 @@ const updateTicket = asyncHandler(async (req, res) => {
     res.json(`${updatedTicket.title} updated`)
 
 
-})
+}
 
 // @desc Delete a ticket
 // @route DELETE /tickets
 // @access Private
-const deleteTicket = asyncHandler(async (req, res) => {
+const deleteTicket = async (req, res) => {
 
     //may want to add completed to ensure open tickets are not deleted
     const { id } = req.body
@@ -110,7 +110,7 @@ const deleteTicket = asyncHandler(async (req, res) => {
     const reply = `Ticket ${result.title} with ID ${result._id} deleted`
 
     res.json(reply)
-})
+}
 
 module.exports = {
     getAllTickets,
