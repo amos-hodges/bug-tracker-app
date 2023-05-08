@@ -10,10 +10,13 @@ const initialState = ticketsAdapter.getInitialState()
 export const ticketsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getTickets: builder.query({
-            query: () => '/tickets',
-            validateStatus: (response, result) => {
-                return response.status === 200 && !result.isError
-            },
+            query: () => ({
+                url: '/tickets',
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError
+                }
+            })
+            ,
             //important for working with mongodb
             // normalized data needs id property, not _id
             transformResponse: responseData => {
