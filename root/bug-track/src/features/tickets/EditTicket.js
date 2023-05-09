@@ -1,16 +1,36 @@
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { selectTicketById } from './ticketsApiSlice'
-import { selectAllUsers } from '../users/usersApiSlice'
 import EditTicketForm from './EditTicketForm'
+import { useGetTicketsQuery } from './ticketsApiSlice'
+import { useGetUsersQuery } from '../users/usersApiSlice'
+import useAuth from '../../hooks/useAuth'
+import PulseLoader from 'react-spinners/PulseLoader'
+
 
 const EditTicket = () => {
     const { id } = useParams()
 
-    const ticket = useSelector(state => selectTicketById(state, id))
-    const users = useSelector(selectAllUsers)
+    const { username, isManager, isAdmin } = useAuth()
 
-    const content = ticket && users ? <EditTicketForm ticket={ticket} users={users} /> : <p>Loading...</p>
+    const { ticket } = useGetTicketsQuery('ticketsList', {
+        selectFromResult: ({ data }) => ({
+            ticket: data?.entities[id]
+        })
+    })
+
+    const { users } = useGetUsersQuery('usersList', {
+        selectFromResult: ({ data }) => ({
+            users: data?.ids.map(id => data?.entities[id])
+        })
+    })
+
+    if (!ticket || !users.length) return <PulseLoader color={'#FFF'} />
+
+    if (!isManager && !isAdmin) {
+        if (ticket.username !== username) {
+            return <p className="errMsg">No Access</p>
+        }
+    }
+    const content = <EditTicketForm ticket={ticket} users={users} />
 
     return content
 }
