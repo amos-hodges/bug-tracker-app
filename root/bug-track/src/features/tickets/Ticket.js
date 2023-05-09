@@ -7,7 +7,7 @@ import { memo } from 'react'
 const Ticket = ({ ticketId }) => {
     const { ticket } = useGetTicketsQuery('ticketsList', {
         selectFromResult: ({ data }) => ({
-            note: data?.entities[ticketId]
+            ticket: data?.entities[ticketId]
         })
     })
 

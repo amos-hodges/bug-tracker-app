@@ -1,6 +1,6 @@
 //unlike new user form, tickets need existing data to be created
 import NewTicketForm from './NewTicketForm'
-import { useGetUsersQuery } from './usersApiSlice'
+import { useGetUsersQuery } from '../users/usersApiSlice'
 import PulseLoader from 'react-spinners/PulseLoader'
 
 
