@@ -1,12 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
-
-import { useSelector } from 'react-redux'
-import { selectTicketById } from './ticketsApiSlice'
+import { useGetTicketsQuery } from './ticketsApiSlice'
+import { memo } from 'react'
 
 const Ticket = ({ ticketId }) => {
-    const ticket = useSelector(state => selectTicketById(state, ticketId))
+    const { ticket } = useGetTicketsQuery('ticketsList', {
+        selectFromResult: ({ data }) => ({
+            note: data?.entities[ticketId]
+        })
+    })
 
     const navigate = useNavigate()
 
@@ -43,4 +46,6 @@ const Ticket = ({ ticketId }) => {
     } else return null
 }
 
-export default Ticket
+const memoizedTicket = memo(Ticket)
+
+export default memoizedTicket
