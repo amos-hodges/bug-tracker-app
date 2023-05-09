@@ -68,7 +68,7 @@ const PersistLogin = () => {
         content = <Outlet />
     } else if (token && isUninitialized) {
         console.log('token & uninit')
-        console.log(isUninitialized)
+        //console.log(isUninitialized)
         content = <Outlet />
     }
 

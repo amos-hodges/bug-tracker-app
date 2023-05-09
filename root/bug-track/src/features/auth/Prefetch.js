@@ -6,17 +6,23 @@ import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 
 const Prefetch = () => {
-    useEffect(() => {
-        console.log('subscribing')
-        const tickets = store.dispatch(ticketsApiSlice.endpoints.getTickets.initiate())
-        const users = store.dispatch(usersApiSlice.endpoints.getUsers.initiate())
 
-        return () => {
-            console.log('unsubscribing')
-            tickets.unsubscribe()
-            users.unsubscribe()
-        }
+    useEffect(() => {
+        console.log('prefetching')
+        store.dispatch(ticketsApiSlice.util.prefetch('getTickets', 'ticketsList', { force: true }))
+        store.dispatch(usersApiSlice.util.prefetch('getUsers', 'usersList', { force: true }))
     }, [])
+    // useEffect(() => {
+    //     console.log('subscribing')
+    //     const tickets = store.dispatch(ticketsApiSlice.endpoints.getTickets.initiate())
+    //     const users = store.dispatch(usersApiSlice.endpoints.getUsers.initiate())
+
+    //     return () => {
+    //         console.log('unsubscribing')
+    //         tickets.unsubscribe()
+    //         users.unsubscribe()
+    //     }
+    // }, [])
 
     return <Outlet />
 }
