@@ -1,14 +1,17 @@
 //unlike new user form, tickets need existing data to be created
-import { useSelector } from 'react-redux'
-import { selectAllUsers } from '../users/usersApiSlice'
 import NewTicketForm from './NewTicketForm'
+import { useGetUsersQuery } from './usersApiSlice'
+import PulseLoader from 'react-spinners/PulseLoader'
+
 
 const NewTicket = () => {
-    const users = useSelector(selectAllUsers)
+    const { users } = useGetUsersQuery('usersList', {
+        selectFromResult: ({ data }) => ({
+            users: data?.ids.map(id => data?.entities[id])
+        })
+    })
 
-    if (!users?.length) {
-        return <p>Not Currently Available</p>
-    }
+    if (!users.length) return <PulseLoader color={'#FFF'} />
 
     const content = <NewTicketForm users={users} />
 
