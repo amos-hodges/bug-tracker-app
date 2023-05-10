@@ -51,6 +51,7 @@ const EditTicketForm = ({ ticket, users }) => {
     }
 
     const onDeleteTicketClicked = async () => {
+
         await deleteTicket({ id: ticket.id })
     }
 

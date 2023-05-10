@@ -42,7 +42,6 @@ const TicketsList = () => {
 
         const tableContent = ids?.length && filteredIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
 
-
         content = (
             <table className="table table--notes">
                 <thead className="table__thead">

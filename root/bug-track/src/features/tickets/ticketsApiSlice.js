@@ -29,10 +29,10 @@ export const ticketsApiSlice = apiSlice.injectEndpoints({
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
-                        { type: 'ticket', id: 'LIST' },
-                        ...result.ids.map(id => ({ type: 'ticket', id }))
+                        { type: 'Ticket', id: 'LIST' },
+                        ...result.ids.map(id => ({ type: 'Ticket', id }))
                     ]
-                } else return [{ type: 'ticket', id: 'LIST' }]
+                } else return [{ type: 'Ticket', id: 'LIST' }]
             }
         }),
         addNewTicket: builder.mutation({

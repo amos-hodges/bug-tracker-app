@@ -56,7 +56,7 @@ const createNewTicket = async (req, res) => {
 // @access Private
 const updateTicket = async (req, res) => {
     const { id, user, title, text, completed } = req.body
-
+    console.log(`${id} updated`)
     //confirm data
     if (!id || !user || !title || !text || typeof completed !== 'boolean') {
         console.log(id, user, title, text, typeof completed)
@@ -105,7 +105,7 @@ const deleteTicket = async (req, res) => {
         return res.status(400).json({ message: 'Ticket not found' })
     }
 
-    const result = await Ticket.deleteOne()
+    const result = await ticket.deleteOne()
 
     const reply = `Ticket ${result.title} with ID ${result._id} deleted`
 
