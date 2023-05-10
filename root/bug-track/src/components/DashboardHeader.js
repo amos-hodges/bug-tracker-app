@@ -8,10 +8,9 @@ import {
     faUserPlus
 } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
-
 import useAuth from '../hooks/useAuth'
+import PulseLoader from 'react-spinners/PulseLoader'
 
 const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
 const TICKETS_REGEX = /^\/dashboard\/tickets(\/)?$/
@@ -116,7 +115,7 @@ const DashboardHeader = () => {
 
     let buttonContent
     if (isLoading) {
-        buttonContent = <p>Logging Out...</p>
+        buttonContent = <PulseLoader color={"#FFF"} />
     } else {
         buttonContent = (
             <>
