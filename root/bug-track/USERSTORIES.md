@@ -1,7 +1,8 @@
 Bug Tracking App User Stories
 
-- [ ] Home page with login & account registration
-- [ ] Abilility for users to reset password & 'remember me'
+- [x] Home page with login
+- [ ] Abilility for users to reset password
+- [x] 'remember me' functionality to prevent refresh page from reseting privileges etc.
 - [ ] Levels of privelege for different user types
     - [x] Admin - create/delete user accounts
     - [ ] Manager - create projects, add users to specific projects, re-assign tickets, create announcements, request addition/removal of employees

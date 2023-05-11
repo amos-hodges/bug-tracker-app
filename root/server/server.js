@@ -17,8 +17,6 @@ console.log(process.env.NODE_ENV)
 
 connectDB()
 
-// express.static is built in middleware
-// app.use(express.static('/public'))
 app.use(logger)
 
 app.use(cors(corsOptions))
