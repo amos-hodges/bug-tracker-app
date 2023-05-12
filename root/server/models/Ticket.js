@@ -8,8 +8,8 @@ const ticketSchema = new mongoose.Schema({
     },
     project: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
         required: true,
-        ref: 'Project'
     },
     title: {
         type: String,

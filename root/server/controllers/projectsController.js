@@ -7,7 +7,9 @@ const User = require('../models/User')
 // @access Private
 
 const getAllProjects = async (req, res) => {
+
     const projects = await Project.find().lean()
+
     if (!projects?.length) {
         return res.status(400).json({ message: 'No projects found' })
     }
@@ -28,9 +30,9 @@ const getAllProjects = async (req, res) => {
 // @route POST /projects
 // @access Private
 const createNewProject = async (req, res) => {
-    const { title, users } = req.body
+    const { title, description, users } = req.body
 
-    if (!title) {
+    if (!title || !description) {
         return res.status(400).json({ message: 'Title field is required' })
     }
 
@@ -40,7 +42,7 @@ const createNewProject = async (req, res) => {
     if (duplicate) {
         return res.status(409).json({ message: 'Duplicate project title' })
     }
-
+    //project can be created with or without users assigned
     const project = await Project.create({
         title,
         users: users || [],
@@ -58,12 +60,18 @@ const createNewProject = async (req, res) => {
 // @desc Update a project
 // @route PATCH /projects
 // @access Private
-const updateProject = async (req, res) => { }
+const updateProject = async (req, res) => {
+    //need to be able to update title, description
+    //need to be able to add and remove users 
+
+}
 
 // @desc Delete a project
 // @route DELETE /projects
 // @access Private
-const deleteProject = async (req, res) => { }
+const deleteProject = async (req, res) => {
+    //needs to make sure no open tickets before delete
+}
 
 module.exports = {
     getAllProjects,

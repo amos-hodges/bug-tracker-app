@@ -6,15 +6,10 @@ const projectSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        users: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        }],
-        tickets: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Ticket'
-        }]
-
+        description: {
+            type: String,
+            required: true
+        },
     }
 )
 
