@@ -26,7 +26,7 @@ const getAllTickets = async (req, res) => {
 // @access Private
 const createNewTicket = async (req, res) => {
     const { user, title, text } = req.body
-    // console.log(user, title, text)
+
     //confrim data
 
     if (!user || !title || !text) {
