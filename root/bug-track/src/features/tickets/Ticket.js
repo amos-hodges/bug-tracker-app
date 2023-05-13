@@ -3,7 +3,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import { useGetTicketsQuery } from './ticketsApiSlice'
 import { memo } from 'react'
-
+//Need to add fields for priortity and current user
 const Ticket = ({ ticketId }) => {
     const { ticket } = useGetTicketsQuery('ticketsList', {
         selectFromResult: ({ data }) => ({

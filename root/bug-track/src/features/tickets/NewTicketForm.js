@@ -4,6 +4,8 @@ import { useAddNewTicketMutation } from "./ticketsApiSlice"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave } from "@fortawesome/free-solid-svg-icons"
 
+//Needs field for assigning project.
+//Use id of current project
 const NewTicketForm = ({ users }) => {
 
     const [addNewTicket, {

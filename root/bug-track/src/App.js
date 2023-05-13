@@ -15,6 +15,8 @@ import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
 import { ROLES } from './config/roles'
 
+
+//Need to nest dashboard within a 'project' route to switch between projects
 function App() {
   return (
     <Routes>
