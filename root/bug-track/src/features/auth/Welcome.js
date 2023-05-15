@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
-//will be customized once auth is complete
+//This is where current projects will be displayed
 const Welcome = () => {
 
     const { username, isManager, isAdmin } = useAuth()
