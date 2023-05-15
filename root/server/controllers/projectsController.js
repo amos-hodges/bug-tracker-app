@@ -1,6 +1,4 @@
 const Project = require('../models/Project')
-const Ticket = require('../models/Ticket')
-const User = require('../models/User')
 
 // @desc Get all projects
 // @route GET /projects

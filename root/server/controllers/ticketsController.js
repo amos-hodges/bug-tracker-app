@@ -25,11 +25,13 @@ const getAllTickets = async (req, res) => {
 // @route POST /tickets
 // @access Private
 const createNewTicket = async (req, res) => {
-    const { user, project, title, text } = req.body
 
+    const { user, project, title, text, importance } = req.body
+    console.log(req.body)
     //confrim data
 
-    if (!user || !project || !title || !text) {
+    if (!user || !project || !title || !text || !importance) {
+        console.log(user, project, title, text, importance)
         return res.status(400).json({ message: 'All fields are required.' })
     }
 
@@ -40,7 +42,7 @@ const createNewTicket = async (req, res) => {
         return res.status(409).json({ message: 'Duplicate ticket title' })
     }
 
-    const ticket = await Ticket.create({ user, project, title, text })
+    const ticket = await Ticket.create({ user, project, title, text, importance })
 
     if (ticket) {
         return res.status(201).json({ message: 'Ticket succesfuly created' })
@@ -54,10 +56,10 @@ const createNewTicket = async (req, res) => {
 // @route PATCH /tickets
 // @access Private
 const updateTicket = async (req, res) => {
-    const { id, user, title, text, completed } = req.body
+    const { id, user, title, text, completed, importance } = req.body
     console.log(`${id} updated`)
     //confirm data
-    if (!id || !user || !title || !text || typeof completed !== 'boolean') {
+    if (!id || !user || !title || !text || typeof completed !== 'boolean' || !importance) {
         console.log(id, user, title, text, typeof completed)
         return res.status(400).json({ message: 'All field are required' })
     }
@@ -78,6 +80,7 @@ const updateTicket = async (req, res) => {
     ticket.title = title
     ticket.text = text
     ticket.completed = completed
+    ticket.importance = importance
 
     const updatedTicket = await ticket.save()
 
