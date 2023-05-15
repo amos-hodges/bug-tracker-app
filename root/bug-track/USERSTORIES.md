@@ -4,29 +4,33 @@ Bug Tracking App User Stories
 - [ ] Abilility for users to reset password
 - [x] 'remember me' functionality to prevent refresh page from reseting privileges etc.
 - [ ] Levels of privelege for different user types
-    - [x] Admin - create/delete user accounts
-    - [ ] Manager - create projects, add users to specific projects, re-assign tickets, create announcements, request addition/removal of employees
-    - [ ] Employee - change statuses and add notes on tickets, cannot close ticket without manager approval
+    - [x] Admin - create/delete user accounts, all manager and employee privilege
+    - [ ] Manager - create projects, add users to specific projects, re-assign tickets, create announcements, request addition/removal of employees, all employee privelege
+    - [ ] Employee - change statuses and add notes on thier own tickets, cannot close ticket without manager approval
     - [ ] Demo - select user type and demonstrate priveleges without creating new account
 - [ ] Users are assigned projects and can switch between projects
-- [ ] Dashboard upon login displays tickets for the current selected project with condensed information
-- [ ] Tickets are associated with a specific project (e.g. 'Client project 1')
+- [ ] Welcome page upon login displays:
+    - [ ] Only projects assigned to an employee
+    - [ ] All Projects for manager
+    - [ ] All Projects and all users for admin
+- [ ] Clicking a specifc project displays tickets for the selected project with all information
+- [ ] Tickets are associated with a specific project when created
 - [x] Tickets are assigned to specific users, and can only be reassigned by managers or admin
 - [ ] Tickets can be maximized to there own page, where comments can be made and history viewed
-- [ ] Tickets have all relevant info (category, description, severity, importance, creator, date, etc.)
+- [ ] Tickets have all relevant info (description, severity, importance, creator, date, etc.)
 - [x] Tickets can be created, modified
 - [ ] Tickets can be closed/deleted (only deleted by managers after it has been closed)
 - [ ] Tickets can be sorted by categories from within the dashboard (e.g. sort by creator, assigned to, severity etc.)
 - [ ] Each ticket will have a history, available before & after it is closed
-- [ ] Users have options to navigate to different pages from the dashboard
-    - [ ] Assignments - this is where employees can view what is assigned to them, managers can see what is assigned to everybody & make modifications
-    - [ ] Projects - employees see the projects, description, possibly message board. Managers can modify who is working in each project
-    - [ ] Team members - employees see who they are working with & their assignments, managers can request addition/removal, admin can add/remove
+- [ ] Users have options to navigate to different pages from the dashboard via sidebar
+    - [ ] Assignments - this is where employees can view tickets assigned to them, managers can see what is assigned to everybody & make modifications
+    - [ ] Projects - Employees see their projects. Managers can modify who is working in each project
+    - [ ] Team members - employees see who they are working with & their assignments, managers can add/remove active members from projects, admin can add/remove users entirely
 - [ ] There will be a notification system available to each user type on the dashboard
 - [ ] Each user type will recieve different types/levels of notifications
     [ ] Admin - Requests to add/modify/remove employees & privelege, changes made to teams
-    [ ] Manager - Project related notifications (backlog/late/urgent tickets etc)
-    [ ] Employee - Reminders for assigned tickets, new ticket assignments, project announcements
+    [ ] Manager - Project related notifications (backlog/late/urgent tickets etc), addition/modificaiton/removal of employees
+    [ ] Employee - Reminders for assigned tickets, new project & ticket assignments, project announcements
     [ ] Demo - Same as privilege, example notifications for the selected user type
 - [x] Once logged in users can navigate between pages, refresh and go back without losing privilege
 - [ ] Users will be prompted to log in every 24 hours
