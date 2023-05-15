@@ -1,1 +1,45 @@
 //format similar to user and ticket.Project name, description, tickets (for user or total)
+import { useNavigate } from 'react-router-dom'
+
+const Project = ({ projectId }) => {
+    const { project } = useGetProjectsQuery('projectList', {
+        selectFromResult: ({ data }) => ({
+            project: data?.entities[projectId]
+        })
+    })
+
+    const navigate = useNavigate()
+
+    if (project) {
+        //add timestamps to project model
+        const created = new Date(project.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
+        const updated = new Date(project.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
+
+        // const users = get # of users associated with project
+        // const tickets = get # of tickets with project id
+
+        const handleEdit = () => navigate(`/dashboard/projects/${projectId}`)
+
+        return (
+            <tr className="table__row">
+
+
+                <td className="table__cell note__title">{project.title}</td>
+                <td className="table__cell note__username">{project.username}</td>
+                <td className="table__cell note__created">{created}</td>
+                <td className="table__cell note__updated">{updated}</td>
+                <td className="table__cell note__updated">{tickets}</td>
+                <td className="table__cell note__updated">{users}</td>
+
+                <td className="table__cell">
+                    <button
+                        className="icon-button table__button"
+                        onClick={handleEdit}
+                    >
+                        <FontAwesomeIcon icon={faPenToSquare} />
+                    </button>
+                </td>
+            </tr>
+        )
+    } else return null
+}
