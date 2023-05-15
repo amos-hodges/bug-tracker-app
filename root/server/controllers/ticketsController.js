@@ -5,6 +5,8 @@ const Ticket = require('../models/Ticket')
 // @desc Get all tickets
 // @route GET /tickets
 // @access Private
+
+//Would want to do project id filtering here if dealing with a larger number of tickets
 const getAllTickets = async (req, res) => {
 
     const tickets = await Ticket.find().lean()
@@ -19,17 +21,15 @@ const getAllTickets = async (req, res) => {
     res.json(ticketsWithUser)
 }
 
-// May need to create method to get individual tickets
-
 // @desc Create a new ticket
 // @route POST /tickets
 // @access Private
 const createNewTicket = async (req, res) => {
-    const { user, title, text } = req.body
+    const { user, project, title, text } = req.body
 
     //confrim data
 
-    if (!user || !title || !text) {
+    if (!user || !project || !title || !text) {
         return res.status(400).json({ message: 'All fields are required.' })
     }
 
@@ -40,10 +40,9 @@ const createNewTicket = async (req, res) => {
         return res.status(409).json({ message: 'Duplicate ticket title' })
     }
 
-    const ticket = await Ticket.create({ user, title, text })
+    const ticket = await Ticket.create({ user, project, title, text })
 
     if (ticket) {
-
         return res.status(201).json({ message: 'Ticket succesfuly created' })
     } else {
         return res.status(400).json({ message: 'Invalid ticket data recieved' })
@@ -104,7 +103,10 @@ const deleteTicket = async (req, res) => {
     if (!ticket) {
         return res.status(400).json({ message: 'Ticket not found' })
     }
-
+    // Check if the ticket is completed
+    if (!ticket.completed) {
+        return res.status(403).json({ message: 'Cannot delete an incomplete ticket' });
+    }
     const result = await ticket.deleteOne()
 
     const reply = `Ticket ${result.title} with ID ${result._id} deleted`
@@ -117,5 +119,4 @@ module.exports = {
     createNewTicket,
     updateTicket,
     deleteTicket
-
 }

@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
         type: [String],
         default: ["Employee"]
     },
+    projects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
+    }],
     active: {
         type: Boolean,
         default: true

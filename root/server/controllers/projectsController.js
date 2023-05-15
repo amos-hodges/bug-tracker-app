@@ -13,41 +13,28 @@ const getAllProjects = async (req, res) => {
     if (!projects?.length) {
         return res.status(400).json({ message: 'No projects found' })
     }
+    res.json(projects)
 
-    const projectsWithUsersAndTickets = await Promise.all(
-        projects.map(async (project) => {
-            const populatedProject = await Project.populate(project, [
-                { path: 'tickets', model: Ticket },
-                { path: 'users', model: User }
-            ])
-            return populatedProject
-        })
-    )
-    res.json(populatedProject)
 }
 
 // @desc Create a new project
 // @route POST /projects
 // @access Private
 const createNewProject = async (req, res) => {
-    const { title, description, users } = req.body
+    const { title, description } = req.body
 
     if (!title || !description) {
-        return res.status(400).json({ message: 'Title field is required' })
+        return res.status(400).json({ message: 'All fields required' })
     }
 
     //check duplicates
-    const duplicate = await Ticket.findOne({ title }).collation({ locale: 'en', strength: 2 }).lean().exec()
+    const duplicate = await Project.findOne({ title }).collation({ locale: 'en', strength: 2 }).lean().exec()
 
     if (duplicate) {
         return res.status(409).json({ message: 'Duplicate project title' })
     }
     //project can be created with or without users assigned
-    const project = await Project.create({
-        title,
-        users: users || [],
-        tickets: [],
-    });
+    const project = await Project.create({ title, description });
 
     if (project) {
         return res.status(201).json({ message: 'Project succesfuly created' })
@@ -62,15 +49,52 @@ const createNewProject = async (req, res) => {
 // @access Private
 const updateProject = async (req, res) => {
     //need to be able to update title, description
-    //need to be able to add and remove users 
+    const { id, title, description } = req.body
 
+    if (!id || !title || !description) {
+        return res.status(400).json({ message: 'All field are required' })
+    }
+
+    const project = await Project.findById(id).exec()
+
+    if (!project) {
+        return res.status(400).json({ message: 'Project not found' })
+    }
+    const duplicate = await Project.findOne({ title }).collation({ locale: 'en', strength: 2 }).lean().exec()
+
+    if (duplicate) {
+        return res.status(409).json({ message: 'Duplicate project title' })
+    }
+
+    project.title = title
+    project.description = description
+
+    const updatedProject = await project.save()
+
+    res.json(`Project: ${updatedProject.title} updated succesfully`)
 }
 
 // @desc Delete a project
 // @route DELETE /projects
 // @access Private
 const deleteProject = async (req, res) => {
-    //needs to make sure no open tickets before delete
+    const { id } = req.body
+
+    if (!id) {
+        return res.status(400).json({ message: 'Project ID required' })
+    }
+    //confirm project exists
+    const project = await Project.findById(id).exec()
+
+    if (!project) {
+        return res.status(400).json({ message: 'Project not found' })
+    }
+
+    const result = await project.deleteOne()
+
+    const reply = `Project ${result.title} with ID ${result._id} deleted`
+
+    res.json(reply)
 }
 
 module.exports = {
