@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { useAddNewTicketMutation } from "./ticketsApiSlice"
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAddNewTicketMutation } from './ticketsApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from "@fortawesome/free-solid-svg-icons"
+import { faSave } from '@fortawesome/free-solid-svg-icons'
 
 const NewTicketForm = ({ users }) => {
 

@@ -366,6 +366,10 @@ tr {
     grid-template-columns: repeat(3, 1fr) 2fr repeat(2, 1fr);
   }
 
+  .table--projects {
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+  }
+
   .note__created,
   .note__updated,
   .note__username {

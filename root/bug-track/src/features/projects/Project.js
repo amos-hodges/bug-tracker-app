@@ -1,5 +1,8 @@
 //format similar to user and ticket.Project name, description, tickets (for user or total)
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import { useGetProjectsQuery } from './projectsApiSlice'
 
 const Project = ({ projectId }) => {
     const { project } = useGetProjectsQuery('projectList', {
@@ -15,11 +18,11 @@ const Project = ({ projectId }) => {
         const created = new Date(project.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
         const updated = new Date(project.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
 
-        // const users = get # of users associated with project
-        // const tickets = get # of tickets with project id
+        const users = 'place'
+        const tickets = 'holder'
 
         const handleEdit = () => navigate(`/dashboard/projects/${projectId}`)
-
+        //update CSS classes
         return (
             <tr className="table__row">
 
@@ -43,3 +46,5 @@ const Project = ({ projectId }) => {
         )
     } else return null
 }
+
+export default Project

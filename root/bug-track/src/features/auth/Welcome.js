@@ -24,6 +24,10 @@ const Welcome = () => {
             {(isManager || isAdmin) && <p><Link to="/dashboard/users">Views User Settings</Link></p>}
 
             {(isAdmin) && <p><Link to="/dashboard/users/new">Add a New User</Link></p>}
+
+            {(isManager || isAdmin) && <p><Link to="/dashboard/projects">Views Projects</Link></p>}
+
+            {(isManager || isAdmin) && <p><Link to="/dashboard/projects/new">Create New Project</Link></p>}
         </section>
     )
 
