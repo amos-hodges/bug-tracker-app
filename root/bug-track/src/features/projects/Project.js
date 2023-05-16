@@ -15,8 +15,10 @@ const Project = ({ projectId }) => {
 
     if (project) {
         //add timestamps to project model
-        const created = new Date(project.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
-        const updated = new Date(project.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
+        // const created = new Date(project.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
+        // const updated = new Date(project.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
+        const created = 'add'
+        const updated = 'timestamps'
 
         const users = 'place'
         const tickets = 'holder'
@@ -28,11 +30,11 @@ const Project = ({ projectId }) => {
 
 
                 <td className="table__cell note__title">{project.title}</td>
-                <td className="table__cell note__username">{project.username}</td>
+                <td className="table__cell note__username">{project.description}</td>
                 <td className="table__cell note__created">{created}</td>
                 <td className="table__cell note__updated">{updated}</td>
-                <td className="table__cell note__updated">{tickets}</td>
                 <td className="table__cell note__updated">{users}</td>
+                <td className="table__cell note__updated">{tickets}</td>
 
                 <td className="table__cell">
                     <button

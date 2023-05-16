@@ -60,8 +60,8 @@ const updateProject = async (req, res) => {
     }
     const duplicate = await Project.findOne({ title }).collation({ locale: 'en', strength: 2 }).lean().exec()
 
-    if (duplicate) {
-        return res.status(409).json({ message: 'Duplicate project title' })
+    if (duplicate && duplicate?._id.toString() !== id) {
+        return res.status(409).json({ message: 'Duplicate username' })
     }
 
     project.title = title
