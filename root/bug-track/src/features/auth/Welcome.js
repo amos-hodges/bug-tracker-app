@@ -4,7 +4,7 @@ import ProjectList from '../projects/ProjectList'
 //This is where current projects will be displayed
 const Welcome = () => {
 
-    const { username, isManager, isAdmin } = useAuth()
+    const { username, userId, isManager, isAdmin } = useAuth()
 
     const date = new Date()
     const today = new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(date)
@@ -16,7 +16,7 @@ const Welcome = () => {
             <p>{today}</p>
             <h1>Welcome {username}</h1>
             <p>{message}</p>
-            <ProjectList />
+            <ProjectList userId={userId} />
             <p><Link to="/dashboard/tickets">View Tickets</Link></p>
 
             <p><Link to="/dashboard/tickets/new">Create a new Ticket</Link></p>

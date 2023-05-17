@@ -1,12 +1,11 @@
 import { useGetProjectsQuery } from './projectsApiSlice'
+import useAuth from '../../hooks/useAuth'
 import Project from './Project'
-//import useAuth from '../../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
 
 const ProjectList = () => {
-    //eventually filter based on roles
-    // const { username, isManager, isAdmin } = useAuth()
 
+    const { userId, isManager, isAdmin } = useAuth()
     const {
         data: projects,
         isLoading,
@@ -30,17 +29,6 @@ const ProjectList = () => {
     if (isSuccess) {
         //add entities for filtering
         const { ids } = projects
-
-        //limit visible tickets to current user unless admin or manager
-        //will modify to accomdate employees working on the same project, tickets assigned to groups etc
-        // let filteredIds
-        // if (isManager || isAdmin) {
-        //     filteredIds = [...ids]
-        // } else {
-        //     filteredIds = ids.filter(projectId => entities[projectId].username === username)
-        // }
-
-        // const tableContent = ids?.length && filteredIds.map(projectId => <Project key={projectId} projectId={projectId} />)
 
         const tableContent = ids?.length && ids.map(projectId => <Project key={projectId} projectId={projectId} />)
 

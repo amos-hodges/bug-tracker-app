@@ -25,6 +25,7 @@ const EditTicketForm = ({ ticket, users }) => {
 
     const [title, setTitle] = useState(ticket.title)
     const [text, setText] = useState(ticket.text)
+
     const [completed, setCompleted] = useState(ticket.completed)
     const [userId, setUserId] = useState(ticket.user)
 
