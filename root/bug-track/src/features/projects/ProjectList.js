@@ -1,6 +1,6 @@
 import { useGetProjectsQuery } from './projectsApiSlice'
 import Project from './Project'
-import useAuth from '../../hooks/useAuth'
+//import useAuth from '../../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
 
 const ProjectList = () => {

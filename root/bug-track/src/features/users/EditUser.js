@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import EditUserForm from './EditUserForm'
 import { useGetUsersQuery } from './usersApiSlice'
+import { useGetProjectsQuery } from '../projects/projectsApiSlice'
 import PulseLoader from 'react-spinners/PulseLoader'
 
 const EditUser = () => {
@@ -12,9 +13,15 @@ const EditUser = () => {
         })
     })
 
-    if (!user) return <PulseLoader color={'#FFF'} />
+    const { projects } = useGetProjectsQuery('projectsList', {
+        selectFromResult: ({ data }) => ({
+            projects: data?.ids.map(id => data?.entities[id])
+        })
+    })
 
-    const content = <EditUserForm user={user} />
+    if (!user || !projects) return <PulseLoader color={'#FFF'} />
+
+    const content = <EditUserForm user={user} projects={projects} />
 
     return content
 }

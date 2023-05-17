@@ -15,10 +15,8 @@ const Project = ({ projectId }) => {
 
     if (project) {
         //add timestamps to project model
-        // const created = new Date(project.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
-        // const updated = new Date(project.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
-        const created = 'add'
-        const updated = 'timestamps'
+        const created = new Date(project.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
+        const updated = new Date(project.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
 
         const users = 'place'
         const tickets = 'holder'
