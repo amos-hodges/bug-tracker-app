@@ -20,7 +20,8 @@ Bug Tracking App User Stories
 - [ ] Tickets have all relevant info (description, severity, importance, creator, date, etc.)
 - [x] Tickets can be created, modified
 - [ ] Tickets can be closed/deleted (only deleted by managers after it has been closed)
-- [ ] Tickets can be sorted by categories from within the dashboard (e.g. sort by creator, assigned to, severity etc.)
+- [ ] Tickets can be sorted by categories from within the dashboard
+    - [ ] Name, date, severity etc
 - [ ] Each ticket will have a history, available before & after it is closed
 - [ ] Users have options to navigate to different pages from the dashboard via sidebar
     - [ ] Assignments - this is where employees can view tickets assigned to them, managers can see what is assigned to everybody & make modifications
