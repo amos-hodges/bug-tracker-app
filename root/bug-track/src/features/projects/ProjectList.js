@@ -1,4 +1,5 @@
 import { useGetProjectsQuery } from './projectsApiSlice'
+import { useGetUsersQuery } from '../users/usersApiSlice'
 import useAuth from '../../hooks/useAuth'
 import Project from './Project'
 import PulseLoader from 'react-spinners/PulseLoader'
@@ -6,6 +7,13 @@ import PulseLoader from 'react-spinners/PulseLoader'
 const ProjectList = () => {
 
     const { userId, isManager, isAdmin } = useAuth()
+
+    const { user } = useGetUsersQuery('usersList', {
+        selectFromResult: ({ data }) => ({
+            user: data?.entities[userId]
+        })
+    })
+    console.log(user)
     const {
         data: projects,
         isLoading,
@@ -27,10 +35,24 @@ const ProjectList = () => {
     }
 
     if (isSuccess) {
-        //add entities for filtering
+
         const { ids } = projects
 
-        const tableContent = ids?.length && ids.map(projectId => <Project key={projectId} projectId={projectId} />)
+        const filteredProjectIds = (isAdmin || isManager)
+            ? ids
+            : user?.projects || [];
+
+        const tableContent = filteredProjectIds.length > 0 ? (
+            filteredProjectIds.map(projectId => (
+                <Project key={projectId} projectId={projectId} />
+            ))
+        ) : (
+            <tr>
+                <td colSpan="7">No projects found.</td>
+            </tr>
+        );
+
+        // const tableContent = ids?.length && ids.map(projectId => <Project key={projectId} projectId={projectId} />)
 
         content = (
             <table className="table table--projects">

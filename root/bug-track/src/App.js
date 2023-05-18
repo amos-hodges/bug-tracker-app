@@ -41,11 +41,7 @@ function App() {
                 {/* Admin/Manager Only */}
                 <Route element={<RequireAuth allowedRoles={[ROLES.Manager, ROLES.Admin]} />}>
 
-                  <Route path="projects">
-                    <Route index element={<ProjectList />} />
-                    <Route path=":id" element={<EditProject />} />
-                    <Route path="new" element={<NewProjectForm />} />
-                  </Route>
+
 
                   <Route path="users">
                     <Route index element={<UsersList />} />
@@ -54,6 +50,12 @@ function App() {
                   </Route>
 
                 </Route> {/* End Admin/Manager Only*/}
+
+                <Route path="projects">
+                  <Route index element={<ProjectList />} />
+                  <Route path=":id" element={<EditProject />} />
+                  <Route path="new" element={<NewProjectForm />} />
+                </Route>
 
                 <Route path="tickets">
                   <Route index element={<TicketsList />} />
