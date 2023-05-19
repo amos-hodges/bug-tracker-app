@@ -8,13 +8,13 @@ Bug Tracking App User Stories
     - [ ] Manager - create projects, add users to specific projects, re-assign tickets, create announcements, request addition/removal of employees, all employee privelege
     - [ ] Employee - change statuses and add notes on thier own tickets, cannot close ticket without manager approval
     - [ ] Demo - select user type and demonstrate priveleges without creating new account
-- [X] Users are assigned projects and can switch between projects
-- [ ] Welcome page upon login displays:
-    - [ ] Only projects assigned to an employee
-    - [ ] All Projects for manager
-    - [ ] All Projects and all users for admin
+- [x] Users are assigned projects and can switch between projects
+- [x] Welcome page upon login displays:
+    - [x] Only projects assigned to an employee
+    - [x] All Projects for manager
+    - [x] All Projects and all users for admin
 - [ ] Clicking a specifc project displays tickets for the selected project with all information
-- [ ] Tickets are associated with a specific project when created
+- [x] Tickets are associated with a specific project when created
 - [x] Tickets are assigned to specific users, and can only be reassigned by managers or admin
 - [ ] Tickets can be maximized to there own page, where comments can be made and history viewed
 - [ ] Tickets have all relevant info (description, severity, importance, creator, date, etc.)
