@@ -370,6 +370,10 @@ tr {
     grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
   }
 
+  .table--projects__noEdit {
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+  }
+
   .note__created,
   .note__updated,
   .note__username {

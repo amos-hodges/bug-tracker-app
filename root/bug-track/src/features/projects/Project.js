@@ -4,7 +4,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import { useGetProjectsQuery } from './projectsApiSlice'
 
-const Project = ({ projectId }) => {
+const Project = ({ projectId, hideEdit }) => {
     const { project } = useGetProjectsQuery('projectList', {
         selectFromResult: ({ data }) => ({
             project: data?.entities[projectId]
@@ -34,14 +34,14 @@ const Project = ({ projectId }) => {
                 <td className="table__cell note__updated">{users}</td>
                 <td className="table__cell note__updated">{tickets}</td>
 
-                <td className="table__cell">
+                {hideEdit && <td className="table__cell">
                     <button
                         className="icon-button table__button"
                         onClick={handleEdit}
                     >
                         <FontAwesomeIcon icon={faPenToSquare} />
                     </button>
-                </td>
+                </td>}
             </tr>
         )
     } else return null

@@ -13,7 +13,7 @@ const ProjectList = () => {
             user: data?.entities[userId]
         })
     })
-    console.log(user)
+
     const {
         data: projects,
         isLoading,
@@ -44,18 +44,21 @@ const ProjectList = () => {
 
         const tableContent = filteredProjectIds.length > 0 ? (
             filteredProjectIds.map(projectId => (
-                <Project key={projectId} projectId={projectId} />
+                <Project key={projectId} projectId={projectId} hideEdit={isAdmin || isManager} />
             ))
         ) : (
             <tr>
-                <td colSpan="7">No projects found.</td>
+                <td colSpan="6">No projects found.</td>
             </tr>
         );
-
+        const tableClass = isAdmin || isManager ? "table table--projects" : "table table--projects__noEdit"
+        const editColumn = isAdmin || isManager ? (
+            <th scope="col" className="table__th note__edit">Edit</th>
+        ) : null
         // const tableContent = ids?.length && ids.map(projectId => <Project key={projectId} projectId={projectId} />)
 
         content = (
-            <table className="table table--projects">
+            <table className={tableClass}>
                 <thead className="table__thead">
                     <tr>
                         <th scope="col" className="table__th note__title">Project</th>
@@ -64,7 +67,7 @@ const ProjectList = () => {
                         <th scope="col" className="table__th note__title">Last Update</th>
                         <th scope="col" className="table__th note__title">Tickets</th>
                         <th scope="col" className="table__th note__title">Active Employees</th>
-                        <th scope="col" className="table__th note__edit">Edit</th>
+                        {editColumn}
                     </tr>
                 </thead>
                 <tbody>

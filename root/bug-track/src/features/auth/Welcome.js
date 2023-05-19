@@ -4,8 +4,8 @@ import ProjectList from '../projects/ProjectList'
 //This is where current projects will be displayed
 const Welcome = () => {
 
-    const { username, userId, isManager, isAdmin } = useAuth()
-    console.log(username, userId, isManager, isAdmin)
+    const { username, isManager, isAdmin } = useAuth()
+
     const date = new Date()
     const today = new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(date)
 
