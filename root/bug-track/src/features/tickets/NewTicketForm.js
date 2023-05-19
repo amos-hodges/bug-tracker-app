@@ -7,8 +7,8 @@ import { STATUS } from '../../config/statuses'
 
 const NewTicketForm = ({ users }) => {
 
-    const { id } = useParams()
-    console.log(id)
+    const { projectId } = useParams()
+    console.log(projectId)
     const [addNewTicket, {
         isLoading,
         isSuccess,
@@ -30,9 +30,9 @@ const NewTicketForm = ({ users }) => {
             setText('')
             setImportance('')
             setUserId('')
-            navigate(`/dashboard/projects/${id}/tickets`)
+            navigate(`/dashboard/projects/${projectId}/tickets`)
         }
-    }, [isSuccess, navigate, id])
+    }, [isSuccess, navigate, projectId])
 
 
     const onTitleChanged = e => setTitle(e.target.value)
@@ -40,12 +40,12 @@ const NewTicketForm = ({ users }) => {
     const onUserIdChanged = e => setUserId(e.target.value)
     const onImportanceChanged = e => setImportance(e.target.value)
 
-    const canSave = [id, title, text, importance, userId].every(Boolean) && !isLoading
+    const canSave = [projectId, title, text, importance, userId].every(Boolean) && !isLoading
 
     const onSaveTicketClicked = async (e) => {
         e.preventDefault()
         if (canSave) {
-            await addNewTicket({ user: userId, project: id, title, text, importance })
+            await addNewTicket({ user: userId, project: projectId, title, text, importance })
         }
     }
 

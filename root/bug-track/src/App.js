@@ -17,7 +17,7 @@ import NewTicket from './features/tickets/NewTicket'
 import Prefetch from './features/auth/Prefetch'
 import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
-import TestComponent from './features/tickets/TestComponent'
+//import TestComponent from './features/tickets/TestComponent'
 
 
 
@@ -56,15 +56,6 @@ function App() {
 
                   <Route index element={<ProjectList />} />
                   <Route path="new" element={<NewProjectForm />} />
-
-                  {/* <Route path=":id" element={<EditProject />} >
-                    <Route path=":id/tickets">
-                      <Route index element={<TestComponent />} />
-                      {/* <Route index element={<TicketsList />} /> /}
-                      <Route path="new" element={<NewTicket />} />
-                      <Route path=":ticketId" element={<EditTicket />} />
-                    </Route>
-                  </Route> */}
 
                   <Route path=":projectId">
                     <Route element={<EditProject />} />

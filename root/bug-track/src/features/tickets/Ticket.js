@@ -12,7 +12,7 @@ const Ticket = ({ ticketId }) => {
     })
 
     const projectId = useParams()
-
+    console.log(projectId.projectId)
     const navigate = useNavigate()
 
     if (ticket) {
@@ -20,7 +20,7 @@ const Ticket = ({ ticketId }) => {
 
         const updated = new Date(ticket.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
 
-        const handleEdit = () => navigate(`/dashboard/projects/${projectId.id}/tickets/${ticketId}`)
+        const handleEdit = () => navigate(`/dashboard/projects/${projectId.projectId}/tickets/${ticketId}`)
 
         return (
             <tr className="table__row">

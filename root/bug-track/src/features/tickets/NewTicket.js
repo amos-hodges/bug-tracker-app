@@ -11,7 +11,7 @@ const NewTicket = () => {
         })
     })
 
-    if (!users.length) return <PulseLoader color={'#FFF'} />
+    if (!users?.length) return <PulseLoader color={'#FFF'} />
 
     const content = <NewTicketForm users={users} />
 
