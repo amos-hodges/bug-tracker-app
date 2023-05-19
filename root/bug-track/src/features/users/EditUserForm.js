@@ -183,37 +183,16 @@ const EditUserForm = ({ user, projects }) => {
                     />
                 </label>
 
-
                 <label className="form__label" htmlFor="roles">
                     ASSIGNED ROLES:
                 </label>
                 {options}
-                {/* <select
-                    id="roles"
-                    name="roles"
-                    className={`form__select ${validRolesClass}`}
-                    multiple={true}
-                    size="3"
-                    value={roles}
-                    onChange={onRolesChanged}
-                >
-                    {options}
-                </select> */}
+
                 <label className="form__label" htmlFor="roles">
                     ASSIGNED PROJECTS:
                 </label>
-                {/* <select
-                    id="projects"
-                    name="projects"
-                    className={`form__select ${validProjectsClass}`}
-                    multiple={true}
-                    size="3"
-                    value={userProjects}
-                    onChange={onProjectsChanged}
-                >
-                    {projectOptions}
-                </select> */}
                 {projectOptions}
+
             </form>
         </>
     )

@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAddNewTicketMutation } from './ticketsApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
+import { STATUS } from '../../config/statuses'
 
 const NewTicketForm = ({ users }) => {
 
+    const { id } = useParams()
+    console.log(id)
     const [addNewTicket, {
         isLoading,
         isSuccess,
@@ -17,27 +20,32 @@ const NewTicketForm = ({ users }) => {
 
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
+    const [importance, setImportance] = useState('')
     const [userId, setUserId] = useState(users[0].id)
 
     useEffect(() => {
         if (isSuccess) {
+
             setTitle('')
             setText('')
+            setImportance('')
             setUserId('')
-            navigate('/dashboard/tickets')
+            navigate(`/dashboard/projects/${id}/tickets`)
         }
-    }, [isSuccess, navigate])
+    }, [isSuccess, navigate, id])
+
 
     const onTitleChanged = e => setTitle(e.target.value)
     const onTextChanged = e => setText(e.target.value)
     const onUserIdChanged = e => setUserId(e.target.value)
+    const onImportanceChanged = e => setImportance(e.target.value)
 
-    const canSave = [title, text, userId].every(Boolean) && !isLoading
+    const canSave = [id, title, text, importance, userId].every(Boolean) && !isLoading
 
     const onSaveTicketClicked = async (e) => {
         e.preventDefault()
         if (canSave) {
-            await addNewTicket({ user: userId, title, text })
+            await addNewTicket({ user: userId, project: id, title, text, importance })
         }
     }
 
@@ -49,6 +57,12 @@ const NewTicketForm = ({ users }) => {
             > {user.username}</option >
         )
     })
+
+    const statusOptions = Object.keys(STATUS).map((statusKey) => (
+        <option key={statusKey} value={statusKey}>
+            {STATUS[statusKey]}
+        </option>
+    ))
 
     const errClass = isError ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
@@ -103,6 +117,18 @@ const NewTicketForm = ({ users }) => {
                     onChange={onUserIdChanged}
                 >
                     {options}
+                </select>
+
+                <label className="form__label form__checkbox-container" htmlFor="importance">
+                    IMPORTANCE:</label>
+                <select
+                    id="importance"
+                    name="importance"
+                    className="form__select"
+                    value={importance}
+                    onChange={onImportanceChanged}
+                >
+                    {statusOptions}
                 </select>
 
             </form>

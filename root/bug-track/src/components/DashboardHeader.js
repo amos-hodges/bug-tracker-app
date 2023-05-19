@@ -36,7 +36,7 @@ const DashboardHeader = () => {
         }
     }, [isSuccess, navigate])
 
-    const onNewTicketClicked = () => navigate('/dashboard/tickets/new')
+    const onNewTicketClicked = () => navigate(':id/tickets/new')
     const onNewUserClicked = () => navigate('/dashboard/users/new')
     const onTicketsClicked = () => navigate('/dashboard/tickets')
     const onUsersClicked = () => navigate('/dashboard/users')

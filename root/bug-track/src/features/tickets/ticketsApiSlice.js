@@ -61,7 +61,7 @@ export const ticketsApiSlice = apiSlice.injectEndpoints({
         }),
         deleteTicket: builder.mutation({
             query: ({ id }) => ({
-                url: `/tickets`,
+                url: 'tickets',
                 method: 'DELETE',
                 body: { id }
             }),

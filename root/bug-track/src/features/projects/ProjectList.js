@@ -6,6 +6,7 @@ import PulseLoader from 'react-spinners/PulseLoader'
 
 const ProjectList = () => {
 
+
     const { userId, isManager, isAdmin } = useAuth()
 
     const { user } = useGetUsersQuery('usersList', {
@@ -37,7 +38,7 @@ const ProjectList = () => {
     if (isSuccess) {
 
         const { ids } = projects
-
+        //Only display assigned projects for employees, do not allow employees to edit a project
         const filteredProjectIds = (isAdmin || isManager)
             ? ids
             : user?.projects || [];
@@ -51,11 +52,12 @@ const ProjectList = () => {
                 <td colSpan="6">No projects found.</td>
             </tr>
         );
+
         const tableClass = isAdmin || isManager ? "table table--projects" : "table table--projects__noEdit"
         const editColumn = isAdmin || isManager ? (
             <th scope="col" className="table__th note__edit">Edit</th>
         ) : null
-        // const tableContent = ids?.length && ids.map(projectId => <Project key={projectId} projectId={projectId} />)
+
 
         content = (
             <table className={tableClass}>

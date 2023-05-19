@@ -22,12 +22,17 @@ const Project = ({ projectId, hideEdit }) => {
         const tickets = 'holder'
 
         const handleEdit = () => navigate(`/dashboard/projects/${projectId}`)
+        const handleTitleClick = () => navigate(`/dashboard/projects/${projectId}/tickets`)
         //update CSS classes
         return (
             <tr className="table__row">
 
 
-                <td className="table__cell note__title">{project.title}</td>
+                <td className="table__cell note__title">
+                    <button className="title-button" onClick={handleTitleClick}>
+                        {project.title}
+                    </button>
+                </td>
                 <td className="table__cell note__username">{project.description}</td>
                 <td className="table__cell note__created">{created}</td>
                 <td className="table__cell note__updated">{updated}</td>

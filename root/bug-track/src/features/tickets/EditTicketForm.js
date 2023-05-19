@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useUpdateTicketMutation, useDeleteTicketMutation } from './ticketsApiSlice'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../hooks/useAuth'
+import { STATUS } from '../../config/statuses'
 
 const EditTicketForm = ({ ticket, users }) => {
     const { isManager, isAdmin } = useAuth()
 
+    const { id } = useParams()
+    console.log(id)
     const [updateTicket, {
         isLoading,
         isSuccess,
@@ -25,7 +28,7 @@ const EditTicketForm = ({ ticket, users }) => {
 
     const [title, setTitle] = useState(ticket.title)
     const [text, setText] = useState(ticket.text)
-
+    const [importance, setImportance] = useState(ticket.importance)
     const [completed, setCompleted] = useState(ticket.completed)
     const [userId, setUserId] = useState(ticket.user)
 
@@ -33,21 +36,23 @@ const EditTicketForm = ({ ticket, users }) => {
         if (isSuccess || isDelSuccess) {
             setTitle('')
             setText('')
+            setImportance('')
             setUserId('')
-            navigate('/dashboard/tickets')
+            navigate(`/dashboard/projects/${id}/tickets`)
         }
-    }, [isSuccess, isDelSuccess, navigate])
+    }, [isSuccess, isDelSuccess, navigate, id])
 
     const onTitleChanged = e => setTitle(e.target.value)
     const onTextChanged = e => setText(e.target.value)
+    const onImportanceChanged = e => setImportance(e.target.value)
     const onCompletedChanged = e => setCompleted(prev => !prev)
     const onUserIdChanged = e => setUserId(e.target.value)
 
-    const canSave = [title, text, userId].every(Boolean) && !isLoading
+    const canSave = [title, text, importance, userId].every(Boolean) && !isLoading
 
     const onSaveTicketClicked = async (e) => {
         if (canSave) {
-            await updateTicket({ id: ticket.id, user: userId, title, text, completed })
+            await updateTicket({ id: ticket.id, user: userId, title, text, importance, completed })
         }
     }
 
@@ -73,6 +78,12 @@ const EditTicketForm = ({ ticket, users }) => {
             > {user.username}</option >
         )
     })
+
+    const statusOptions = Object.keys(STATUS).map((statusKey) => (
+        <option key={statusKey} value={statusKey}>
+            {STATUS[statusKey]}
+        </option>
+    ))
 
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
@@ -158,6 +169,17 @@ const EditTicketForm = ({ ticket, users }) => {
                         >
                             {options}
                         </select>
+                        <label className="form__label form__checkbox-container" htmlFor="importance">
+                            IMPORTANCE:</label>
+                        <select
+                            id="importance"
+                            name="importance"
+                            className="form__select"
+                            value={importance}
+                            onChange={onImportanceChanged}
+                        >
+                            {statusOptions}
+                        </select>
                     </div>
                     <div className="form__divider">
                         <p className="form__created">Created:<br />{created}</p>
@@ -167,7 +189,7 @@ const EditTicketForm = ({ ticket, users }) => {
             </form>
         </>
     )
-
+    console.log(title, text, importance, userId)
     return content
 }
 

@@ -60,6 +60,7 @@ const TicketsList = () => {
             </table>
         )
     }
+
     return content
 }
 

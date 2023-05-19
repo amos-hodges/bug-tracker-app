@@ -17,6 +17,7 @@ import NewTicket from './features/tickets/NewTicket'
 import Prefetch from './features/auth/Prefetch'
 import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
+import TestComponent from './features/tickets/TestComponent'
 
 
 
@@ -52,17 +53,29 @@ function App() {
                 </Route> {/* End Admin/Manager Only*/}
 
                 <Route path="projects">
+
                   <Route index element={<ProjectList />} />
-                  <Route path=":id" element={<EditProject />} />
                   <Route path="new" element={<NewProjectForm />} />
-                </Route>
 
-                <Route path="tickets">
-                  <Route index element={<TicketsList />} />
-                  <Route path=":id" element={<EditTicket />} />
-                  <Route path="new" element={<NewTicket />} />
-                </Route>
+                  {/* <Route path=":id" element={<EditProject />} >
+                    <Route path=":id/tickets">
+                      <Route index element={<TestComponent />} />
+                      {/* <Route index element={<TicketsList />} /> /}
+                      <Route path="new" element={<NewTicket />} />
+                      <Route path=":ticketId" element={<EditTicket />} />
+                    </Route>
+                  </Route> */}
 
+                  <Route path=":projectId">
+                    <Route element={<EditProject />} />
+                    <Route path="tickets">
+                      <Route index element={<TicketsList />} />
+                      <Route path="new" element={<NewTicket />} />
+                      <Route path=":ticketId" element={<EditTicket />} />
+                    </Route>
+                  </Route>
+
+                </Route>
 
               </Route>{/* end dashboard */}
             </Route>
