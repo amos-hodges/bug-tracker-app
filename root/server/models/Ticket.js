@@ -1,11 +1,15 @@
 const mongoose = require('mongoose')
-// const AutoIncrement = require('mongoose-sequence')(mongoose)
 
 const ticketSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
+    },
+    project: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
+        required: true,
     },
     title: {
         type: String,
@@ -19,17 +23,14 @@ const ticketSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    importance: {
+        type: String,
+        required: true
+    }
 },
     {
         timestamps: true
     }
 )
-
-
-// ticketSchema.plugin(AutoIncrement, {
-//     inc_field: 'ticket_num',
-//     id: 'ticketNums',
-//     start_seq: 0
-// })
 
 module.exports = mongoose.model('Ticket', ticketSchema)

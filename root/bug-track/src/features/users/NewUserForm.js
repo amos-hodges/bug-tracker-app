@@ -47,13 +47,13 @@ const NewUserForm = () => {
     const onUsernameChanged = e => setUsername(e.target.value)
     const onPasswordChanged = e => setPassword(e.target.value)
 
-    const onRolesChanged = e => {
-        const values = Array.from(
-            e.target.selectedOptions, //HTMLCollection 
-            (option) => option.value
-        )
-        setRoles(values)
-    }
+    const toggleRole = (role) => {
+        if (roles.includes(role)) {
+            setRoles(roles.filter((r) => r !== role))
+        } else {
+            setRoles([...roles, role])
+        }
+    };
 
     const canSave = [roles.length, validUsername, validPassword].every(Boolean) && !isLoading
 
@@ -64,21 +64,22 @@ const NewUserForm = () => {
         }
     }
 
-    const options = Object.values(ROLES).map(role => {
-        return (
-            <option
-                key={role}
+    const options = Object.values(ROLES).map((role) => (
+        <label key={role} className="checkbox-label">
+            <input
+                type="checkbox"
                 value={role}
-            >
-                {role}
-            </option>
-        )
-    })
+                checked={roles.includes(role)}
+                onChange={() => toggleRole(role)}
+            />{' '}
+            {role}
+        </label>
+    ))
 
     const errClass = isError ? "errmsg" : "offscreen"
     const validUserClass = !validUsername ? 'form__input--incomplete' : ''
     const validPwdClass = !validPassword ? 'form__input--incomplete' : ''
-    const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
+    // const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
 
 
     const content = (
@@ -123,17 +124,9 @@ const NewUserForm = () => {
 
                 <label className="form__label" htmlFor="roles">
                     ASSIGNED ROLES:</label>
-                <select
-                    id="roles"
-                    name="roles"
-                    className={`form__select ${validRolesClass}`}
-                    multiple={true}
-                    size="3"
-                    value={roles}
-                    onChange={onRolesChanged}
-                >
-                    {options}
-                </select>
+
+                {options}
+
 
             </form>
         </>

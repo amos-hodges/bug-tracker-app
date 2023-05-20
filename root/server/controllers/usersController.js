@@ -51,7 +51,7 @@ const createNewUser = async (req, res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = async (req, res) => {
-    const { id, username, roles, active, password } = req.body
+    const { id, username, roles, active, password, projects } = req.body
     //confirm data
     if (!id || !username || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
         return res.status(400).json({ message: 'All fields except password are required' })
@@ -72,6 +72,11 @@ const updateUser = async (req, res) => {
     user.username = username
     user.roles = roles
     user.active = active
+
+    // Update projects assigned to the user
+    if (projects && Array.isArray(projects)) {
+        user.projects = projects
+    }
     //dont want to require pwd change every time
     if (password) {
         //hash password

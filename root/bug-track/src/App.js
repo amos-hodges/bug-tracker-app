@@ -1,9 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
+import { ROLES } from './config/roles'
 import Layout from './components/Layout'
 import Public from './components/Public'
-import Login from './features/auth/Login'
 import DashboardLayout from './components/DashboardLayout'
 import Welcome from './features/auth/Welcome'
+import Login from './features/auth/Login'
+import ProjectList from './features/projects/ProjectList'
+import NewProjectForm from './features/projects/NewProjectForm'
+import EditProject from './features/projects/EditProject'
 import TicketsList from './features/tickets/TicketsList'
 import UsersList from './features/users/UsersList'
 import EditUser from './features/users/EditUser'
@@ -13,7 +17,10 @@ import NewTicket from './features/tickets/NewTicket'
 import Prefetch from './features/auth/Prefetch'
 import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
-import { ROLES } from './config/roles'
+//import TestComponent from './features/tickets/TestComponent'
+
+
+
 
 
 //Need to nest dashboard within a 'project' route to switch between projects
@@ -34,20 +41,40 @@ function App() {
 
                 <Route index element={<Welcome />} />
 
+                {/* Admin/Manager Only */}
                 <Route element={<RequireAuth allowedRoles={[ROLES.Manager, ROLES.Admin]} />}>
+
+
+
                   <Route path="users">
                     <Route index element={<UsersList />} />
                     <Route path=":id" element={<EditUser />} />
                     <Route path="new" element={<NewUserForm />} />
                   </Route>
-                </Route>
 
-                <Route path="tickets">
-                  <Route index element={<TicketsList />} />
-                  <Route path=":id" element={<EditTicket />} />
-                  <Route path="new" element={<NewTicket />} />
-                </Route>
+                </Route> {/* End Admin/Manager Only*/}
 
+                <Route path="projects">
+
+                  <Route index element={<ProjectList />} />
+                  <Route path="new" element={<NewProjectForm />} />
+
+                  <Route path=":projectId" element={<EditProject />} />
+                  {/* <Route element={<EditProject />} /> */}
+
+                  <Route path=":projectId/tickets" element={<TicketsList />} />
+                  <Route path=":projectId/tickets/new" element={<NewTicket />} />
+                  <Route path=":projectId/tickets/:ticketId" element={<EditTicket />} />
+
+
+                  {/* <Route path="tickets">
+                      <Route index element={<TicketsList />} />
+                      <Route path="new" element={<NewTicket />} />
+                      <Route path=":ticketId" element={<EditTicket />} />
+                    </Route> */}
+                  {/* </Route> */}
+
+                </Route>
 
               </Route>{/* end dashboard */}
             </Route>

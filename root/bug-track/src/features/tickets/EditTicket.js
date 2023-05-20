@@ -7,13 +7,13 @@ import PulseLoader from 'react-spinners/PulseLoader'
 
 
 const EditTicket = () => {
-    const { id } = useParams()
+    const { ticketId } = useParams()
 
     const { username, isManager, isAdmin } = useAuth()
 
     const { ticket } = useGetTicketsQuery('ticketsList', {
         selectFromResult: ({ data }) => ({
-            ticket: data?.entities[id]
+            ticket: data?.entities[ticketId]
         })
     })
 
@@ -22,7 +22,7 @@ const EditTicket = () => {
             users: data?.ids.map(id => data?.entities[id])
         })
     })
-
+    //console.log(ticket, users)
     if (!ticket || !users.length) return <PulseLoader color={'#FFF'} />
 
     if (!isManager && !isAdmin) {

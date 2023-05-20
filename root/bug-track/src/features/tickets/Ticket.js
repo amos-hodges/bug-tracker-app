@@ -1,9 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useGetTicketsQuery } from './ticketsApiSlice'
 import { memo } from 'react'
+
 //Need to add fields for priortity and current user
+//Need to change content to handle importance
+
 const Ticket = ({ ticketId }) => {
     const { ticket } = useGetTicketsQuery('ticketsList', {
         selectFromResult: ({ data }) => ({
@@ -11,6 +14,8 @@ const Ticket = ({ ticketId }) => {
         })
     })
 
+    const projectId = useParams()
+    console.log(projectId.projectId)
     const navigate = useNavigate()
 
     if (ticket) {
@@ -18,7 +23,7 @@ const Ticket = ({ ticketId }) => {
 
         const updated = new Date(ticket.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
 
-        const handleEdit = () => navigate(`/dashboard/tickets/${ticketId}`)
+        const handleEdit = () => navigate(`/dashboard/projects/${projectId.projectId}/tickets/${ticketId}`)
 
         return (
             <tr className="table__row">

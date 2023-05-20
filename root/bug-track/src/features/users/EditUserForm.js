@@ -7,8 +7,8 @@ import { ROLES } from '../../config/roles'
 
 const USER_REGEX = /^[A-z]{3,20}$/
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/
-//need field for assigning project
-const EditUserForm = ({ user }) => {
+
+const EditUserForm = ({ user, projects, tickets }) => {
     const [updateUser, {
         isLoading,
         isSuccess,
@@ -29,6 +29,7 @@ const EditUserForm = ({ user }) => {
     const [password, setPassword] = useState('')
     const [validPassword, setValidPassword] = useState(false)
     const [roles, setRoles] = useState(user.roles)
+    const [userProjects, setUserProjects] = useState(user.projects)
     const [active, setActive] = useState(user.active)
 
     useEffect(() => {
@@ -44,6 +45,7 @@ const EditUserForm = ({ user }) => {
             setUsername('')
             setPassword('')
             setRoles([])
+            setUserProjects([])
             navigate('/dashboard/users')
         }
     }, [isSuccess, isDelSucces, navigate])
@@ -51,37 +53,61 @@ const EditUserForm = ({ user }) => {
     const onUsernameChanged = e => setUsername(e.target.value)
     const onPasswordChanged = e => setPassword(e.target.value)
 
-    const onRolesChanged = e => {
-        const values = Array.from(
-            e.target.selectedOptions,
-            (option) => option.value
-        )
-        setRoles(values)
+    const toggleRole = (role) => {
+        if (roles.includes(role)) {
+            setRoles(roles.filter((r) => r !== role))
+        } else {
+            setRoles([...roles, role])
+        }
+    };
+
+    const toggleProject = (projectId) => {
+        if (userProjects.includes(projectId)) {
+            setUserProjects(userProjects.filter((id) => id !== projectId))
+        } else {
+            setUserProjects([...userProjects, projectId])
+        }
     }
 
     const onActiveChanged = () => setActive(prev => !prev)
 
     const onSaveUserClicked = async (e) => {
+
         if (password) {
-            await updateUser({ id: user.id, username, password, roles, active })
+            await updateUser({ id: user.id, username, password, roles, projects: userProjects, active })
         } else {
-            await updateUser({ id: user.id, username, roles, active })
+            await updateUser({ id: user.id, username, roles, projects: userProjects, active })
         }
+
     }
 
     const onDeleteUserClicked = async () => {
         await deleteUser({ id: user.id })
     }
 
-    const options = Object.values(ROLES).map(role => {
-        return (
-            <option
-                key={role}
+    const options = Object.values(ROLES).map((role) => (
+        <label key={role} className="checkbox-label">
+            <input
+                type="checkbox"
                 value={role}
+                checked={roles.includes(role)}
+                onChange={() => toggleRole(role)}
+            />{' '}
+            {role}
+        </label>
+    ));
 
-            > {role}</option >
-        )
-    })
+    const projectOptions = projects.map((project) => (
+        <label key={project.id} className="checkbox-label">
+            <input
+                type="checkbox"
+                value={project.id}
+                checked={userProjects.includes(project.id)}
+                onChange={() => toggleProject(project.id)}
+            />{' '}
+            {project.title}
+        </label>
+    ));
 
     let canSave
     if (password) {
@@ -93,9 +119,25 @@ const EditUserForm = ({ user }) => {
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
     const validUserClass = !validUsername ? 'form__input--incomplete' : ''
     const validPwdClass = password && !validPassword ? 'form__input--incomplete' : ''
-    const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
+    // const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
+    // const validProjectsClass = !Boolean(userProjects.length) ? 'form__input--incomplete' : ''
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
+
+    const noTickets = !tickets.length ? true : false
+
+    let deleteButton
+    if (noTickets) {
+        deleteButton = (
+            <button
+                className="icon-button"
+                title="Delete"
+                onClick={onDeleteUserClicked}
+            >
+                <FontAwesomeIcon icon={faTrashCan} />
+            </button>
+        )
+    }
 
     const content = (
         <>
@@ -112,13 +154,7 @@ const EditUserForm = ({ user }) => {
                         >
                             <FontAwesomeIcon icon={faSave} />
                         </button>
-                        <button
-                            className="icon-button"
-                            title="Delete"
-                            onClick={onDeleteUserClicked}
-                        >
-                            <FontAwesomeIcon icon={faTrashCan} />
-                        </button>
+                        {deleteButton}
                     </div>
                 </div>
                 <label className="form__label" htmlFor="username">
@@ -156,21 +192,16 @@ const EditUserForm = ({ user }) => {
                     />
                 </label>
 
-
                 <label className="form__label" htmlFor="roles">
                     ASSIGNED ROLES:
                 </label>
-                <select
-                    id="roles"
-                    name="roles"
-                    className={`form__select ${validRolesClass}`}
-                    multiple={true}
-                    size="3"
-                    value={roles}
-                    onChange={onRolesChanged}
-                >
-                    {options}
-                </select>
+                {options}
+
+                <label className="form__label" htmlFor="roles">
+                    ASSIGNED PROJECTS:
+                </label>
+                {projectOptions}
+
             </form>
         </>
     )

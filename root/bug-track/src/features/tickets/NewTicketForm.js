@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { useAddNewTicketMutation } from "./ticketsApiSlice"
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useAddNewTicketMutation } from './ticketsApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from "@fortawesome/free-solid-svg-icons"
 
-//Needs field for assigning project.
-//Use id of current project
+import { faSave } from '@fortawesome/free-solid-svg-icons'
+import { STATUS } from '../../config/statuses'
+//ADD A BUTTON TO DIRECTLY ADD A NEW USER TO THE PROJECT
+
 const NewTicketForm = ({ users }) => {
 
+    const { projectId } = useParams()
+    //console.log(projectId)
     const [addNewTicket, {
         isLoading,
         isSuccess,
@@ -19,38 +22,48 @@ const NewTicketForm = ({ users }) => {
 
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
+    const [importance, setImportance] = useState('')
     const [userId, setUserId] = useState(users[0].id)
 
     useEffect(() => {
         if (isSuccess) {
+
             setTitle('')
             setText('')
+            setImportance('')
             setUserId('')
-            navigate('/dashboard/tickets')
+            navigate(`/dashboard/projects/${projectId}/tickets`)
         }
-    }, [isSuccess, navigate])
+    }, [isSuccess, navigate, projectId])
+
 
     const onTitleChanged = e => setTitle(e.target.value)
     const onTextChanged = e => setText(e.target.value)
     const onUserIdChanged = e => setUserId(e.target.value)
+    const onImportanceChanged = e => setImportance(e.target.value)
 
-    const canSave = [title, text, userId].every(Boolean) && !isLoading
+    const canSave = [projectId, title, text, importance, userId].every(Boolean) && !isLoading
 
     const onSaveTicketClicked = async (e) => {
         e.preventDefault()
         if (canSave) {
-            await addNewTicket({ user: userId, title, text })
+            await addNewTicket({ user: userId, project: projectId, title, text, importance })
         }
     }
 
-    const options = users.map(user => {
-        return (
-            <option
-                key={user.id}
-                value={user.id}
-            > {user.username}</option >
-        )
-    })
+    const options = users
+        .filter(user => user.projects.includes(projectId))
+        .map(user => (
+            <option key={user.id} value={user.id}>
+                {user.username}
+            </option>
+        ))
+
+    const statusOptions = Object.keys(STATUS).map((statusKey) => (
+        <option key={statusKey} value={statusKey}>
+            {STATUS[statusKey]}
+        </option>
+    ))
 
     const errClass = isError ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
@@ -105,6 +118,18 @@ const NewTicketForm = ({ users }) => {
                     onChange={onUserIdChanged}
                 >
                     {options}
+                </select>
+
+                <label className="form__label form__checkbox-container" htmlFor="importance">
+                    IMPORTANCE:</label>
+                <select
+                    id="importance"
+                    name="importance"
+                    className="form__select"
+                    value={importance}
+                    onChange={onImportanceChanged}
+                >
+                    {statusOptions}
                 </select>
 
             </form>

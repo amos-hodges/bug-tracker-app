@@ -5,6 +5,8 @@ const Ticket = require('../models/Ticket')
 // @desc Get all tickets
 // @route GET /tickets
 // @access Private
+
+//Would want to do project id filtering here if dealing with a larger number of tickets
 const getAllTickets = async (req, res) => {
 
     const tickets = await Ticket.find().lean()
@@ -19,17 +21,17 @@ const getAllTickets = async (req, res) => {
     res.json(ticketsWithUser)
 }
 
-// May need to create method to get individual tickets
-
 // @desc Create a new ticket
 // @route POST /tickets
 // @access Private
 const createNewTicket = async (req, res) => {
-    const { user, title, text } = req.body
-    // console.log(user, title, text)
+
+    const { user, project, title, text, importance } = req.body
+    console.log(req.body)
     //confrim data
 
-    if (!user || !title || !text) {
+    if (!user || !project || !title || !text || !importance) {
+        console.log(user, project, title, text, importance)
         return res.status(400).json({ message: 'All fields are required.' })
     }
 
@@ -40,10 +42,9 @@ const createNewTicket = async (req, res) => {
         return res.status(409).json({ message: 'Duplicate ticket title' })
     }
 
-    const ticket = await Ticket.create({ user, title, text })
+    const ticket = await Ticket.create({ user, project, title, text, importance })
 
     if (ticket) {
-
         return res.status(201).json({ message: 'Ticket succesfuly created' })
     } else {
         return res.status(400).json({ message: 'Invalid ticket data recieved' })
@@ -55,10 +56,10 @@ const createNewTicket = async (req, res) => {
 // @route PATCH /tickets
 // @access Private
 const updateTicket = async (req, res) => {
-    const { id, user, title, text, completed } = req.body
+    const { id, user, title, text, completed, importance } = req.body
     console.log(`${id} updated`)
     //confirm data
-    if (!id || !user || !title || !text || typeof completed !== 'boolean') {
+    if (!id || !user || !title || !text || typeof completed !== 'boolean' || !importance) {
         console.log(id, user, title, text, typeof completed)
         return res.status(400).json({ message: 'All field are required' })
     }
@@ -79,6 +80,7 @@ const updateTicket = async (req, res) => {
     ticket.title = title
     ticket.text = text
     ticket.completed = completed
+    ticket.importance = importance
 
     const updatedTicket = await ticket.save()
 
@@ -104,7 +106,10 @@ const deleteTicket = async (req, res) => {
     if (!ticket) {
         return res.status(400).json({ message: 'Ticket not found' })
     }
-
+    // Check if the ticket is completed
+    if (!ticket.completed) {
+        return res.status(403).json({ message: 'Cannot delete an incomplete ticket' });
+    }
     const result = await ticket.deleteOne()
 
     const reply = `Ticket ${result.title} with ID ${result._id} deleted`
@@ -117,5 +122,4 @@ module.exports = {
     createNewTicket,
     updateTicket,
     deleteTicket
-
 }

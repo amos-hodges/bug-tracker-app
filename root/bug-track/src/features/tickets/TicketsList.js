@@ -1,11 +1,11 @@
 import { useGetTicketsQuery } from './ticketsApiSlice'
 import Ticket from './Ticket'
-import useAuth from '../../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
+import { useParams } from 'react-router-dom'
 
 const TicketsList = () => {
 
-    const { username, isManager, isAdmin } = useAuth()
+    const { projectId } = useParams()
 
     const {
         data: tickets,
@@ -31,14 +31,7 @@ const TicketsList = () => {
     if (isSuccess) {
         const { ids, entities } = tickets
 
-        //limit visible tickets to current user unless admin or manager
-        //will modify to accomdate employees working on the same project, tickets assigned to groups etc
-        let filteredIds
-        if (isManager || isAdmin) {
-            filteredIds = [...ids]
-        } else {
-            filteredIds = ids.filter(ticketId => entities[ticketId].username === username)
-        }
+        const filteredIds = ids.filter(ticketId => entities[ticketId].project === projectId)
 
         const tableContent = ids?.length && filteredIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
 
@@ -60,6 +53,7 @@ const TicketsList = () => {
             </table>
         )
     }
+
     return content
 }
 

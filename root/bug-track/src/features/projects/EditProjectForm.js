@@ -1,103 +1,78 @@
 import { useState, useEffect } from 'react'
-import { useUpdateTicketMutation, useDeleteTicketMutation } from './ticketsApiSlice'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useUpdateProjectMutation, useDeleteProjectMutation } from './projectsApiSlice'
+import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../hooks/useAuth'
-import { STATUS } from '../../config/statuses'
 
-const EditTicketForm = ({ ticket, users }) => {
-    const { isManager, isAdmin } = useAuth()
+const EditProjectForm = ({ project, tickets }) => {
+    const { isAdmin } = useAuth()
 
-    const { projectId } = useParams()
-    console.log(projectId)
-    const [updateTicket, {
+    const [updateProject, {
         isLoading,
         isSuccess,
         isError,
         error
-    }] = useUpdateTicketMutation()
+    }] = useUpdateProjectMutation()
 
-    const [deleteTicket, {
+    const [deleteProject, {
         isSuccess: isDelSuccess,
         isError: isDelError,
         error: delerror
-    }] = useDeleteTicketMutation()
+    }] = useDeleteProjectMutation()
 
     const navigate = useNavigate()
 
-    const [title, setTitle] = useState(ticket.title)
-    const [text, setText] = useState(ticket.text)
-    const [importance, setImportance] = useState(ticket.importance)
-    const [completed, setCompleted] = useState(ticket.completed)
-    const [userId, setUserId] = useState(ticket.user)
+    const [title, setTitle] = useState(project.title)
+    const [description, setDescription] = useState(project.description)
 
     useEffect(() => {
         if (isSuccess || isDelSuccess) {
             setTitle('')
-            setText('')
-            setImportance('')
-            setUserId('')
-            navigate(`/dashboard/projects/${projectId}/tickets`)
+            setDescription('')
+            navigate('/dashboard/projects')
         }
-    }, [isSuccess, isDelSuccess, navigate, projectId])
+    }, [isSuccess, isDelSuccess, navigate])
 
     const onTitleChanged = e => setTitle(e.target.value)
-    const onTextChanged = e => setText(e.target.value)
-    const onImportanceChanged = e => setImportance(e.target.value)
-    const onCompletedChanged = e => setCompleted(prev => !prev)
-    const onUserIdChanged = e => setUserId(e.target.value)
+    const onDescriptionChanged = e => setDescription(e.target.value)
 
-    const canSave = [title, text, importance, userId].every(Boolean) && !isLoading
+    const canSave = [title, description].every(Boolean) && !isLoading
 
-
-    const onSaveTicketClicked = async (e) => {
+    const onSaveProjectClicked = async (e) => {
         if (canSave) {
-            await updateTicket({ id: ticket.id, user: userId, title, text, importance, completed })
+            await updateProject({ id: project.id, title, description })
         }
     }
 
-    const onDeleteTicketClicked = async () => {
-        await deleteTicket({ id: ticket.id })
+    const onDeleteProjectClicked = async () => {
+
+        await deleteProject({ id: project.id })
     }
 
 
-    const created = new Date(ticket.createdAt).toLocaleString('en-US', {
+    const created = new Date(project.createdAt).toLocaleString('en-US', {
         day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
     })
-    const updated = new Date(ticket.updatedAt).toLocaleString('en-US', {
+    const updated = new Date(project.updatedAt).toLocaleString('en-US', {
         day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
     })
 
-    const options = users.map(user => {
-        return (
-            <option
-                key={user.id}
-                value={user.id}
 
-            > {user.username}</option >
-        )
-    })
-
-    const statusOptions = Object.keys(STATUS).map((statusKey) => (
-        <option key={statusKey} value={statusKey}>
-            {STATUS[statusKey]}
-        </option>
-    ))
 
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
-    const validTextClass = !text ? "form__input--incomplete" : ''
+    const validDescriptionClass = !description ? "form__input--incomplete" : ''
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 
     let deleteButton = null
-    if ((isManager || isAdmin) && ticket.completed) {
+    if (!tickets?.length) {
         deleteButton = (
             <button
                 className="icon-button"
                 title="Delete"
-                onClick={onDeleteTicketClicked}
+                onClick={onDeleteProjectClicked}
             >
                 <FontAwesomeIcon icon={faTrashCan} />
             </button>
@@ -110,12 +85,12 @@ const EditTicketForm = ({ ticket, users }) => {
 
             <form className="form" onSubmit={e => e.preventDefault()}>
                 <div className="form__title-row">
-                    <h2>Edit Ticket #{ticket.ticket_num}</h2>
+                    <h2>Edit "{project.title}"</h2>
                     <div className="form__action-buttons">
                         <button
                             className="icon-button"
                             title="Save"
-                            onClick={onSaveTicketClicked}
+                            onClick={onSaveProjectClicked}
                             disabled={!canSave}
                         >
                             <FontAwesomeIcon icon={faSave} />
@@ -136,15 +111,15 @@ const EditTicketForm = ({ ticket, users }) => {
                 />
 
                 <label className="form__label" htmlFor="note-text">
-                    Text:</label>
+                    Project Description:</label>
                 <textarea
-                    className={`form__input form__input--text ${validTextClass}`}
+                    className={`form__input form__input--text ${validDescriptionClass}`}
                     id="note-text"
                     name="text"
-                    value={text}
-                    onChange={onTextChanged}
+                    value={description}
+                    onChange={onDescriptionChanged}
                 />
-                <div className="form__row">
+                {/* <div className="form__row">
                     <div className="form__divider">
                         <label className="form__label form__checkbox-container" htmlFor="note-completed">
                             WORK COMPLETE:
@@ -169,29 +144,17 @@ const EditTicketForm = ({ ticket, users }) => {
                         >
                             {options}
                         </select>
-                        <label className="form__label form__checkbox-container" htmlFor="importance">
-                            IMPORTANCE:</label>
-                        <select
-                            id="importance"
-                            name="importance"
-                            className="form__select"
-                            value={importance}
-                            onChange={onImportanceChanged}
-                        >
-                            {statusOptions}
-                        </select>
-                    </div>
-                    <div className="form__divider">
-                        <p className="form__created">Created:<br />{created}</p>
-                        <p className="form__updated">Updated:<br />{updated}</p>
-                    </div>
+                    </div> */}
+                <div className="form__divider">
+                    <p className="form__created">Created:<br />{created}</p>
+                    <p className="form__updated">Updated:<br />{updated}</p>
                 </div>
+                {/* </div> */}
             </form>
         </>
     )
-    console.log(title, text, importance, userId)
+
     return content
 }
 
-
-export default EditTicketForm
+export default EditProjectForm
