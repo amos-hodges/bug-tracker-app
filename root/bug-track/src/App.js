@@ -57,14 +57,20 @@ function App() {
                   <Route index element={<ProjectList />} />
                   <Route path="new" element={<NewProjectForm />} />
 
-                  <Route path=":projectId">
-                    <Route element={<EditProject />} />
-                    <Route path="tickets">
+                  <Route path=":projectId" element={<EditProject />} />
+                  {/* <Route element={<EditProject />} /> */}
+
+                  <Route path=":projectId/tickets" element={<TicketsList />} />
+                  <Route path=":projectId/tickets/new" element={<NewTicket />} />
+                  <Route path=":projectId/tickets/:ticketId" element={<EditTicket />} />
+
+
+                  {/* <Route path="tickets">
                       <Route index element={<TicketsList />} />
                       <Route path="new" element={<NewTicket />} />
                       <Route path=":ticketId" element={<EditTicket />} />
-                    </Route>
-                  </Route>
+                    </Route> */}
+                  {/* </Route> */}
 
                 </Route>
 

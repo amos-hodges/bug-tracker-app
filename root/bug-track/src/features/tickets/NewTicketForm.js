@@ -4,11 +4,11 @@ import { useAddNewTicketMutation } from './ticketsApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
 import { STATUS } from '../../config/statuses'
-
+//ADD A BUTTON TO DIRECTLY ADD A NEW USER TO THE PROJECT
 const NewTicketForm = ({ users }) => {
 
     const { projectId } = useParams()
-    console.log(projectId)
+    //console.log(projectId)
     const [addNewTicket, {
         isLoading,
         isSuccess,
@@ -49,14 +49,13 @@ const NewTicketForm = ({ users }) => {
         }
     }
 
-    const options = users.map(user => {
-        return (
-            <option
-                key={user.id}
-                value={user.id}
-            > {user.username}</option >
-        )
-    })
+    const options = users
+        .filter(user => user.projects.includes(projectId))
+        .map(user => (
+            <option key={user.id} value={user.id}>
+                {user.username}
+            </option>
+        ))
 
     const statusOptions = Object.keys(STATUS).map((statusKey) => (
         <option key={statusKey} value={statusKey}>

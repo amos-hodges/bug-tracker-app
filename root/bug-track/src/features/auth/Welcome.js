@@ -17,9 +17,10 @@ const Welcome = () => {
             <h1>Welcome {username}</h1>
             <p>{message}</p>
             <ProjectList />
-            <p><Link to="/dashboard/tickets">View Tickets</Link></p>
 
-            <p><Link to="/dashboard/tickets/new">Create a new Ticket</Link></p>
+            {/* maybe link to all tickets? <p><Link to="/dashboard/tickets">View Tickets</Link></p> */}
+
+            {/* wont work without project id <p><Link to="/dashboard/tickets/new">Create a new Ticket</Link></p> */}
             {/* simplify logic after final access features are determined*/}
             {(isManager || isAdmin) && <p><Link to="/dashboard/users">Views User Settings</Link></p>}
 

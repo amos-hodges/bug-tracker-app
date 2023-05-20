@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../hooks/useAuth'
 
-const EditProjectForm = ({ project }) => {
+const EditProjectForm = ({ project, tickets }) => {
     const { isAdmin } = useAuth()
 
     const [updateProject, {
@@ -58,15 +58,7 @@ const EditProjectForm = ({ project }) => {
         day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
     })
 
-    // const options = users.map(user => {
-    //     return (
-    //         <option
-    //             key={user.id}
-    //             value={user.id}
 
-    //         > {user.username}</option >
-    //     )
-    // })
 
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
@@ -75,7 +67,7 @@ const EditProjectForm = ({ project }) => {
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 
     let deleteButton = null
-    if (isAdmin) {
+    if (!tickets?.length) {
         deleteButton = (
             <button
                 className="icon-button"

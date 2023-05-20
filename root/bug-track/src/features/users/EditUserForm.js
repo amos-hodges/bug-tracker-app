@@ -8,7 +8,7 @@ import { ROLES } from '../../config/roles'
 const USER_REGEX = /^[A-z]{3,20}$/
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/
 
-const EditUserForm = ({ user, projects }) => {
+const EditUserForm = ({ user, projects, tickets }) => {
     const [updateUser, {
         isLoading,
         isSuccess,
@@ -124,6 +124,21 @@ const EditUserForm = ({ user, projects }) => {
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 
+    const noTickets = !tickets.length ? true : false
+
+    let deleteButton
+    if (noTickets) {
+        deleteButton = (
+            <button
+                className="icon-button"
+                title="Delete"
+                onClick={onDeleteUserClicked}
+            >
+                <FontAwesomeIcon icon={faTrashCan} />
+            </button>
+        )
+    }
+
     const content = (
         <>
             <p className={errClass}>{errContent}</p>
@@ -139,13 +154,7 @@ const EditUserForm = ({ user, projects }) => {
                         >
                             <FontAwesomeIcon icon={faSave} />
                         </button>
-                        <button
-                            className="icon-button"
-                            title="Delete"
-                            onClick={onDeleteUserClicked}
-                        >
-                            <FontAwesomeIcon icon={faTrashCan} />
-                        </button>
+                        {deleteButton}
                     </div>
                 </div>
                 <label className="form__label" htmlFor="username">

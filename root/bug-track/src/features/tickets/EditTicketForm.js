@@ -9,8 +9,8 @@ import { STATUS } from '../../config/statuses'
 const EditTicketForm = ({ ticket, users }) => {
     const { isManager, isAdmin } = useAuth()
 
-    const { id } = useParams()
-    console.log(id)
+    const { projectId } = useParams()
+    console.log(projectId)
     const [updateTicket, {
         isLoading,
         isSuccess,
@@ -38,9 +38,9 @@ const EditTicketForm = ({ ticket, users }) => {
             setText('')
             setImportance('')
             setUserId('')
-            navigate(`/dashboard/projects/${id}/tickets`)
+            navigate(`/dashboard/projects/${projectId}/tickets`)
         }
-    }, [isSuccess, isDelSuccess, navigate, id])
+    }, [isSuccess, isDelSuccess, navigate, projectId])
 
     const onTitleChanged = e => setTitle(e.target.value)
     const onTextChanged = e => setText(e.target.value)
@@ -50,6 +50,7 @@ const EditTicketForm = ({ ticket, users }) => {
 
     const canSave = [title, text, importance, userId].every(Boolean) && !isLoading
 
+
     const onSaveTicketClicked = async (e) => {
         if (canSave) {
             await updateTicket({ id: ticket.id, user: userId, title, text, importance, completed })
@@ -57,7 +58,6 @@ const EditTicketForm = ({ ticket, users }) => {
     }
 
     const onDeleteTicketClicked = async () => {
-
         await deleteTicket({ id: ticket.id })
     }
 
@@ -92,7 +92,7 @@ const EditTicketForm = ({ ticket, users }) => {
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 
     let deleteButton = null
-    if (isManager || isAdmin) {
+    if ((isManager || isAdmin) && ticket.completed) {
         deleteButton = (
             <button
                 className="icon-button"

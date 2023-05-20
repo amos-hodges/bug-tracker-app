@@ -7,20 +7,23 @@ import {
     faUserGear,
     faUserPlus
 } from '@fortawesome/free-solid-svg-icons'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import useAuth from '../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
 
 const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
-const TICKETS_REGEX = /^\/dashboard\/tickets(\/)?$/
+const TICKETS_REGEX = /^\/dashboard\/projects\/\w+\/tickets(\/)?$/
 const USERS_REGEX = /^\/dashboard\/users(\/)?$/
-
+//DISPLAY THE CURRENT PROJECT IN THE HEADER
 const DashboardHeader = () => {
+
+    const { projectId } = useParams()
 
     const { isManager, isAdmin } = useAuth()
 
     const navigate = useNavigate()
+
     const { pathname } = useLocation()
 
     const [sendLogout, {
@@ -36,16 +39,16 @@ const DashboardHeader = () => {
         }
     }, [isSuccess, navigate])
 
-    const onNewTicketClicked = () => navigate(':id/tickets/new')
+    const onNewTicketClicked = () => navigate(`projects/${projectId}/tickets/new`)
     const onNewUserClicked = () => navigate('/dashboard/users/new')
-    const onTicketsClicked = () => navigate('/dashboard/tickets')
+    const onTicketsClicked = () => navigate(`projects/${projectId}/tickets`)
     const onUsersClicked = () => navigate('/dashboard/users')
 
 
     let dashClass = null
-    if (!DASHBOARD_REGEX.test(pathname) && !TICKETS_REGEX.test(pathname) && !USERS_REGEX.test(pathname)) {
-        dashClass = "dash-header__container--small"
-    }
+    // if (!DASHBOARD_REGEX.test(pathname) && !TICKETS_REGEX.test(pathname) && !USERS_REGEX.test(pathname)) {
+    //     dashClass = "dash-header__container--small"
+    // }
 
     let newTicketButton = null
     if (TICKETS_REGEX.test(pathname)) {
@@ -89,17 +92,17 @@ const DashboardHeader = () => {
     }
 
     let ticketsButton = null
-    if (!TICKETS_REGEX.test(pathname) && pathname.includes('/dashboard')) {
-        ticketsButton = (
-            <button
-                className="icon-button"
-                title="Tickets"
-                onClick={onTicketsClicked}
-            >
-                <FontAwesomeIcon icon={faFilePen} />
-            </button>
-        )
-    }
+    // if (!TICKETS_REGEX.test(pathname) && pathname.includes('/dashboard')) {
+    //     ticketsButton = (
+    //         <button
+    //             className="icon-button"
+    //             title="Tickets"
+    //             onClick={onTicketsClicked}
+    //         >
+    //             <FontAwesomeIcon icon={faFilePen} />
+    //         </button>
+    //     )
+    // }
 
     const logoutButton = (
         <button
