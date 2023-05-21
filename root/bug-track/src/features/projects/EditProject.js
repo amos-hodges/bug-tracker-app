@@ -1,4 +1,4 @@
-import { Outlet, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import EditProjectForm from './EditProjectForm'
 import { useGetProjectsQuery } from './projectsApiSlice'
 import PulseLoader from 'react-spinners/PulseLoader'
@@ -20,14 +20,11 @@ const EditProject = () => {
             ),
         }),
     })
-    console.log(tickets)
+
     if (!project) return <PulseLoader color={'#FFF'} />
 
     const content = (
-        <>
-            <EditProjectForm project={project} tickets={tickets} />
-            <Outlet />
-        </>
+        <EditProjectForm project={project} tickets={tickets} />
     )
 
     return content

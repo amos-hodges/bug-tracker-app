@@ -133,7 +133,7 @@ a:focus-visible {
   content: "➜ "
 }
 
-/* || DASH HEADER, CONTAINER & FOOTER */
+/* || DASH HEADER, CONTAINER, SIDEBAR & FOOTER */
 
 .dash-header {
   position: sticky;
@@ -163,8 +163,17 @@ a:focus-visible {
 }
 
 .dash-container {
+  display: flex;
+}
+
+.content-container {
   padding: 0.75em 0.5em 0.5em;
   flex-grow: 1;
+}
+
+.sidebar {
+  width: 20%;
+  background-color: #98b3c9;
 }
 
 .dash-footer {

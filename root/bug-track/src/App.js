@@ -17,13 +17,9 @@ import NewTicket from './features/tickets/NewTicket'
 import Prefetch from './features/auth/Prefetch'
 import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
-//import TestComponent from './features/tickets/TestComponent'
+import UserProfile from './features/settings/UserProfile'
+import UserSettings from './features/settings/UserSettings'
 
-
-
-
-
-//Need to nest dashboard within a 'project' route to switch between projects
 function App() {
   return (
     <Routes>
@@ -44,8 +40,6 @@ function App() {
                 {/* Admin/Manager Only */}
                 <Route element={<RequireAuth allowedRoles={[ROLES.Manager, ROLES.Admin]} />}>
 
-
-
                   <Route path="users">
                     <Route index element={<UsersList />} />
                     <Route path=":id" element={<EditUser />} />
@@ -54,27 +48,18 @@ function App() {
 
                 </Route> {/* End Admin/Manager Only*/}
 
-                <Route path="projects">
-
+                <Route path="projects">{/* Project routes */}
                   <Route index element={<ProjectList />} />
                   <Route path="new" element={<NewProjectForm />} />
-
                   <Route path=":projectId" element={<EditProject />} />
-                  {/* <Route element={<EditProject />} /> */}
-
+                  {/* Ticket Routes */}
                   <Route path=":projectId/tickets" element={<TicketsList />} />
                   <Route path=":projectId/tickets/new" element={<NewTicket />} />
                   <Route path=":projectId/tickets/:ticketId" element={<EditTicket />} />
-
-
-                  {/* <Route path="tickets">
-                      <Route index element={<TicketsList />} />
-                      <Route path="new" element={<NewTicket />} />
-                      <Route path=":ticketId" element={<EditTicket />} />
-                    </Route> */}
-                  {/* </Route> */}
-
                 </Route>
+
+                <Route path="profile" element={<UserProfile />} />
+                <Route path="settings" element={<UserSettings />} />
 
               </Route>{/* end dashboard */}
             </Route>

@@ -10,7 +10,7 @@ const EditTicketForm = ({ ticket, users }) => {
     const { isManager, isAdmin } = useAuth()
 
     const { projectId } = useParams()
-    console.log(projectId)
+    //console.log(projectId)
     const [updateTicket, {
         isLoading,
         isSuccess,
@@ -69,21 +69,28 @@ const EditTicketForm = ({ ticket, users }) => {
         day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
     })
 
-    const options = users.map(user => {
-        return (
-            <option
-                key={user.id}
-                value={user.id}
-
-            > {user.username}</option >
-        )
-    })
-
-    const statusOptions = Object.keys(STATUS).map((statusKey) => (
-        <option key={statusKey} value={statusKey}>
-            {STATUS[statusKey]}
-        </option>
-    ))
+    const options = [
+        <option key="" value="">
+            -- Select User --
+        </option>,
+        ...users
+            .filter(user => user.projects.includes(projectId))
+            .map(user => (
+                <option key={user.id} value={user.id}>
+                    {user.username}
+                </option>
+            ))
+    ]
+    const statusOptions = [
+        <option key="" value="">
+            -- Select Status --
+        </option>,
+        ...Object.keys(STATUS).map((statusKey) => (
+            <option key={statusKey} value={statusKey}>
+                {STATUS[statusKey]}
+            </option>
+        ))
+    ]
 
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
@@ -189,7 +196,7 @@ const EditTicketForm = ({ ticket, users }) => {
             </form>
         </>
     )
-    console.log(title, text, importance, userId)
+
     return content
 }
 

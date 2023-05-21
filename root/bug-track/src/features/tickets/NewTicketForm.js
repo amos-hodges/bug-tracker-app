@@ -23,8 +23,8 @@ const NewTicketForm = ({ users }) => {
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
     const [importance, setImportance] = useState('')
-    const [userId, setUserId] = useState(users[0].id)
-
+    const [userId, setUserId] = useState('')
+    //const [userId, setUserId] = useState(users[0].id)
     useEffect(() => {
         if (isSuccess) {
 
@@ -51,19 +51,29 @@ const NewTicketForm = ({ users }) => {
         }
     }
 
-    const options = users
-        .filter(user => user.projects.includes(projectId))
-        .map(user => (
-            <option key={user.id} value={user.id}>
-                {user.username}
+    const options = [
+        <option key="" value="">
+            -- Select User --
+        </option>,
+        ...users
+            .filter(user => user.projects.includes(projectId))
+            .map(user => (
+                <option key={user.id} value={user.id}>
+                    {user.username}
+                </option>
+            ))
+    ]
+
+    const statusOptions = [
+        <option key="" value="">
+            -- Select Status --
+        </option>,
+        ...Object.keys(STATUS).map((statusKey) => (
+            <option key={statusKey} value={statusKey}>
+                {STATUS[statusKey]}
             </option>
         ))
-
-    const statusOptions = Object.keys(STATUS).map((statusKey) => (
-        <option key={statusKey} value={statusKey}>
-            {STATUS[statusKey]}
-        </option>
-    ))
+    ]
 
     const errClass = isError ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''

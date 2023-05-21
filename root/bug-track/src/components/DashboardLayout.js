@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import DashboardHeader from './DashboardHeader'
 import DashboardFooter from './DashboardFooter'
+import Sidebar from './Sidebar'
 
 //layout component for protected portion of app
 const DashboardLayout = () => {
@@ -8,7 +9,10 @@ const DashboardLayout = () => {
         <>
             <DashboardHeader />
             <div className='dash-container'>
-                <Outlet />
+                <Sidebar />
+                <div className='content-container'>
+                    <Outlet />
+                </div>
             </div>
             <DashboardFooter />
         </>

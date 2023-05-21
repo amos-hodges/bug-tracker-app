@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faRightFromBracket,
     faFileCirclePlus,
-    faFilePen,
-    faUserGear,
+    faFolderPlus,
+    faCircleUser,
+    faGear,
+    faUsersGear,
     faUserPlus
 } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
@@ -39,10 +41,13 @@ const DashboardHeader = () => {
         }
     }, [isSuccess, navigate])
 
+    const onNewProjectClicked = () => navigate('/dashboard/projects/new')
     const onNewTicketClicked = () => navigate(`projects/${projectId}/tickets/new`)
     const onNewUserClicked = () => navigate('/dashboard/users/new')
-    const onTicketsClicked = () => navigate(`projects/${projectId}/tickets`)
-    const onUsersClicked = () => navigate('/dashboard/users')
+    //const onTicketsClicked = () => navigate(`projects/${projectId}/tickets`)
+    const onUserSettingsClicked = () => navigate('/dashboard/users')
+    const onProfileClicked = () => navigate('/dashboard/profile')
+    const onSettingsClicked = () => navigate('/dashboard/settings')
 
 
     let dashClass = null
@@ -50,6 +55,20 @@ const DashboardHeader = () => {
     //     dashClass = "dash-header__container--small"
     // }
 
+    let newProjectButton = null
+    if (isManager || isAdmin) {
+        if (DASHBOARD_REGEX.test(pathname)) {
+            newProjectButton = (
+                <button
+                    className="icon-button"
+                    title="New Project"
+                    onClick={onNewProjectClicked}
+                >
+                    <FontAwesomeIcon icon={faFolderPlus} />
+                </button>
+            )
+        }
+    }
     let newTicketButton = null
     if (TICKETS_REGEX.test(pathname)) {
         newTicketButton = (
@@ -64,28 +83,30 @@ const DashboardHeader = () => {
     }
 
     let newUserButton = null
-    if (USERS_REGEX.test(pathname)) {
-        newUserButton = (
-            <button
-                className="icon-button"
-                title="New User"
-                onClick={onNewUserClicked}
-            >
-                <FontAwesomeIcon icon={faUserPlus} />
-            </button>
-        )
+    if (isManager || isAdmin) {
+        if (USERS_REGEX.test(pathname)) {
+            newUserButton = (
+                <button
+                    className="icon-button"
+                    title="New User"
+                    onClick={onNewUserClicked}
+                >
+                    <FontAwesomeIcon icon={faUserPlus} />
+                </button>
+            )
+        }
     }
 
-    let userButton = null
+    let userSettingsButton = null
     if (isManager || isAdmin) {
         if (!USERS_REGEX.test(pathname) && pathname.includes('/dashboard')) {
-            userButton = (
+            userSettingsButton = (
                 <button
                     className="icon-button"
                     title="Users"
-                    onClick={onUsersClicked}
+                    onClick={onUserSettingsClicked}
                 >
-                    <FontAwesomeIcon icon={faUserGear} />
+                    <FontAwesomeIcon icon={faUsersGear} />
                 </button>
             )
         }
@@ -103,6 +124,28 @@ const DashboardHeader = () => {
     //         </button>
     //     )
     // }
+
+    // AVAILABLE ON ALL PAGES
+
+    const profileButton = (
+        <button
+            className='icon-button'
+            title="profile"
+            onClick={onProfileClicked}
+        >
+            {/* Eventually replace with user thumbnail */}
+            <FontAwesomeIcon icon={faCircleUser} />
+        </button>
+    )
+    const settingsButton = (
+        <button
+            className='icon-button'
+            title="settings"
+            onClick={onSettingsClicked}
+        >
+            <FontAwesomeIcon icon={faGear} />
+        </button>
+    )
 
     const logoutButton = (
         <button
@@ -122,10 +165,13 @@ const DashboardHeader = () => {
     } else {
         buttonContent = (
             <>
+                {newProjectButton}
                 {newTicketButton}
                 {newUserButton}
                 {ticketsButton}
-                {userButton}
+                {userSettingsButton}
+                {profileButton}
+                {settingsButton}
                 {logoutButton}
             </>
         )

@@ -15,7 +15,7 @@ const Ticket = ({ ticketId }) => {
     })
 
     const projectId = useParams()
-    console.log(projectId.projectId)
+    //console.log(projectId.projectId)
     const navigate = useNavigate()
 
     if (ticket) {
