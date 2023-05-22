@@ -19,6 +19,7 @@ import PersistLogin from './features/auth/PersistLogin'
 import RequireAuth from './features/auth/RequireAuth'
 import UserProfile from './features/settings/UserProfile'
 import UserSettings from './features/settings/UserSettings'
+import Team from './features/users/Team'
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
                   <Route path=":projectId/tickets/:ticketId" element={<EditTicket />} />
                 </Route>
 
+                <Route path="team" element={<Team />} />
                 <Route path="profile" element={<UserProfile />} />
                 <Route path="settings" element={<UserSettings />} />
 

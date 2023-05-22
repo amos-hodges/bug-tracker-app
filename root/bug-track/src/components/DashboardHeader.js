@@ -53,7 +53,7 @@ const DashboardHeader = ({ isSidebarOpen, toggleSidebar }) => {
 
     //let dashClass = isSidebarOpen ? "dash-header__container" : "dash-header__container--sidebar"
     let dashClass = "dash-header__container"
-    console.log(dashClass)
+
     let sidebarToggle = (
         <button
             className="icon-button"

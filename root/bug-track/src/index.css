@@ -10,14 +10,14 @@
 
 :root {
   /* COLORS */
-  --BGCOLOR: #0F172A;
+  --BGCOLOR: #213461;
   --BORDER-COLOR: #FFF;
   --COLOR: #FFF;
   --ERROR: firebrick;
   --INACTIVE: lightgray;
   --LINK-COLOR: whitesmoke;
   --LINK-HOVER: rgba(245, 245, 245, 0.9);
-  --NOTE-BGCOLOR: hsla(240, 64%, 27%, 0.65);
+  --NOTE-BGCOLOR: hsla(240, 64%, 27%, 0.466);
   --STATUS-COMPLETE: limegreen;
   --STATUS-OPEN: firebrick;
   --TABLE-BGCOLOR: #FFF;
@@ -177,20 +177,70 @@ a:focus-visible {
   height: 100vh;
 }
 
+/*SIDE BAR CLASSES*/
+
 .sidebar {
   width: 0;
-  transition: width 0.3s, opacity 0.3s;
+  transition: width 0.4s, opacity 0.2s;
+  transition-timing-function: ease-out;
   overflow: hidden;
+  background-color: rgba(145, 170, 170, 0.678);
   opacity: 0;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
 }
 
 .sidebar--open {
   width: 20%;
-  transition: width 0.3s, opacity 0.3s;
+  transition: width 0.4s, opacity 0.3s;
   border-radius: 4px;
   opacity: 1;
-  background-color: rgba(51, 172, 172, 0.678);
+  background-color: rgba(145, 170, 170, 0.678);
+  flex-direction: column;
+  align-items: center;
+  display: flex;
 }
+
+.sidebar__title {
+  display: flex;
+  align-items: center;
+  padding-top: 0.5em;
+  padding-bottom: 100px;
+}
+
+.sidebar__title a {
+  display: flex;
+  align-items: center;
+  text-decoration: none
+}
+
+.sidebar__title h2 {
+  margin-left: 0.5rem;
+}
+
+.sidebar--open p {
+  margin-bottom: 50px;
+  padding: 8px 12px;
+  border-radius: 15px;
+  background-color: rgba(173, 216, 230, 0.5);
+  width: 60%;
+  display: inline-block;
+  text-align: center;
+}
+
+.sidebar p {
+  margin-bottom: 50px;
+  padding: 8px 12px;
+  border-radius: 15px;
+  background-color: rgba(173, 216, 230, 0.5);
+  width: 60%;
+  display: inline-block;
+  text-align: center;
+}
+
+
+/*REST OF DASH*/
 
 .dash-container {
   padding: 1em;
@@ -229,9 +279,7 @@ a:focus-visible {
   height: auto;
 }
 
-/* .content-container {
-  flex-grow: 1;
-} */
+
 
 /* || TABLES - GENERAL */
 
