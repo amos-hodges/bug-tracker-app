@@ -1,20 +1,36 @@
 import { Outlet } from 'react-router-dom'
+import { useState } from 'react'
 import DashboardHeader from './DashboardHeader'
 import DashboardFooter from './DashboardFooter'
 import Sidebar from './Sidebar'
 
 //layout component for protected portion of app
 const DashboardLayout = () => {
+
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen)
+    }
+
+    let containerClass = !isSidebarOpen ? 'dash-container' : 'dash-container-sidebar container-closed'
+
     return (
         <>
-            <DashboardHeader />
-            <div className='dash-container'>
-                <Sidebar />
-                <div className='content-container'>
+
+            <DashboardHeader
+                isSidebarOpen={isSidebarOpen}
+                toggleSidebar={() => toggleSidebar()} />
+            <div className="content-container">
+                <Sidebar isSidebarOpen={isSidebarOpen} />
+                <div className={containerClass}>
+
                     <Outlet />
                 </div>
+
             </div>
             <DashboardFooter />
+
         </>
     )
 }

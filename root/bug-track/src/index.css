@@ -151,6 +151,8 @@ a:focus-visible {
   align-items: center;
 }
 
+
+
 .dash-header__container--small {
   max-width: 800px;
 }
@@ -162,19 +164,50 @@ a:focus-visible {
   gap: 0.5em;
 }
 
-.dash-container {
-  display: flex;
+.dash-header__title {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
+
 .content-container {
-  padding: 0.75em 0.5em 0.5em;
-  flex-grow: 1;
+  display: flex;
+  height: 100vh;
 }
 
 .sidebar {
-  width: 20%;
-  background-color: #98b3c9;
+  width: 0;
+  transition: width 0.3s, opacity 0.3s;
+  overflow: hidden;
+  opacity: 0;
 }
+
+.sidebar--open {
+  width: 20%;
+  transition: width 0.3s, opacity 0.3s;
+  border-radius: 4px;
+  opacity: 1;
+  background-color: rgba(51, 172, 172, 0.678);
+}
+
+.dash-container {
+  padding: 1em;
+  flex: 1;
+  transition: all 0.3s;
+}
+
+.dash-container-sidebar {
+  padding: 1em;
+  flex: 1 1 80%;
+}
+
+.container-closed {
+  flex: 1;
+  overflow: hidden;
+}
+
 
 .dash-footer {
   font-size: 1rem;
@@ -195,6 +228,10 @@ a:focus-visible {
   width: auto;
   height: auto;
 }
+
+/* .content-container {
+  flex-grow: 1;
+} */
 
 /* || TABLES - GENERAL */
 

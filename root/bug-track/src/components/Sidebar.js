@@ -1,7 +1,10 @@
-//This will be sidebar navigation avvailable on all pages
-const Sidebar = () => {
+//import { useState } from "react"
+const Sidebar = ({ isSidebarOpen }) => {
+
+    let sideBarClass = isSidebarOpen ? "sidebar" : "sidebar--open"
+    console.log(sideBarClass)
     return (
-        <aside className="sidebar">
+        <aside className={sideBarClass}>
             <h2>Sidebar</h2>
             <p>Link 1</p>
             <p>Link 2</p>

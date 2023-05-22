@@ -30,7 +30,7 @@ const EditProjectForm = ({ project, tickets }) => {
         if (isSuccess || isDelSuccess) {
             setTitle('')
             setDescription('')
-            navigate('/dashboard/projects')
+            navigate('/dashboard')
         }
     }, [isSuccess, isDelSuccess, navigate])
 
@@ -67,7 +67,7 @@ const EditProjectForm = ({ project, tickets }) => {
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 
     let deleteButton = null
-    if (!tickets?.length) {
+    if (!tickets?.length && isAdmin) {
         deleteButton = (
             <button
                 className="icon-button"
@@ -119,37 +119,12 @@ const EditProjectForm = ({ project, tickets }) => {
                     value={description}
                     onChange={onDescriptionChanged}
                 />
-                {/* <div className="form__row">
-                    <div className="form__divider">
-                        <label className="form__label form__checkbox-container" htmlFor="note-completed">
-                            WORK COMPLETE:
-                            <input
-                                className="form__checkbox"
-                                id="note-completed"
-                                name="completed"
-                                type="checkbox"
-                                checked={completed}
-                                onChange={onCompletedChanged}
-                            />
-                        </label>
 
-                        <label className="form__label form__checkbox-container" htmlFor="note-username">
-                            ASSIGNED TO:</label>
-                        <select
-                            id="note-username"
-                            name="username"
-                            className="form__select"
-                            value={userId}
-                            onChange={onUserIdChanged}
-                        >
-                            {options}
-                        </select>
-                    </div> */}
                 <div className="form__divider">
                     <p className="form__created">Created:<br />{created}</p>
                     <p className="form__updated">Updated:<br />{updated}</p>
                 </div>
-                {/* </div> */}
+
             </form>
         </>
     )

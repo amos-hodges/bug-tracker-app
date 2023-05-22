@@ -7,7 +7,8 @@ import {
     faCircleUser,
     faGear,
     faUsersGear,
-    faUserPlus
+    faUserPlus,
+    faBars
 } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
@@ -18,7 +19,7 @@ const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
 const TICKETS_REGEX = /^\/dashboard\/projects\/\w+\/tickets(\/)?$/
 const USERS_REGEX = /^\/dashboard\/users(\/)?$/
 //DISPLAY THE CURRENT PROJECT IN THE HEADER
-const DashboardHeader = () => {
+const DashboardHeader = ({ isSidebarOpen, toggleSidebar }) => {
 
     const { projectId } = useParams()
 
@@ -50,10 +51,18 @@ const DashboardHeader = () => {
     const onSettingsClicked = () => navigate('/dashboard/settings')
 
 
-    let dashClass = null
-    // if (!DASHBOARD_REGEX.test(pathname) && !TICKETS_REGEX.test(pathname) && !USERS_REGEX.test(pathname)) {
-    //     dashClass = "dash-header__container--small"
-    // }
+    //let dashClass = isSidebarOpen ? "dash-header__container" : "dash-header__container--sidebar"
+    let dashClass = "dash-header__container"
+    console.log(dashClass)
+    let sidebarToggle = (
+        <button
+            className="icon-button"
+            title="sidebar"
+            onClick={toggleSidebar}
+        >
+            <FontAwesomeIcon icon={faBars} />
+        </button>
+    )
 
     let newProjectButton = null
     if (isManager || isAdmin) {
@@ -113,17 +122,6 @@ const DashboardHeader = () => {
     }
 
     let ticketsButton = null
-    // if (!TICKETS_REGEX.test(pathname) && pathname.includes('/dashboard')) {
-    //     ticketsButton = (
-    //         <button
-    //             className="icon-button"
-    //             title="Tickets"
-    //             onClick={onTicketsClicked}
-    //         >
-    //             <FontAwesomeIcon icon={faFilePen} />
-    //         </button>
-    //     )
-    // }
 
     // AVAILABLE ON ALL PAGES
 
@@ -182,7 +180,8 @@ const DashboardHeader = () => {
             <p className={errClass}>{error?.data?.message}</p>
 
             <header className="dash-header">
-                <div className={`dash-header__container ${dashClass}`}>
+                <div className={dashClass}>
+                    {sidebarToggle}
                     <Link to="/dashboard">
                         <h1 className="dash-header__title">Bug Tracker</h1>
                     </Link>
