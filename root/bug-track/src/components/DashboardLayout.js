@@ -7,7 +7,7 @@ import Sidebar from './Sidebar'
 //layout component for protected portion of app
 const DashboardLayout = () => {
 
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen)

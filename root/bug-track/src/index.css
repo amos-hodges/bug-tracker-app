@@ -63,6 +63,15 @@
   visibility: hidden;
 }
 
+.logout {
+  padding-bottom: 10px;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+
 /* || GENERAL STYLES */
 
 body {
@@ -200,6 +209,9 @@ a:focus-visible {
   flex-direction: column;
   align-items: center;
   display: flex;
+  position: fixed;
+  top: 48px;
+  bottom: 38px;
 }
 
 .sidebar__title {
@@ -246,6 +258,7 @@ a:focus-visible {
   padding: 1em;
   flex: 1;
   transition: all 0.3s;
+  margin-left: 20%
 }
 
 .dash-container-sidebar {

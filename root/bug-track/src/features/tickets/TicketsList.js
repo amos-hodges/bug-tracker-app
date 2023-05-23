@@ -19,7 +19,6 @@ const TicketsList = () => {
         refetchOnMountOrArgChange: true
     })
 
-
     let content
 
     if (isLoading) content = <PulseLoader color={"#FFF"} />

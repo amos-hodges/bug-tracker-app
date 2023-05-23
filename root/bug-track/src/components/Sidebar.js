@@ -1,19 +1,55 @@
 //import { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBug } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
+import { faBug, faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
+import { Link, useNavigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
+import { useSendLogoutMutation } from '../features/auth/authApiSlice'
+import PulseLoader from 'react-spinners/PulseLoader'
+import { useEffect } from "react"
 
 const Sidebar = ({ isSidebarOpen }) => {
 
     const { isAdmin, isManager } = useAuth()
+    const navigate = useNavigate()
+    const [sendLogout, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useSendLogoutMutation()
+
+    useEffect(() => {
+        if (isSuccess) {
+            navigate('/')
+        }
+    }, [isSuccess, navigate])
 
     let mode = (isAdmin || isManager) ? 'All' : 'My'
 
     let sideBarClass = isSidebarOpen ? "sidebar" : "sidebar--open"
 
-    return (
+    let logoutButton
+    if (isLoading) {
+        logoutButton = <PulseLoader color={"#FFF"} />
+    } else {
+        logoutButton = (
+            <button
+                className="icon-button logout"
+                title="Logout"
+                onClick={sendLogout}
+            >
+                Sign&nbsp;Out&nbsp;
+                <FontAwesomeIcon icon={faRightFromBracket} />
+            </button>
+        )
+    }
+    if (isError) {
+        console.log(error)
+    }
+
+    const content = (
         <div className={sideBarClass}>
+
             <div className="sidebar__title">
                 <Link to='/dashboard'>
                     <span className="icon-button">
@@ -22,15 +58,54 @@ const Sidebar = ({ isSidebarOpen }) => {
                     <h2>Bug Tracker</h2>
                 </Link>
             </div>
+
             <p><Link to="/dashboard">{mode} Projects</Link></p>
-            <p><Link to="team">My Team</Link></p>
-            {(isManager || isAdmin) && <p><Link to="/dashboard/users">User Settings</Link></p>}
-            {(isManager || isAdmin) && <p>All Tickets</p>}
-            <p>My Tickets</p>
+
+            {(isManager || isAdmin)
+                ? <p><Link to="/dashboard/users">User Settings</Link></p>
+                : <p><Link to="team">My Team</Link></p>}
+
+            {(isManager || isAdmin)
+                ? <p>All Tickets</p>
+                : <p>My Tickets</p>}
+
             <p><Link to="profile">Profile</Link></p>
+
             <p><Link to="settings">Settings</Link></p>
+
+            {logoutButton}
         </div>
     )
+
+    // return (
+    //     <div className={sideBarClass}>
+    //         <div className="sidebar__title">
+    //             <Link to='/dashboard'>
+    //                 <span className="icon-button">
+    //                     <FontAwesomeIcon icon={faBug} />
+    //                 </span>
+    //                 <h2>Bug Tracker</h2>
+    //             </Link>
+    //         </div>
+    //         <p><Link to="/dashboard">{mode} Projects</Link></p>
+    //         <p><Link to="team">My Team</Link></p>
+    //         {(isManager || isAdmin) && <p><Link to="/dashboard/users">User Settings</Link></p>}
+    //         {(isManager || isAdmin) && <p>All Tickets</p>}
+    //         <p>My Tickets</p>
+    //         <p><Link to="profile">Profile</Link></p>
+    //         <p><Link to="settings">Settings</Link></p>
+
+    //         <button
+    //             className="icon-button logout"
+    //             title="Logout"
+    //             onClick={sendLogout}
+    //         >
+    //             Sign&nbsp;Out&nbsp;<FontAwesomeIcon icon={faRightFromBracket} />
+    //         </button>
+
+    //     </div>
+    // )
+    return content
 }
 
 export default Sidebar

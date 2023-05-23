@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import ProjectList from '../projects/ProjectList'
 //This is where current projects will be displayed
@@ -22,13 +22,13 @@ const Welcome = () => {
 
             {/* wont work without project id <p><Link to="/dashboard/tickets/new">Create a new Ticket</Link></p> */}
             {/* simplify logic after final access features are determined*/}
-            {(isManager || isAdmin) && <p><Link to="/dashboard/users">Views User Settings</Link></p>}
+            {/* {(isManager || isAdmin) && <p><Link to="/dashboard/users">Views User Settings</Link></p>}
 
             {(isAdmin) && <p><Link to="/dashboard/users/new">Add a New User</Link></p>}
 
             {(isManager || isAdmin) && <p><Link to="/dashboard/projects">Views Projects</Link></p>}
 
-            {(isManager || isAdmin) && <p><Link to="/dashboard/projects/new">Create New Project</Link></p>}
+            {(isManager || isAdmin) && <p><Link to="/dashboard/projects/new">Create New Project</Link></p>} */}
         </section>
     )
 

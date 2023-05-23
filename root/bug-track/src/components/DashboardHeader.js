@@ -45,14 +45,9 @@ const DashboardHeader = ({ isSidebarOpen, toggleSidebar }) => {
     const onNewProjectClicked = () => navigate('/dashboard/projects/new')
     const onNewTicketClicked = () => navigate(`projects/${projectId}/tickets/new`)
     const onNewUserClicked = () => navigate('/dashboard/users/new')
-    //const onTicketsClicked = () => navigate(`projects/${projectId}/tickets`)
     const onUserSettingsClicked = () => navigate('/dashboard/users')
     const onProfileClicked = () => navigate('/dashboard/profile')
     const onSettingsClicked = () => navigate('/dashboard/settings')
-
-
-    //let dashClass = isSidebarOpen ? "dash-header__container" : "dash-header__container--sidebar"
-    let dashClass = "dash-header__container"
 
     let sidebarToggle = (
         <button
@@ -170,7 +165,7 @@ const DashboardHeader = ({ isSidebarOpen, toggleSidebar }) => {
                 {userSettingsButton}
                 {profileButton}
                 {settingsButton}
-                {logoutButton}
+                {/* {logoutButton} */}
             </>
         )
     }
@@ -180,7 +175,7 @@ const DashboardHeader = ({ isSidebarOpen, toggleSidebar }) => {
             <p className={errClass}>{error?.data?.message}</p>
 
             <header className="dash-header">
-                <div className={dashClass}>
+                <div className="dash-header__container">
                     {sidebarToggle}
                     <Link to="/dashboard">
                         <h1 className="dash-header__title">Bug Tracker</h1>
