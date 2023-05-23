@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useGetProjectsQuery } from './projectsApiSlice'
 import { useGetTicketsQuery } from '../tickets/ticketsApiSlice'
 import { useGetUsersQuery } from '../users/usersApiSlice'
+
 //import { useMemo } from 'react'
 
 const Project = ({ projectId, hideEdit }) => {
@@ -32,16 +33,14 @@ const Project = ({ projectId, hideEdit }) => {
     const usersCount = getUsersCount()
     const navigate = useNavigate()
 
-    // if (isProjectLoading || isTicketsLoading || isUsersLoading) return <p>Loading...</p>
-
     if (project) {
-        //add timestamps to project model
+
         const created = new Date(project.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
         const updated = new Date(project.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
 
         const handleEdit = () => navigate(`/dashboard/projects/${projectId}`)
         const handleTitleClick = () => navigate(`/dashboard/projects/${projectId}/tickets`)
-        //update CSS classes
+        //**********update CSS classes
         return (
             <tr className="table__row">
 

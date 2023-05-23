@@ -46,7 +46,7 @@ const Sidebar = ({ isSidebarOpen }) => {
     if (isError) {
         console.log(error)
     }
-
+    // eventually add logic to close sidebar if user clicks link to current page
     const content = (
         <div className={sideBarClass}>
 
@@ -63,11 +63,11 @@ const Sidebar = ({ isSidebarOpen }) => {
 
             {(isManager || isAdmin)
                 ? <p><Link to="/dashboard/users">User Settings</Link></p>
-                : <p><Link to="team">My Team</Link></p>}
+                : <p><Link to="team">Collaborate</Link></p>}
 
-            {(isManager || isAdmin)
-                ? <p>All Tickets</p>
-                : <p>My Tickets</p>}
+
+            <p><Link to="/dashboard/projects/all/tickets">All Tickets</Link></p>
+
 
             <p><Link to="profile">Profile</Link></p>
 

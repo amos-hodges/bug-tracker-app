@@ -45,6 +45,7 @@ const Team = () => {
         const { entities } = users
         const currentUser = entities[userId]
 
+        //figure out beter formatting, links to projects, add message button
         const tableContent = Object.values(entities)
             .filter((user) => user.id !== currentUser.id) // Exclude current user
             .map((user) => {
@@ -65,6 +66,7 @@ const Team = () => {
                     </tr>
                 ) : null;
             })
+
         content = (
             <>
                 <div className="form__title-row">
@@ -88,6 +90,7 @@ const Team = () => {
             </>
         )
     }
+
     return content
 }
 

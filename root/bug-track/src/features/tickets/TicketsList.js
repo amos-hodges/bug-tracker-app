@@ -32,8 +32,11 @@ const TicketsList = () => {
 
         const filteredIds = ids.filter(ticketId => entities[ticketId].project === projectId)
 
-        const tableContent = ids?.length && filteredIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
+        const tableContent = (projectId !== 'all')
+            ? ids?.length && filteredIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
+            : ids.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
 
+        //Ticket needs additional field for the project it belongs to, which is displayed if the tickets aren't filtered
         content = (
             <table className="table table--notes">
                 <thead className="table__thead">
