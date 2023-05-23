@@ -469,6 +469,10 @@ tr {
     font-size: 1.5rem;
   }
 
+  .table--team {
+    grid-template-columns: 1fr 2fr;
+  }
+
   .table--notes {
     grid-template-columns: repeat(3, 1fr) 2fr repeat(2, 1fr);
   }

@@ -19,7 +19,7 @@ const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
 const TICKETS_REGEX = /^\/dashboard\/projects\/\w+\/tickets(\/)?$/
 const USERS_REGEX = /^\/dashboard\/users(\/)?$/
 //DISPLAY THE CURRENT PROJECT IN THE HEADER
-const DashboardHeader = ({ isSidebarOpen, toggleSidebar }) => {
+const DashboardHeader = ({ toggleSidebar }) => {
 
     const { projectId } = useParams()
 
@@ -139,16 +139,16 @@ const DashboardHeader = ({ isSidebarOpen, toggleSidebar }) => {
             <FontAwesomeIcon icon={faGear} />
         </button>
     )
-
-    const logoutButton = (
-        <button
-            className="icon-button"
-            title="Logout"
-            onClick={sendLogout}
-        >
-            <FontAwesomeIcon icon={faRightFromBracket} />
-        </button>
-    )
+    //Game time decision
+    // const logoutButton = (
+    //     <button
+    //         className="icon-button"
+    //         title="Logout"
+    //         onClick={sendLogout}
+    //     >
+    //         <FontAwesomeIcon icon={faRightFromBracket} />
+    //     </button>
+    // )
 
     const errClass = isError ? "errMsg" : "offscreen"
 
