@@ -360,6 +360,37 @@ tr {
   color: var(--STATUS-COMPLETE);
 }
 
+.ticket-title {
+  display: inline-block;
+  /* padding: 5px 10px;
+  border-radius: 10px; */
+  /* font-weight: bold; */
+}
+
+.critical {
+  background-color: red;
+  color: white;
+}
+
+.high {
+  background-color: orange;
+  color: white;
+}
+
+.medium {
+  background-color: yellow;
+}
+
+.low {
+  background-color: green;
+  color: white;
+}
+
+.lowest {
+  background-color: blue;
+  color: white;
+}
+
 
 /* || FORM - GENERAL */
 
