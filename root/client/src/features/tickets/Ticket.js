@@ -24,7 +24,7 @@ const Ticket = ({ ticketId }) => {
         const updated = new Date(ticket.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
 
         const handleEdit = () => navigate(`/dashboard/projects/${projectId.projectId}/tickets/${ticketId}`)
-        console.log(ticket.importance)
+
         return (
             <tr className="table__row">
                 <td className="table__cell note__status">

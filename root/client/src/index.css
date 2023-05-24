@@ -391,6 +391,17 @@ tr {
   color: white;
 }
 
+.new-ticket-button {
+  position: fixed;
+  bottom: 70px;
+  right: 50px;
+  padding: 20px 40px;
+  background-color: #f3a2a2;
+  color: #000000;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
 
 /* || FORM - GENERAL */
 
