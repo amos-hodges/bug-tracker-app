@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { ROLES } from '../../config/roles'
+import Modal from '../../components/Modal'
 
 const USER_REGEX = /^[A-z]{3,20}$/
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/
@@ -31,6 +32,7 @@ const EditUserForm = ({ user, projects, tickets }) => {
     const [roles, setRoles] = useState(user.roles)
     const [userProjects, setUserProjects] = useState(user.projects)
     const [active, setActive] = useState(user.active)
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         setValidUsername(USER_REGEX.test(username))
@@ -62,23 +64,27 @@ const EditUserForm = ({ user, projects, tickets }) => {
     };
 
     const toggleProject = (projectId) => {
-        if (userProjects.includes(projectId)) {
-            setUserProjects(userProjects.filter((id) => id !== projectId))
+        const hasTickets = tickets.some((ticket) => ticket.project === projectId);
+
+        if (hasTickets) {
+            setShowModal(true)
         } else {
-            setUserProjects([...userProjects, projectId])
+            if (userProjects.includes(projectId)) {
+                setUserProjects(userProjects.filter((id) => id !== projectId))
+            } else {
+                setUserProjects([...userProjects, projectId])
+            }
         }
     }
 
     const onActiveChanged = () => setActive(prev => !prev)
 
     const onSaveUserClicked = async (e) => {
-
         if (password) {
             await updateUser({ id: user.id, username, password, roles, projects: userProjects, active })
         } else {
             await updateUser({ id: user.id, username, roles, projects: userProjects, active })
         }
-
     }
 
     const onDeleteUserClicked = async () => {
@@ -119,8 +125,6 @@ const EditUserForm = ({ user, projects, tickets }) => {
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
     const validUserClass = !validUsername ? 'form__input--incomplete' : ''
     const validPwdClass = password && !validPassword ? 'form__input--incomplete' : ''
-    // const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
-    // const validProjectsClass = !Boolean(userProjects.length) ? 'form__input--incomplete' : ''
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 
@@ -203,6 +207,10 @@ const EditUserForm = ({ user, projects, tickets }) => {
                 {projectOptions}
 
             </form>
+            {showModal && (
+                <Modal onClose={() => setShowModal(false)}>
+                    <p>User has tickets open in that project!</p>
+                </Modal>)}
         </>
     )
 

@@ -19,6 +19,7 @@ const EditProject = () => {
                 (ticket) => ticket?.project === project.id
             ),
         }),
+        skip: !project,
     })
 
     if (!project) return <PulseLoader color={'#FFF'} />
