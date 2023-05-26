@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../hooks/useAuth'
 
-const EditProjectForm = ({ project, tickets }) => {
+const EditProjectForm = ({ project, tickets, users }) => {
     const { isAdmin } = useAuth()
 
     const [updateProject, {
@@ -46,7 +46,6 @@ const EditProjectForm = ({ project, tickets }) => {
     }
 
     const onDeleteProjectClicked = async () => {
-
         await deleteProject({ id: project.id })
     }
 
@@ -66,8 +65,12 @@ const EditProjectForm = ({ project, tickets }) => {
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 
+    const associatedUsers = users.some(user => user.projects.includes(project.id))
+
+    console.log(associatedUsers)
+
     let deleteButton = null
-    if (!tickets?.length && isAdmin) {
+    if (!tickets?.length && !associatedUsers && isAdmin) {
         deleteButton = (
             <button
                 className="icon-button"

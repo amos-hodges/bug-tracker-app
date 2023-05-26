@@ -19,6 +19,8 @@ const Project = ({ projectId, hideEdit }) => {
     const { data: ticketsData } = useGetTicketsQuery('ticketsList')
     const { data: usersData } = useGetUsersQuery('usersList')
 
+
+
     const getTicketsCount = () => {
         const tickets = ticketsData?.entities || {}
         return Object.values(tickets).filter(ticket => ticket.project === projectId).length

@@ -10,7 +10,7 @@ const EditTicketForm = ({ ticket, users }) => {
     const { isManager, isAdmin } = useAuth()
 
     const { projectId } = useParams()
-    //console.log(projectId)
+
     const [updateTicket, {
         isLoading,
         isSuccess,
@@ -97,7 +97,7 @@ const EditTicketForm = ({ ticket, users }) => {
     const validTextClass = !text ? "form__input--incomplete" : ''
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
-
+    console.log(errContent)
     let deleteButton = null
     if ((isManager || isAdmin) && ticket.completed) {
         deleteButton = (

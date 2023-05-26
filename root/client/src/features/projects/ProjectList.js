@@ -11,7 +11,8 @@ const ProjectList = () => {
 
     const { user } = useGetUsersQuery('usersList', {
         selectFromResult: ({ data }) => ({
-            user: data?.entities[userId]
+            user: data?.entities[userId],
+
         })
     })
 
@@ -26,6 +27,7 @@ const ProjectList = () => {
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })
+
 
     let content
 

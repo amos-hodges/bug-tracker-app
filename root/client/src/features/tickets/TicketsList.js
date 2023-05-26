@@ -4,9 +4,11 @@ import PulseLoader from 'react-spinners/PulseLoader'
 import { useParams, Link } from 'react-router-dom'
 
 
+
 const TicketsList = () => {
 
     const { projectId } = useParams()
+
 
     const {
         data: tickets,
@@ -17,7 +19,8 @@ const TicketsList = () => {
     } = useGetTicketsQuery('ticketsList', {
         pollingInterval: 15000,
         refetchOnFocus: true,
-        refetchOnMountOrArgChange: true
+        refetchOnMountOrArgChange: true,
+
     })
 
     let content
@@ -25,7 +28,14 @@ const TicketsList = () => {
     if (isLoading) content = <PulseLoader color={"#FFF"} />
 
     if (isError) {
-        content = <p className="errmsg">{error?.data?.message}</p>
+        content =
+            <><p className="errmsg">{error?.data?.message}</p>
+                {
+                    (projectId !== 'all') && <Link to={`/dashboard/projects/${projectId}/tickets/new`} className="new-ticket-button">
+                        New Ticket
+                    </Link >
+                }
+            </>
     }
 
     if (isSuccess) {
@@ -57,9 +67,9 @@ const TicketsList = () => {
                         {tableContent}
                     </tbody>
                 </table>
-                <Link to={`/dashboard/projects/${projectId}/tickets/new`} className="new-ticket-button">
+                {(projectId !== 'all') && <Link to={`/dashboard/projects/${projectId}/tickets/new`} className="new-ticket-button">
                     New Ticket
-                </Link>
+                </Link >}
             </>
         )
     }
