@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import DashboardHeader from './DashboardHeader'
 import DashboardFooter from './DashboardFooter'
 import Sidebar from './Sidebar'
@@ -7,7 +7,16 @@ import Sidebar from './Sidebar'
 //layout component for protected portion of app
 const DashboardLayout = () => {
 
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+    const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+        // Retrieve the previous state from local storage or use the default value
+        const storedState = localStorage.getItem('sidebarToggle');
+        return storedState ? JSON.parse(storedState) : true;
+    });
+
+    useEffect(() => {
+        // Save the sidebar toggle state to local storage whenever it changes
+        localStorage.setItem('sidebarToggle', JSON.stringify(isSidebarOpen));
+    }, [isSidebarOpen]);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen)

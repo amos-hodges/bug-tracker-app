@@ -201,7 +201,7 @@ const EditUserForm = ({ user, projects, tickets }) => {
                 </label>
                 {options}
 
-                <label className="form__label" htmlFor="roles">
+                <label className="form__label" htmlFor="projects">
                     ASSIGNED PROJECTS:
                 </label>
                 {projectOptions}

@@ -77,34 +77,6 @@ const Sidebar = ({ isSidebarOpen }) => {
         </div>
     )
 
-    // return (
-    //     <div className={sideBarClass}>
-    //         <div className="sidebar__title">
-    //             <Link to='/dashboard'>
-    //                 <span className="icon-button">
-    //                     <FontAwesomeIcon icon={faBug} />
-    //                 </span>
-    //                 <h2>Bug Tracker</h2>
-    //             </Link>
-    //         </div>
-    //         <p><Link to="/dashboard">{mode} Projects</Link></p>
-    //         <p><Link to="team">My Team</Link></p>
-    //         {(isManager || isAdmin) && <p><Link to="/dashboard/users">User Settings</Link></p>}
-    //         {(isManager || isAdmin) && <p>All Tickets</p>}
-    //         <p>My Tickets</p>
-    //         <p><Link to="profile">Profile</Link></p>
-    //         <p><Link to="settings">Settings</Link></p>
-
-    //         <button
-    //             className="icon-button logout"
-    //             title="Logout"
-    //             onClick={sendLogout}
-    //         >
-    //             Sign&nbsp;Out&nbsp;<FontAwesomeIcon icon={faRightFromBracket} />
-    //         </button>
-
-    //     </div>
-    // )
     return content
 }
 

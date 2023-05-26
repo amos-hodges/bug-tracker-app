@@ -22,7 +22,7 @@ const EditUser = () => {
     // all tickets associated with current user
     const { tickets, isLoading: isTicketsLoading } = useGetTicketsQuery('ticketsList', {
         selectFromResult: ({ data }) => ({
-            tickets: Object.values(data?.entities).filter(
+            tickets: Object.values(data?.entities || {}).filter(
                 (ticket) => ticket?.username === user?.username
             ),
         }),
