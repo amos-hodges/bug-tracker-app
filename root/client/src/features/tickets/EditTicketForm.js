@@ -134,6 +134,7 @@ const EditTicketForm = ({ ticket, users }) => {
     let backButton = (
         <button
             className="navigation-link"
+            title="BackButton"
             onClick={handleBackClick}
         >
             Back to project
@@ -273,13 +274,13 @@ const EditTicketForm = ({ ticket, users }) => {
             </div>
         </>
     )
+
     return (
         <>
             {!noProject && (isAdmin || isManager || ticket.user === currentUser) ? editContent : ticketContent}
         </>
     )
 
-    //return editContent
 }
 
 

@@ -40,6 +40,18 @@
   transform: scale(1.1);
 }
 
+.title-button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: transform 0.4s;
+}
+
+.title-button:hover {
+  transform: scale(1.1);
+}
+
 .errmsg {
   display: inline-block;
   background-color: var(--TABLE-BGCOLOR);
@@ -268,6 +280,11 @@ a:focus-visible {
   width: 60%;
   display: inline-block;
   text-align: center;
+  transition: transform 0.3s;
+}
+
+.sidebar--open p:hover {
+  transform: scale(1.1);
 }
 
 .sidebar p {
@@ -326,6 +343,19 @@ a:focus-visible {
 
 /* || TABLES - GENERAL */
 
+.list-container {
+  background-color: #cacaca67;
+  width: 85%;
+  margin: 0 auto;
+  border: 2px solid #cccccca9;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  /* Add a box shadow for a 3D effect */
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 thead,
 tbody,
 tr {
@@ -335,10 +365,11 @@ tr {
 .table {
   font-size: 1rem;
   width: 100%;
+  padding: 10px;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   color: var(--TABLE-COLOR);
-  gap: 0.1em;
+  gap: 1px;
 }
 
 .table__button {
@@ -358,7 +389,9 @@ tr {
   background-color: var(--TABLE-BGCOLOR);
   text-align: center;
   border: 1px solid var(--TABLE-COLOR);
+  border-radius: 2px;
   padding: 0.5em;
+
 }
 
 .table__cell:last-child {
@@ -395,6 +428,11 @@ tr {
   display: inline-block;
   padding: 5px;
   border-radius: 10px;
+  transition: transform 0.3s;
+}
+
+.ticket-title:hover {
+  transform: scale(1.1);
 }
 
 .critical {
@@ -430,6 +468,11 @@ tr {
   color: #000000;
   text-decoration: none;
   border-radius: 10px;
+  transition: transform 0.3s;
+}
+
+.new-ticket-button:hover {
+  transform: scale(1.1);
 }
 
 /* || USERS */
@@ -567,7 +610,7 @@ tr {
   }
 
   .table--projects {
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 3fr 1fr 1fr 1fr 1fr 1fr;
   }
 
   .table--projects__noEdit {
