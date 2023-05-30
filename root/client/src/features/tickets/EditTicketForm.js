@@ -66,6 +66,10 @@ const EditTicketForm = ({ ticket, users }) => {
         await deleteTicket({ id: ticket.id })
     }
 
+    const handleBackClick = () => {
+        navigate(`/dashboard/projects/${projectId}/tickets`)
+    }
+
 
     const created = new Date(ticket.createdAt).toLocaleString('en-US', {
         day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
@@ -125,132 +129,147 @@ const EditTicketForm = ({ ticket, users }) => {
         </button>
     )
 
+    let backButton = (
+        <button
+            className="navigation-link"
+            onClick={handleBackClick}
+        >
+            Back to project
+        </button>
+    )
+
     const editContent = (
-        <div className="ticket-container">
-            <p className={errClass}>{errContent}</p>
+        <>
+            {backButton}
+            <div className="page-container">
+                <p className={errClass}>{errContent}</p>
 
-            <form className="form" onSubmit={e => e.preventDefault()}>
-                <div className="form__title-row">
-                    <h2>Edit Ticket</h2>
-                    <div className="form__action-buttons">
-                        {noteButton}
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            onClick={onSaveTicketClicked}
-                            disabled={!canSave}
-                        >
-                            <FontAwesomeIcon icon={faSave} />
-                        </button>
-                        {deleteButton}
+                <form className="form" onSubmit={e => e.preventDefault()}>
+                    <div className="form__title-row">
+                        <h2>Edit Ticket</h2>
+                        <div className="form__action-buttons">
+                            {noteButton}
+                            <button
+                                className="icon-button"
+                                title="Save"
+                                onClick={onSaveTicketClicked}
+                                disabled={!canSave}
+                            >
+                                <FontAwesomeIcon icon={faSave} />
+                            </button>
+                            {deleteButton}
 
+                        </div>
                     </div>
-                </div>
-                <label className="form__label" htmlFor="note-title">
-                    Title:</label>
-                <input
-                    className={`form__input ${validTitleClass}`}
-                    id="note-title"
-                    name="title"
-                    type="text"
-                    autoComplete="off"
-                    value={title}
-                    onChange={onTitleChanged}
-                />
+                    <label className="form__label" htmlFor="note-title">
+                        Title:</label>
+                    <input
+                        className={`form__input ${validTitleClass}`}
+                        id="note-title"
+                        name="title"
+                        type="text"
+                        autoComplete="off"
+                        value={title}
+                        onChange={onTitleChanged}
+                    />
 
-                <label className="form__label" htmlFor="note-text">
-                    Description:</label>
-                <textarea
-                    className={`form__input form__input--text ${validTextClass}`}
-                    id="note-text"
-                    name="text"
-                    value={text}
-                    onChange={onTextChanged}
-                />
+                    <label className="form__label" htmlFor="note-text">
+                        Description:</label>
+                    <textarea
+                        className={`form__input form__input--text ${validTextClass}`}
+                        id="note-text"
+                        name="text"
+                        value={text}
+                        onChange={onTextChanged}
+                    />
+                    <div className="form__row">
+                        <div className="form__divider">
+                            <label className="form__label form__checkbox-container" htmlFor="note-completed">
+                                WORK COMPLETE:
+                                <input
+                                    className="form__checkbox"
+                                    id="note-completed"
+                                    name="completed"
+                                    type="checkbox"
+                                    checked={completed}
+                                    onChange={onCompletedChanged}
+                                />
+                            </label>
+
+                            <label className="form__label form__checkbox-container" htmlFor="note-username">
+                                ASSIGNED TO:</label>
+                            <select
+                                id="note-username"
+                                name="username"
+                                className="form__select"
+                                value={userId}
+                                onChange={onUserIdChanged}
+                            >
+                                {options}
+                            </select>
+                            <label className="form__label form__checkbox-container" htmlFor="importance">
+                                IMPORTANCE:</label>
+                            <select
+                                id="importance"
+                                name="importance"
+                                className="form__select"
+                                value={importance}
+                                onChange={onImportanceChanged}
+                            >
+                                {statusOptions}
+                            </select>
+                            <label className="form__label form__checkbox-container" htmlFor="comments">
+                                COMMENTS:</label>
+                            <p>List of comments on ticket...(delete)</p>
+                        </div>
+                        <div className="form__divider">
+                            <p>Revision History:</p>
+                            <p>Dropdown list of revisions..</p>
+                            <button>Revert</button>
+                            <p className="form__created">Created:<br />{created}</p>
+                            <p className="form__updated">Last Update:<br />{updated}</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </>
+    )
+
+    const ticketContent = (
+        <>
+            {backButton}
+            <div className="page-container">
+
+                <div className="form__title-row">
+                    <label className="form__label" htmlFor="note-title">
+                        Title:</label>
+                    {ticket.title}
+                    <label className="form__label" htmlFor="note-text">
+                        Description:</label>
+                </div>
                 <div className="form__row">
                     <div className="form__divider">
                         <label className="form__label form__checkbox-container" htmlFor="note-completed">
-                            WORK COMPLETE:
-                            <input
-                                className="form__checkbox"
-                                id="note-completed"
-                                name="completed"
-                                type="checkbox"
-                                checked={completed}
-                                onChange={onCompletedChanged}
-                            />
-                        </label>
-
+                            WORK COMPLETE:</label>
+                        <p>{completed}</p>
                         <label className="form__label form__checkbox-container" htmlFor="note-username">
                             ASSIGNED TO:</label>
-                        <select
-                            id="note-username"
-                            name="username"
-                            className="form__select"
-                            value={userId}
-                            onChange={onUserIdChanged}
-                        >
-                            {options}
-                        </select>
+                        <p>{userId}</p>
                         <label className="form__label form__checkbox-container" htmlFor="importance">
                             IMPORTANCE:</label>
-                        <select
-                            id="importance"
-                            name="importance"
-                            className="form__select"
-                            value={importance}
-                            onChange={onImportanceChanged}
-                        >
-                            {statusOptions}
-                        </select>
+                        <p>{importance}</p>
                         <label className="form__label form__checkbox-container" htmlFor="comments">
                             COMMENTS:</label>
-                        <p>List of comments on ticket...(delete)</p>
+                        <p>List of comments on ticket</p>
                     </div>
                     <div className="form__divider">
-                        <p>Revision History:</p>
-                        <p>Dropdown list of revisions..</p>
-                        <button>Revert</button>
+                        <p>Revision Version: version#</p>
                         <p className="form__created">Created:<br />{created}</p>
                         <p className="form__updated">Last Update:<br />{updated}</p>
                     </div>
                 </div>
-            </form>
-        </div>
-    )
-
-    const ticketContent = (
-        <div className="ticket-container">
-
-            <div className="form__title-row">
-                <label className="form__label" htmlFor="note-title">
-                    Title:</label>
-                {ticket.title}
-                <label className="form__label" htmlFor="note-text">
-                    Description:</label>
             </div>
-            <div className="form__row">
-                <div className="form__divider">
-                    <label className="form__label form__checkbox-container" htmlFor="note-completed">
-                        WORK COMPLETE:</label>
-                    <p>{completed}</p>
-                    <label className="form__label form__checkbox-container" htmlFor="note-username">
-                        ASSIGNED TO:</label>
-                    <p>{userId}</p>
-                    <label className="form__label form__checkbox-container" htmlFor="importance">
-                        IMPORTANCE:</label>
-                    <p>{importance}</p>
-                    <label className="form__label form__checkbox-container" htmlFor="comments">
-                        COMMENTS:</label>
-                    <p>List of comments on ticket</p>
-                </div>
-                <div className="form__divider">
-                    <p>Revision Version: version#</p>
-                    <p className="form__created">Created:<br />{created}</p>
-                    <p className="form__updated">Last Update:<br />{updated}</p>
-                </div>
-            </div>
-        </div>
+        </>
     )
     return (
         <>

@@ -26,6 +26,20 @@
 }
 
 /* || UTILITY CLASSES */
+.navigation-link {
+  color: var(--COLOR);
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: transform 0.2s;
+}
+
+.navigation-link:hover {
+  transform: scale(1.1);
+}
+
 .errmsg {
   display: inline-block;
   background-color: var(--TABLE-BGCOLOR);
@@ -248,6 +262,7 @@ a:focus-visible {
 .sidebar--open p {
   margin-bottom: 50px;
   padding: 8px 12px;
+  border: 1px solid;
   border-radius: 15px;
   background-color: rgba(173, 216, 230, 0.5);
   width: 60%;
@@ -258,6 +273,7 @@ a:focus-visible {
 .sidebar p {
   margin-bottom: 50px;
   padding: 8px 12px;
+  border: 1px solid;
   border-radius: 15px;
   background-color: rgba(173, 216, 230, 0.5);
   width: 60%;
@@ -354,21 +370,8 @@ tr {
   background-color: var(--INACTIVE);
 }
 
-/* ||  NOTE */
+/* ||  TICKET */
 
-.ticket-container {
-  width: 60%;
-  /* Adjust the width as needed */
-  margin: 0 auto;
-  /* Center the component horizontally */
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-  /* Add a box shadow for a 3D effect */
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
 
 .note__created,
 .note__updated,
@@ -430,14 +433,31 @@ tr {
   border-radius: 10px;
 }
 
+/* || USERS */
+
+
+
 
 /* || FORM - GENERAL */
+.page-container {
+  width: 60%;
+  margin: 0 auto;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  /* Add a box shadow for a 3D effect */
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
 
 .form {
+  width: 75%;
   display: flex;
   flex-flow: column nowrap;
   gap: 0.75em;
   max-width: 800px;
+  padding-bottom: 20px;
 }
 
 .form__checkbox-container {

@@ -91,6 +91,10 @@ const EditUserForm = ({ user, projects, tickets }) => {
         await deleteUser({ id: user.id })
     }
 
+    const handleBackClick = () => {
+        navigate('/dashboard/users')
+    }
+
     const options = Object.values(ROLES).map((role) => (
         <label key={role} className="checkbox-label">
             <input
@@ -143,70 +147,83 @@ const EditUserForm = ({ user, projects, tickets }) => {
         )
     }
 
+    let backButton = (
+        <button
+            className="navigation-link"
+            onClick={handleBackClick}
+        >
+            User Settings
+        </button>
+    )
+
+
     const content = (
         <>
-            <p className={errClass}>{errContent}</p>
-            <form className="form" onSubmit={e => e.preventDefault()}>
-                <div className="form__title-row">
-                    <h2>Edit User</h2>
-                    <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            onClick={onSaveUserClicked}
-                            disabled={!canSave}
-                        >
-                            <FontAwesomeIcon icon={faSave} />
-                        </button>
-                        {deleteButton}
+            {backButton}
+            <div className="page-container">
+                <p className={errClass}>{errContent}</p>
+                <form className="form" onSubmit={e => e.preventDefault()}>
+                    <div className="form__title-row">
+                        <h2>Edit User</h2>
+                        <div className="form__action-buttons">
+                            <button
+                                className="icon-button"
+                                title="Save"
+                                onClick={onSaveUserClicked}
+                                disabled={!canSave}
+                            >
+                                <FontAwesomeIcon icon={faSave} />
+                            </button>
+                            {deleteButton}
+                        </div>
                     </div>
-                </div>
-                <label className="form__label" htmlFor="username">
-                    Username: <span className="nowrap">[3-20 letter]</span>
-                </label>
-                <input
-                    className={`form__input ${validUserClass}`}
-                    id="username"
-                    name="username"
-                    type="text"
-                    autoComplete="off"
-                    value={username}
-                    onChange={onUsernameChanged}
-                />
-                <label className="form__label" htmlFor="password">
-                    Password: <span className="nowrap">[empty = no change]</span> <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
-                <input
-                    className={`form__input ${validPwdClass}`}
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={onPasswordChanged}
-                />
-
-                <label className="form__label form__checkbox-container" htmlFor="user-active">
-                    ACTIVE:
+                    <label className="form__label" htmlFor="username">
+                        Username: <span className="nowrap">[3-20 letter]</span>
+                    </label>
                     <input
-                        className="form__checkbox"
-                        id="user-active"
-                        name="user-active"
-                        type="checkbox"
-                        checked={active}
-                        onChange={onActiveChanged}
+                        className={`form__input ${validUserClass}`}
+                        id="username"
+                        name="username"
+                        type="text"
+                        autoComplete="off"
+                        value={username}
+                        onChange={onUsernameChanged}
                     />
-                </label>
+                    <label className="form__label" htmlFor="password">
+                        Password: <span className="nowrap">[empty = no change]</span> <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
+                    <input
+                        className={`form__input ${validPwdClass}`}
+                        id="password"
+                        name="password"
+                        type="password"
+                        value={password}
+                        onChange={onPasswordChanged}
+                    />
 
-                <label className="form__label" htmlFor="roles">
-                    ASSIGNED ROLES:
-                </label>
-                {options}
+                    <label className="form__label form__checkbox-container" htmlFor="user-active">
+                        ACTIVE:
+                        <input
+                            className="form__checkbox"
+                            id="user-active"
+                            name="user-active"
+                            type="checkbox"
+                            checked={active}
+                            onChange={onActiveChanged}
+                        />
+                    </label>
 
-                <label className="form__label" htmlFor="projects">
-                    ASSIGNED PROJECTS:
-                </label>
-                {projectOptions}
+                    <label className="form__label" htmlFor="roles">
+                        ASSIGNED ROLES:
+                    </label>
+                    {options}
 
-            </form>
+                    <label className="form__label" htmlFor="projects">
+                        ASSIGNED PROJECTS:
+                    </label>
+                    {projectOptions}
+
+                </form>
+            </div>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
                     <p>User has tickets open in that project!</p>

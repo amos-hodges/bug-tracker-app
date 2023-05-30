@@ -49,6 +49,9 @@ const EditProjectForm = ({ project, tickets, users }) => {
         await deleteProject({ id: project.id })
     }
 
+    const handleBackClick = () => {
+        navigate('/dashboard')
+    }
 
     const created = new Date(project.createdAt).toLocaleString('en-US', {
         day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
@@ -80,53 +83,66 @@ const EditProjectForm = ({ project, tickets, users }) => {
         )
     }
 
+    let backButton = (
+        <button
+            className="navigation-link"
+            onClick={handleBackClick}
+        >
+            Back to Projects
+        </button>
+    )
+
+
     const content = (
         <>
-            <p className={errClass}>{errContent}</p>
+            {backButton}
+            <div className="page-container">
+                <p className={errClass}>{errContent}</p>
 
-            <form className="form" onSubmit={e => e.preventDefault()}>
-                <div className="form__title-row">
-                    <h2>Edit "{project.title}"</h2>
-                    <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            onClick={onSaveProjectClicked}
-                            disabled={!canSave}
-                        >
-                            <FontAwesomeIcon icon={faSave} />
-                        </button>
-                        {deleteButton}
+                <form className="form" onSubmit={e => e.preventDefault()}>
+                    <div className="form__title-row">
+                        <h2>Edit "{project.title}"</h2>
+                        <div className="form__action-buttons">
+                            <button
+                                className="icon-button"
+                                title="Save"
+                                onClick={onSaveProjectClicked}
+                                disabled={!canSave}
+                            >
+                                <FontAwesomeIcon icon={faSave} />
+                            </button>
+                            {deleteButton}
+                        </div>
                     </div>
-                </div>
-                <label className="form__label" htmlFor="note-title">
-                    Title:</label>
-                <input
-                    className={`form__input ${validTitleClass}`}
-                    id="note-title"
-                    name="title"
-                    type="text"
-                    autoComplete="off"
-                    value={title}
-                    onChange={onTitleChanged}
-                />
+                    <label className="form__label" htmlFor="note-title">
+                        Title:</label>
+                    <input
+                        className={`form__input ${validTitleClass}`}
+                        id="note-title"
+                        name="title"
+                        type="text"
+                        autoComplete="off"
+                        value={title}
+                        onChange={onTitleChanged}
+                    />
 
-                <label className="form__label" htmlFor="note-text">
-                    Project Description:</label>
-                <textarea
-                    className={`form__input form__input--text ${validDescriptionClass}`}
-                    id="note-text"
-                    name="text"
-                    value={description}
-                    onChange={onDescriptionChanged}
-                />
+                    <label className="form__label" htmlFor="note-text">
+                        Project Description:</label>
+                    <textarea
+                        className={`form__input form__input--text ${validDescriptionClass}`}
+                        id="note-text"
+                        name="text"
+                        value={description}
+                        onChange={onDescriptionChanged}
+                    />
 
-                <div className="form__divider">
-                    <p className="form__created">Created:<br />{created}</p>
-                    <p className="form__updated">Updated:<br />{updated}</p>
-                </div>
+                    <div className="form__divider">
+                        <p className="form__created">Created:<br />{created}</p>
+                        <p className="form__updated">Updated:<br />{updated}</p>
+                    </div>
 
-            </form>
+                </form>
+            </div>
         </>
     )
 
