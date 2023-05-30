@@ -11,6 +11,8 @@ const EditTicketForm = ({ ticket, users }) => {
 
     const { projectId } = useParams()
 
+    const noProject = (projectId === 'all')
+
     const [updateTicket, {
         isLoading,
         isSuccess,
@@ -273,7 +275,7 @@ const EditTicketForm = ({ ticket, users }) => {
     )
     return (
         <>
-            {(isAdmin || isManager || ticket.user === currentUser) ? editContent : ticketContent}
+            {!noProject && (isAdmin || isManager || ticket.user === currentUser) ? editContent : ticketContent}
         </>
     )
 
