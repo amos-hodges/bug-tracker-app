@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useGetUsersQuery } from './usersApiSlice'
 import { memo } from 'react'
 
+//eventually add sorting by user or project, add "connect" button to initaite message
 const User = ({ userId }) => {
     const { user } = useGetUsersQuery('usersList', {
         selectFromResult: ({ data }) => ({

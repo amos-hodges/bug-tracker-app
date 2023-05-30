@@ -61,7 +61,6 @@ const EditProjectForm = ({ project, tickets, users }) => {
     })
 
 
-
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
     const validDescriptionClass = !description ? "form__input--incomplete" : ''

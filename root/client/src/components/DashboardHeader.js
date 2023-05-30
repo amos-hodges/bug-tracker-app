@@ -16,7 +16,8 @@ import useAuth from '../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
 
 const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
-const TICKETS_REGEX = /^\/dashboard\/projects\/\w+\/tickets(\/)?$/
+//const TICKETS_REGEX = /^\/dashboard\/projects\/\w+\/tickets(\/)?$/
+const TICKETS_REGEX = /^\/dashboard\/projects\/(?!all\b)\w+\/tickets(\/)?$/
 const USERS_REGEX = /^\/dashboard\/users(\/)?$/
 //DISPLAY THE CURRENT PROJECT IN THE HEADER
 const DashboardHeader = ({ toggleSidebar }) => {

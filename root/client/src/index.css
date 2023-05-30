@@ -356,7 +356,7 @@ tr {
 .table__th,
 .table__cell {
   background-color: var(--TABLE-BGCOLOR);
-  text-align: left;
+  text-align: center;
   border: 1px solid var(--TABLE-COLOR);
   padding: 0.5em;
 }
@@ -392,10 +392,10 @@ tr {
 }
 
 .ticket-title {
+  width: 90%;
   display: inline-block;
-  /* padding: 5px 10px;
-  border-radius: 10px; */
-  /* font-weight: bold; */
+  padding: 5px;
+  border-radius: 10px;
 }
 
 .critical {
@@ -563,8 +563,8 @@ tr {
     grid-template-columns: 1fr 2fr;
   }
 
-  .table--notes {
-    grid-template-columns: repeat(3, 1fr) 2fr repeat(2, 1fr);
+  .table--tickets {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
   .table--projects {
