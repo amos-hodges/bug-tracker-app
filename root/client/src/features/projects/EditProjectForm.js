@@ -67,8 +67,6 @@ const EditProjectForm = ({ project, tickets, users }) => {
 
     const associatedUsers = users.some(user => user.projects.includes(project.id))
 
-    console.log(associatedUsers)
-
     let deleteButton = null
     if (!tickets?.length && !associatedUsers && isAdmin) {
         deleteButton = (

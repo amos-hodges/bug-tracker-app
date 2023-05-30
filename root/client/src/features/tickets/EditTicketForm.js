@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { useUpdateTicketMutation, useDeleteTicketMutation } from './ticketsApiSlice'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faTrashCan, faCommentMedical } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../hooks/useAuth'
 import { STATUS } from '../../config/statuses'
 
 const EditTicketForm = ({ ticket, users }) => {
-    const { isManager, isAdmin } = useAuth()
+    const { userId: currentUser, isManager, isAdmin } = useAuth()
 
     const { projectId } = useParams()
 
@@ -49,6 +49,11 @@ const EditTicketForm = ({ ticket, users }) => {
     const onUserIdChanged = e => setUserId(e.target.value)
 
     const canSave = [title, text, importance, userId].every(Boolean) && !isLoading
+
+    const onNewNoteClicked = () => {
+        //add a note once ticket model has been updated to accomodate
+        console.log('adding new note')
+    }
 
 
     const onSaveTicketClicked = async (e) => {
@@ -97,7 +102,7 @@ const EditTicketForm = ({ ticket, users }) => {
     const validTextClass = !text ? "form__input--incomplete" : ''
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
-    console.log(errContent)
+
     let deleteButton = null
     if ((isManager || isAdmin) && ticket.completed) {
         deleteButton = (
@@ -110,15 +115,25 @@ const EditTicketForm = ({ ticket, users }) => {
             </button>
         )
     }
+    let noteButton = (
+        <button
+            className="icon-button"
+            title="NewNote"
+            onClick={onNewNoteClicked}
+        >
+            <FontAwesomeIcon icon={faCommentMedical} />
+        </button>
+    )
 
-    const content = (
-        <>
+    const editContent = (
+        <div className="ticket-container">
             <p className={errClass}>{errContent}</p>
 
             <form className="form" onSubmit={e => e.preventDefault()}>
                 <div className="form__title-row">
-                    <h2>Edit Ticket #{ticket.ticket_num}</h2>
+                    <h2>Edit Ticket</h2>
                     <div className="form__action-buttons">
+                        {noteButton}
                         <button
                             className="icon-button"
                             title="Save"
@@ -128,6 +143,7 @@ const EditTicketForm = ({ ticket, users }) => {
                             <FontAwesomeIcon icon={faSave} />
                         </button>
                         {deleteButton}
+
                     </div>
                 </div>
                 <label className="form__label" htmlFor="note-title">
@@ -143,7 +159,7 @@ const EditTicketForm = ({ ticket, users }) => {
                 />
 
                 <label className="form__label" htmlFor="note-text">
-                    Text:</label>
+                    Description:</label>
                 <textarea
                     className={`form__input form__input--text ${validTextClass}`}
                     id="note-text"
@@ -187,17 +203,62 @@ const EditTicketForm = ({ ticket, users }) => {
                         >
                             {statusOptions}
                         </select>
+                        <label className="form__label form__checkbox-container" htmlFor="comments">
+                            COMMENTS:</label>
+                        <p>List of comments on ticket...(delete)</p>
                     </div>
                     <div className="form__divider">
+                        <p>Revision History:</p>
+                        <p>Dropdown list of revisions..</p>
+                        <button>Revert</button>
                         <p className="form__created">Created:<br />{created}</p>
-                        <p className="form__updated">Updated:<br />{updated}</p>
+                        <p className="form__updated">Last Update:<br />{updated}</p>
                     </div>
                 </div>
             </form>
+        </div>
+    )
+
+    const ticketContent = (
+        <div className="ticket-container">
+
+            <div className="form__title-row">
+                <label className="form__label" htmlFor="note-title">
+                    Title:</label>
+                {ticket.title}
+                <label className="form__label" htmlFor="note-text">
+                    Description:</label>
+            </div>
+            <div className="form__row">
+                <div className="form__divider">
+                    <label className="form__label form__checkbox-container" htmlFor="note-completed">
+                        WORK COMPLETE:</label>
+                    <p>{completed}</p>
+                    <label className="form__label form__checkbox-container" htmlFor="note-username">
+                        ASSIGNED TO:</label>
+                    <p>{userId}</p>
+                    <label className="form__label form__checkbox-container" htmlFor="importance">
+                        IMPORTANCE:</label>
+                    <p>{importance}</p>
+                    <label className="form__label form__checkbox-container" htmlFor="comments">
+                        COMMENTS:</label>
+                    <p>List of comments on ticket</p>
+                </div>
+                <div className="form__divider">
+                    <p>Revision Version: version#</p>
+                    <p className="form__created">Created:<br />{created}</p>
+                    <p className="form__updated">Last Update:<br />{updated}</p>
+                </div>
+            </div>
+        </div>
+    )
+    return (
+        <>
+            {(isAdmin || isManager || ticket.user === currentUser) ? editContent : ticketContent}
         </>
     )
 
-    return content
+    //return editContent
 }
 
 
