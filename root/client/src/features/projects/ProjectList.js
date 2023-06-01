@@ -62,24 +62,22 @@ const ProjectList = () => {
 
 
         content = (
-            <div className="list-container">
-                <table className={tableClass}>
-                    <thead className="table__thead">
-                        <tr>
-                            <th scope="col" className="table__th note__title">Project</th>
-                            <th scope="col" className="table__th note__title">Description</th>
-                            <th scope="col" className="table__th note__title">Created</th>
-                            <th scope="col" className="table__th note__title">Last Update</th>
-                            <th scope="col" className="table__th note__title">Tickets</th>
-                            <th scope="col" className="table__th note__title">Active Employees</th>
-                            {editColumn}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tableContent}
-                    </tbody>
-                </table>
-            </div>
+            <table className={tableClass}>
+                <thead className="table__thead">
+                    <tr>
+                        <th scope="col" className="table__th note__title">Project</th>
+                        <th scope="col" className="table__th note__title">Description</th>
+                        <th scope="col" className="table__th note__title">Created</th>
+                        <th scope="col" className="table__th note__title">Last Update</th>
+                        <th scope="col" className="table__th note__title">Tickets</th>
+                        <th scope="col" className="table__th note__title">Active Employees</th>
+                        {editColumn}
+                    </tr>
+                </thead>
+                <tbody>
+                    {tableContent}
+                </tbody>
+            </table>
         )
     }
     return content
