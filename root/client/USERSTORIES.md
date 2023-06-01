@@ -54,3 +54,4 @@ Extra feature ideas:
 - [ ] Notifications are emailed to users
 - [ ] See who is online/active
 - [ ] Chat functionality between users
+- [ ] test
