@@ -18,15 +18,17 @@ Bug Tracking App User Stories
 - [ ] Tickets can be maximized to there own page, where comments can be made and history viewed
 - [x] Tickets have all relevant info (description, status, importance, creator, timestamps, project, etc.)
 - [x] Tickets can be created, modified
-- [ ] Create ticket button floats over tickets page
-- [ ] Tickets can be closed/deleted (only deleted by managers after it has been closed)
+- [x] Create ticket button floats over tickets page
+- [x] Tickets can be closed/deleted (only deleted by managers after it has been closed)
 - [ ] Tickets can be sorted by categories from within the dashboard
 - [ ] Each data type will have a search option from its respective page (search tickets from project ticket, users from user settings, etc.)
 - [ ] Each ticket will have a history, available before & after it is closed
 - [ ] Users have options to navigate to different pages from the dashboard via sidebar
-    - [ ] Assignments - this is where employees can view tickets assigned to them, managers can see what is assigned to everybody & make modifications
-    - [ ] Projects - Employees see their projects. Managers can modify who is working in each project
-    - [ ] Team members - employees see who they are working with & their assignments, managers can add/remove active members from projects, admin can add/remove users entirely
+    - [x] Tickets - this is where employees can view all tickets for their projects, managers can see what is assigned to everybody & make modifications
+    - [x] Projects - Employees see their projects. Managers can modify who is working in each project
+    - [x] Team members - employees see who they are working with & their assignments, managers can add/remove active members from projects, admin can add/remove users entirely
+    - [ ] Profile - Users can customize various aspects of their profile, reset password etc
+    - [ ] Settings - Users can change settings related to app functionality (font size, theme, notifications etc..)
 - [ ] There will be a notification system available to each user type on the dashboard (click notification icon displays list of notifications)
 - [ ] Each user type will recieve different types/levels of notifications
     - [ ] Admin - Requests to add/modify/remove employees & privelege, changes made to teams, password changes
