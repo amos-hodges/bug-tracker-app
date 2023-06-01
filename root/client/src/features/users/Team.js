@@ -72,21 +72,23 @@ const Team = () => {
                 <div className="form__title-row">
                     <h2>My Teams</h2>
                 </div>
-                <table className="table table--team">
-                    <thead className="table__head">
-                        <tr>
-                            <th scope="col" className="table__th user__username">
-                                User
-                            </th>
-                            <th scope="col" className="table__th user__roles">
-                                Shared Projects
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tableContent}
-                    </tbody>
-                </table>
+                <div className="list-container">
+                    <table className="table table--team">
+                        <thead className="table__head">
+                            <tr>
+                                <th scope="col" className="table__th user__username">
+                                    User
+                                </th>
+                                <th scope="col" className="table__th user__roles">
+                                    Shared Projects
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tableContent}
+                        </tbody>
+                    </table>
+                </div >
             </>
         )
     }

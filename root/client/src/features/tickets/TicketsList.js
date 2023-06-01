@@ -49,9 +49,7 @@ const TicketsList = () => {
 
         //Ticket needs additional field for the project it belongs to, which is displayed if the tickets aren't filtered
         content = (
-            <>
-
-
+            <div className="list-container">
                 <table className="table table--tickets">
                     <thead className="table__thead">
                         <tr>
@@ -69,7 +67,7 @@ const TicketsList = () => {
                 {(projectId !== 'all') && <Link to={`/dashboard/projects/${projectId}/tickets/new`} className="new-ticket-button">
                     New Ticket
                 </Link >}
-            </>
+            </div>
         )
     }
 
