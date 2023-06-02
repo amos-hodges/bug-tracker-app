@@ -60,7 +60,7 @@ function App() {
                   <Route path=":projectId/tickets/:ticketId" element={<EditTicket />} />
                 </Route>
 
-                <Route path="team" element={<Team />} />
+                <Route path="team/:projectId" element={<Team />} />
                 <Route path="profile" element={<UserProfile />} />
                 <Route path="settings" element={<UserSettings />} />
 

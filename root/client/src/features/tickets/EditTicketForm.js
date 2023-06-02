@@ -136,7 +136,7 @@ const EditTicketForm = ({ ticket, users }) => {
             className="navigation-link"
             onClick={handleBackClick}
         >
-            Back to project
+            Back
         </button>
     )
 

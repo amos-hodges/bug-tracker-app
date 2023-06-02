@@ -386,6 +386,13 @@ tr {
 
 /* ||  TICKET */
 
+.employees-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
 .note__created,
 .note__updated,
 .note__username {

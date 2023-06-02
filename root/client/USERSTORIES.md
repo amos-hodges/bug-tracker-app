@@ -47,6 +47,7 @@ Bug Tracking App User Stories
 
 Nice to have:
 - [ ] Different ways to display tickets on dashboard (list, grid, carousel, etc.)
+- [ ] Profile pictures on users list
 - [ ] Message boards for specific projects
 - [ ] Users can customize profile and display preferences (e.g. dark mode, larger text, etc)
 
@@ -54,4 +55,3 @@ Extra feature ideas:
 - [ ] Notifications are emailed to users
 - [ ] See who is online/active
 - [ ] Chat functionality between users
-- [x] we're good

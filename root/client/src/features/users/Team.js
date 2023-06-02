@@ -2,9 +2,12 @@ import PulseLoader from 'react-spinners/PulseLoader'
 import { useGetUsersQuery } from './usersApiSlice'
 import { useGetProjectsQuery } from '../projects/projectsApiSlice'
 import useAuth from '../../hooks/useAuth'
+import { useParams } from 'react-router-dom'
 
 const Team = () => {
     const { userId } = useAuth()
+
+    const { projectId } = useParams()
 
     const { data: projects,
         isLoading: isProjectLoading,
@@ -45,28 +48,42 @@ const Team = () => {
         const { entities } = users
         const currentUser = entities[userId]
 
-        //figure out beter formatting, links to projects, add message button
-        const tableContent = Object.values(entities)
-            .filter((user) => user.id !== currentUser.id) // Exclude current user
-            .map((user) => {
+        let tableContent
 
-                const sharedProjects = projects.ids.filter((projectId) =>
-                    user.projects.some((userProjectId) => userProjectId === projectId)
-                )
+        if (projectId === 'all') {
 
-                return sharedProjects?.length ? (
+            //figure out beter formatting, links to projects, add message button
+            tableContent = Object.values(entities)
+                .filter((user) => user.id !== currentUser.id) // Exclude current user
+                .map((user) => {
+
+                    const sharedProjects = projects.ids.filter((projectId) =>
+                        user.projects.some((userProjectId) => userProjectId === projectId)
+                    )
+
+                    return sharedProjects?.length ? (
+                        <tr key={user.id}>
+                            <td className="table__cell">{user.username}</td>
+                            <td className="table__cell">
+                                {sharedProjects.map((projectId) => {
+                                    const project = projects.entities[projectId]
+                                    return <span key={project.id}>{project.title}</span>
+                                })}
+                            </td>
+                        </tr>
+                    ) : null;
+                })
+        } else {
+            const project = projects.entities[projectId]
+            tableContent = Object.values(entities)
+                .filter((user) => user.projects.includes(projectId) && user.id !== userId)
+                .map((user) => (
                     <tr key={user.id}>
                         <td className="table__cell">{user.username}</td>
-                        <td className="table__cell">
-                            {sharedProjects.map((projectId) => {
-                                const project = projects.entities[projectId]
-                                return <span key={project.id}>{project.title}</span>
-                            })}
-                        </td>
+                        <td className="table__cell">{project.title}</td>
                     </tr>
-                ) : null;
-            })
-
+                ))
+        }
         content = (
             <>
                 <div className="form__title-row">

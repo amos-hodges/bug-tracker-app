@@ -42,6 +42,7 @@ const Project = ({ projectId, hideEdit }) => {
 
         const handleEdit = () => navigate(`/dashboard/projects/${projectId}`)
         const handleTitleClick = () => navigate(`/dashboard/projects/${projectId}/tickets`)
+        const handleEmployeesClicked = () => navigate(`/dashboard/team/${projectId}`)
         //**********update CSS classes
         return (
             <tr className="table__row">
@@ -56,7 +57,12 @@ const Project = ({ projectId, hideEdit }) => {
                 <td className="table__cell note__created">{created}</td>
                 <td className="table__cell note__updated">{updated}</td>
                 <td className="table__cell note__updated">{ticketsCount}</td>
-                <td className="table__cell note__updated">{usersCount}</td>
+                <td className="table__cell">
+                    {usersCount}
+                    <button className="employees-button" onClick={handleEmployeesClicked}>
+                        View Team
+                    </button>
+                </td>
 
                 {hideEdit && <td className="table__cell">
                     <button
