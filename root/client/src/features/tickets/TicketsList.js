@@ -24,6 +24,7 @@ const TicketsList = () => {
     })
 
     let content
+    let projTitle
 
     if (isLoading) content = <PulseLoader color={"#FFF"} />
 
@@ -47,27 +48,35 @@ const TicketsList = () => {
             ? ids?.length && filteredIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
             : ids.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
 
+        if (filteredIds.length > 0) {
+            const firstTicket = entities[filteredIds[0]];
+            projTitle = firstTicket.projectTitle;
+        }
+
         //Ticket needs additional field for the project it belongs to, which is displayed if the tickets aren't filtered
         content = (
-            <div className="list-container">
-                <table className="table table--tickets">
-                    <thead className="table__thead">
-                        <tr>
-                            <th scope="col" className="table__th note__title">Title</th>
-                            <th scope="col" className="table__th note__username">Owner</th>
-                            <th scope="col" className="table__th note__status">Status</th>
+            <>
+                <h1>{projTitle}</h1>
+                <div className="list-container">
+                    <table className="table table--tickets">
+                        <thead className="table__thead">
+                            <tr>
+                                <th scope="col" className="table__th note__title">Title</th>
+                                <th scope="col" className="table__th note__username">Owner</th>
+                                <th scope="col" className="table__th note__status">Status</th>
 
-                            <th scope="col" className="table__th note__updated">Updated</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tableContent}
-                    </tbody>
-                </table>
-                {(projectId !== 'all') && <Link to={`/dashboard/projects/${projectId}/tickets/new`} className="new-ticket-button">
-                    New Ticket
-                </Link >}
-            </div>
+                                <th scope="col" className="table__th note__updated">Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tableContent}
+                        </tbody>
+                    </table>
+                    {(projectId !== 'all') && <Link to={`/dashboard/projects/${projectId}/tickets/new`} className="new-ticket-button">
+                        New Ticket
+                    </Link >}
+                </div>
+            </>
         )
     }
 

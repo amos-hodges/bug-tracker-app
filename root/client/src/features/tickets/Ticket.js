@@ -13,7 +13,7 @@ const Ticket = ({ ticketId }) => {
             ticket: data?.entities[ticketId]
         })
     })
-    console.log(ticket.projectTitle)
+
     const { projectId } = useParams()
 
     const navigate = useNavigate()
