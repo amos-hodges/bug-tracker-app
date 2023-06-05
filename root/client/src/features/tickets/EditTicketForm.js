@@ -256,7 +256,7 @@ const EditTicketForm = ({ ticket, users }) => {
                         <p>{completed}</p>
                         <label className="form__label form__checkbox-container" htmlFor="note-username">
                             ASSIGNED TO:</label>
-                        <p>{userId}</p>
+                        <p>{ticket.username}</p>
                         <label className="form__label form__checkbox-container" htmlFor="importance">
                             IMPORTANCE:</label>
                         <p>{importance}</p>
