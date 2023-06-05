@@ -3,6 +3,7 @@ import User from './User'
 import PulseLoader from 'react-spinners/PulseLoader'
 
 const UsersList = () => {
+
     const {
         data: users,
         isLoading,
@@ -28,7 +29,6 @@ const UsersList = () => {
         const { ids } = users
 
         const tableContent = ids?.length && ids.map(userId => <User key={userId} userId={userId} />)
-
 
         content = (
             <>

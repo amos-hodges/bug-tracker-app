@@ -6,6 +6,7 @@ import { memo } from 'react'
 
 //eventually add sorting by user or project, add "connect" button to initaite message
 const User = ({ userId }) => {
+
     const { user } = useGetUsersQuery('usersList', {
         selectFromResult: ({ data }) => ({
             user: data?.entities[userId]
@@ -21,7 +22,7 @@ const User = ({ userId }) => {
         const userRolesString = user.roles.toString().replaceAll(',', ', ')
 
         const cellStatus = user.active ? '' : 'table__cell--inactive'
-
+        //eventually displayt profile pic next to usernames
         return (
             <tr className="table__row user">
                 <td className={`table__cell ${cellStatus}`}>{user.username}</td>

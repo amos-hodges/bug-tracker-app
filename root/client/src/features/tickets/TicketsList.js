@@ -9,7 +9,6 @@ const TicketsList = () => {
 
     const { projectId } = useParams()
 
-
     const {
         data: tickets,
         isLoading,
@@ -48,20 +47,26 @@ const TicketsList = () => {
             ? ids?.length && filteredIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
             : ids.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
 
+        const tableClass = (projectId !== 'all')
+            ? "table table--tickets"
+            : "table table--tickets__all"
+
         if (filteredIds.length > 0) {
             const firstTicket = entities[filteredIds[0]];
             projTitle = firstTicket.projectTitle;
         }
+        console.log(tableClass)
 
         //Ticket needs additional field for the project it belongs to, which is displayed if the tickets aren't filtered
         content = (
             <>
                 <h1>{projTitle}</h1>
                 <div className="list-container">
-                    <table className="table table--tickets">
+                    <table className={tableClass}>
                         <thead className="table__thead">
                             <tr>
                                 <th scope="col" className="table__th note__title">Title</th>
+                                {projectId === 'all' && (<th scope="col" className="table__th note__title">Project</th>)}
                                 <th scope="col" className="table__th note__username">Owner</th>
                                 <th scope="col" className="table__th note__status">Status</th>
 

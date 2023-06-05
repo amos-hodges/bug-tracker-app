@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGetTicketsQuery } from './ticketsApiSlice'
 import { memo } from 'react'
@@ -34,7 +32,9 @@ const Ticket = ({ ticketId }) => {
                         {ticket.title}
                     </button>
                 </td>
-
+                {projectId === 'all' && (
+                    <td className="table__cell note__project-title">{ticket.projectTitle}</td>
+                )}
                 <td className="table__cell note__username">{ticket.username}</td>
                 <td className="table__cell note__status">
                     {ticket.completed

@@ -6,7 +6,6 @@ import PulseLoader from 'react-spinners/PulseLoader'
 
 const ProjectList = () => {
 
-
     const { userId, isManager, isAdmin } = useAuth()
 
     const { user } = useGetUsersQuery('usersList', {

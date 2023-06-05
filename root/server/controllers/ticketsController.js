@@ -1,6 +1,6 @@
 const User = require('../models/User')
 const Ticket = require('../models/Ticket')
-
+const Project = require('../models/Project')
 
 // @desc Get all tickets
 // @route GET /tickets
@@ -14,11 +14,12 @@ const getAllTickets = async (req, res) => {
         return res.status(400).json({ message: 'No tickets found' })
     }
 
-    const ticketsWithUser = await Promise.all(tickets.map(async (ticket) => {
+    const ticketsWithUserAndProject = await Promise.all(tickets.map(async (ticket) => {
         const user = await User.findById(ticket.user).lean().exec()
-        return { ...ticket, username: user.username }
+        const project = await Project.findById(ticket.project).lean().exec()
+        return { ...ticket, username: user.username, projectTitle: project.title }
     }))
-    res.json(ticketsWithUser)
+    res.json(ticketsWithUserAndProject)
 }
 
 // @desc Create a new ticket
