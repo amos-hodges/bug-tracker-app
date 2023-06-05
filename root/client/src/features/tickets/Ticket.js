@@ -18,12 +18,18 @@ const Ticket = ({ ticketId }) => {
 
     if (ticket) {
 
-        const updated = new Date(ticket.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', })
+        const updated = new Date(ticket.updatedAt).toLocaleString('en-US', {
+            day: 'numeric',
+            month: 'long',
+            hour: 'numeric',
+            minute: 'numeric',
+        })
 
         const handleOpen = () => navigate(`/dashboard/projects/${projectId}/tickets/${ticketId}`)
 
         return (
             <tr className="table__row">
+
                 <td className={`table__cell`}>
                     <button
                         className={`ticket-title ${ticket.importance.toLowerCase()}`}
@@ -32,10 +38,13 @@ const Ticket = ({ ticketId }) => {
                         {ticket.title}
                     </button>
                 </td>
+
                 {projectId === 'all' && (
                     <td className="table__cell note__project-title">{ticket.projectTitle}</td>
                 )}
+
                 <td className="table__cell note__username">{ticket.username}</td>
+
                 <td className="table__cell note__status">
                     {ticket.completed
                         ? <span className="note__status--completed">Completed</span>

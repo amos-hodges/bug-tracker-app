@@ -55,9 +55,7 @@ const TicketsList = () => {
             const firstTicket = entities[filteredIds[0]];
             projTitle = firstTicket.projectTitle;
         }
-        console.log(tableClass)
 
-        //Ticket needs additional field for the project it belongs to, which is displayed if the tickets aren't filtered
         content = (
             <>
                 <h1>{projTitle}</h1>

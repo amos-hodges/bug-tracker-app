@@ -1,4 +1,5 @@
 import { useGetUsersQuery } from './usersApiSlice'
+import { Link } from 'react-router-dom'
 import User from './User'
 import PulseLoader from 'react-spinners/PulseLoader'
 
@@ -46,6 +47,9 @@ const UsersList = () => {
                                 <th scope="col" className="table__th user__roles">
                                     Roles
                                 </th>
+                                <th scope="col" className="table__th user__roles">
+                                    Current Projects
+                                </th>
                                 <th scope="col" className="table__th user__edit">
                                     Edit
                                 </th>
@@ -55,6 +59,9 @@ const UsersList = () => {
                             {tableContent}
                         </tbody>
                     </table>
+                    <Link to={'/dashboard/users/new'} className="new-ticket-button">
+                        New User
+                    </Link >
                 </div>
             </>
         )

@@ -2,10 +2,10 @@ import PulseLoader from 'react-spinners/PulseLoader'
 import { useGetUsersQuery } from './usersApiSlice'
 import { useGetProjectsQuery } from '../projects/projectsApiSlice'
 import useAuth from '../../hooks/useAuth'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 const Team = () => {
-    const { userId } = useAuth()
+    const { userId, isAdmin, isManager } = useAuth()
 
     const { projectId } = useParams()
 
@@ -105,6 +105,9 @@ const Team = () => {
                             {tableContent}
                         </tbody>
                     </table>
+                    {(isAdmin || isManager) && <Link to={'/dashboard/users'} className="new-ticket-button">
+                        Add User to Project
+                    </Link >}
                 </div >
             </>
         )

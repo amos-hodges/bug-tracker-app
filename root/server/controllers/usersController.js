@@ -1,16 +1,30 @@
 const User = require('../models/User')
 const Ticket = require('../models/Ticket')
+const Project = require('../models/Project')
 const bcrypt = require('bcrypt')
 
 // @desc Get all user
 // @route GET /users
 // @access Private
 const getAllUsers = async (req, res) => {
+
     const users = await User.find().select('-password').lean()
     if (!users?.length) {
         return res.status(400).json({ message: 'No users found' })
     }
-    res.json(users)
+
+    const usersWithProjects = await Promise.all(users.map(async (user) => {
+        //retrive project titles without modifying user.projects array
+        const projectTitles = await Project.find(
+            { _id: { $in: user.projects } },
+            'title'
+        ).lean();
+
+        return { ...user, projectTitles: projectTitles.map((project) => project.title) };
+    }))
+
+    res.json(usersWithProjects)
+
 }
 
 // @desc Create new user

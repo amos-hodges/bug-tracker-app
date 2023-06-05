@@ -20,6 +20,9 @@ const User = ({ userId }) => {
         const handleEdit = () => navigate(`/dashboard/users/${userId}`)
 
         const userRolesString = user.roles.toString().replaceAll(',', ', ')
+        const userProjectsString = user.projectTitles.length
+            ? user.projectTitles.toString().replaceAll(',', ', ')
+            : 'None'
 
         const cellStatus = user.active ? '' : 'table__cell--inactive'
         //eventually displayt profile pic next to usernames
@@ -27,6 +30,8 @@ const User = ({ userId }) => {
             <tr className="table__row user">
                 <td className={`table__cell ${cellStatus}`}>{user.username}</td>
                 <td className={`table__cell ${cellStatus}`}>{userRolesString}</td>
+                <td className={`table__cell ${cellStatus}`}>{userProjectsString}</td>
+
                 <td className={`table__cell ${cellStatus}`}>
                     <button
                         className="icon-button table__button"
