@@ -55,9 +55,11 @@ const TicketsList = () => {
         }
         const { ids, entities } = tickets
 
-        const filteredIds = ids.filter(ticketId => entities[ticketId].project === projectId)
+        const filteredIds = (projectId !== 'all')
+            ? ids.filter(ticketId => entities[ticketId].project === projectId)
+            : ids
 
-        const sortedIds = [...ids].sort((a, b) => {
+        const sortedIds = [...filteredIds].sort((a, b) => {
             const aValue = entities[a][categoryMap[sortCategory]]
             const bValue = entities[b][categoryMap[sortCategory]]
             if (sortOrder === "asc") {
@@ -71,9 +73,10 @@ const TicketsList = () => {
             }
         })
 
-        const tableContent = (projectId !== 'all')
-            ? ids?.length && sortedIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
-            : ids.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
+        const tableContent = sortedIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
+        // const tableContent = (projectId !== 'all')
+        //     ? ids?.length && sortedIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
+        //     : ids.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
 
         const tableClass = (projectId !== 'all')
             ? "table table--tickets"
