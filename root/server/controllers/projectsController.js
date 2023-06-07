@@ -1,4 +1,6 @@
 const Project = require('../models/Project')
+const User = require('../models/User')
+const Ticket = require('../models/Ticket')
 
 // @desc Get all projects
 // @route GET /projects
@@ -8,10 +10,16 @@ const getAllProjects = async (req, res) => {
 
     const projects = await Project.find().lean()
 
+    const projectsWithUsersAndTickets = await Promise.all(projects.map(async (project) => {
+        const userCount = await User.countDocuments({ 'projects': project._id });
+        const ticketCount = await Ticket.countDocuments({ 'project': project._id });
+        return { ...project, userCount, ticketCount }
+    }))
+
     if (!projects?.length) {
         return res.status(400).json({ message: 'No projects found' })
     }
-    res.json(projects)
+    res.json(projectsWithUsersAndTickets)
 
 }
 

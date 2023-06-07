@@ -3,12 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import { useGetProjectsQuery } from './projectsApiSlice'
-import { useGetTicketsQuery } from '../tickets/ticketsApiSlice'
-import { useGetUsersQuery } from '../users/usersApiSlice'
 
-//import { useMemo } from 'react'
-
-const Project = ({ projectId, hideEdit }) => {
+const Project = ({ projectId, hideEdit, ticketCount, userCount }) => {
 
     const { project } = useGetProjectsQuery('projectList', {
         selectFromResult: ({ data }) => ({
@@ -16,23 +12,6 @@ const Project = ({ projectId, hideEdit }) => {
         })
     })
 
-    const { data: ticketsData } = useGetTicketsQuery('ticketsList')
-    const { data: usersData } = useGetUsersQuery('usersList')
-
-
-
-    const getTicketsCount = () => {
-        const tickets = ticketsData?.entities || {}
-        return Object.values(tickets).filter(ticket => ticket.project === projectId).length
-    }
-
-    const getUsersCount = () => {
-        const users = usersData?.entities || {}
-        return Object.values(users).filter(user => user.projects.includes(projectId)).length
-    }
-
-    const ticketsCount = getTicketsCount()
-    const usersCount = getUsersCount()
     const navigate = useNavigate()
 
     if (project) {
@@ -43,6 +22,8 @@ const Project = ({ projectId, hideEdit }) => {
         const handleEdit = () => navigate(`/dashboard/projects/${projectId}`)
         const handleTitleClick = () => navigate(`/dashboard/projects/${projectId}/tickets`)
         const handleEmployeesClicked = () => navigate(`/dashboard/team/${projectId}`)
+
+
         //**********update CSS classes
         return (
             <tr className="table__row">
@@ -56,9 +37,9 @@ const Project = ({ projectId, hideEdit }) => {
                 <td className="table__cell note__username">{project.description}</td>
                 <td className="table__cell note__created">{created}</td>
                 <td className="table__cell note__updated">{updated}</td>
-                <td className="table__cell note__updated">{ticketsCount}</td>
+                <td className="table__cell note__updated">{ticketCount}</td>
                 <td className="table__cell">
-                    {usersCount}
+                    {userCount}
                     <button className="employees-button" onClick={handleEmployeesClicked}>
                         View Team
                     </button>

@@ -43,21 +43,52 @@ const ProjectList = () => {
 
     if (isSuccess) {
 
-        const { ids } = projects
+        const categoryMap = {
+            project: "title",
+            description: "description",
+            created: "createdAt",
+            updated: "updatedAt",
+            tickets: "ticketCount",
+            employees: "userCount"
+        }
+
+
+        const { ids, entities } = projects
+
         //Only display assigned projects for employees, do not allow employees to edit a project
         const filteredProjectIds = (isAdmin || isManager)
             ? ids
             : user?.projects || [];
 
-        const tableContent = filteredProjectIds.length > 0 ? (
-            filteredProjectIds.map(projectId => (
-                <Project key={projectId} projectId={projectId} hideEdit={isAdmin || isManager} />
+        const sortedIds = [...filteredProjectIds].sort((a, b) => {
+            const aValue = entities[a][categoryMap[sortCategory]]
+            const bValue = entities[b][categoryMap[sortCategory]]
+            if (sortOrder === "asc") {
+                if (aValue < bValue) return -1
+                if (aValue > bValue) return 1
+                return 0
+            } else {
+                if (bValue < aValue) return -1
+                if (bValue > aValue) return 1
+                return 0
+            }
+        })
+
+        const tableContent = sortedIds.length > 0 ? (
+            sortedIds.map(projectId => (
+                <Project
+                    key={projectId}
+                    projectId={projectId}
+                    hideEdit={isAdmin || isManager}
+                    ticketCount={entities[projectId].ticketCount}
+                    userCount={entities[projectId].userCount}
+                />
             ))
         ) : (
             <tr>
                 <td colSpan="6">No projects found.</td>
             </tr>
-        );
+        )
 
         const tableClass = isAdmin || isManager ? "table table--projects" : "table table--projects__noEdit"
         const editColumn = isAdmin || isManager ? (

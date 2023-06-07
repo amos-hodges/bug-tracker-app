@@ -74,9 +74,6 @@ const TicketsList = () => {
         })
 
         const tableContent = sortedIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
-        // const tableContent = (projectId !== 'all')
-        //     ? ids?.length && sortedIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
-        //     : ids.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
 
         const tableClass = (projectId !== 'all')
             ? "table table--tickets"
