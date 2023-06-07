@@ -20,10 +20,10 @@ Bug Tracking App User Stories
 - [x] Tickets can be created, modified
 - [x] Create ticket button floats over tickets page
 - [x] Tickets can be closed/deleted (only deleted by managers after it has been closed)
-- [ ] Tickets can be sorted by categories from within the dashboard
+- [x] Tickets can be sorted by categories from within the dashboard
 - [ ] Each data type will have a search option from its respective page (search tickets from project ticket, users from user settings, etc.)
 - [ ] Each ticket will have a history, available before & after it is closed
-- [ ] Users have options to navigate to different pages from the dashboard via sidebar
+- [x] Users have options to navigate to different pages from the dashboard via sidebar
     - [x] Tickets - this is where employees can view all tickets for their projects, managers can see what is assigned to everybody & make modifications
     - [x] Projects - Employees see their projects. Managers can modify who is working in each project
     - [x] Team members - employees see who they are working with & their assignments, managers can add/remove active members from projects, admin can add/remove users entirely

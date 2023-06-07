@@ -135,9 +135,10 @@ const Team = () => {
                                     User
                                     {sortCategory === "username" && <SortIndicator order={sortOrder} />}
                                 </th>
-                                {(projectId === 'all') && <th scope="col" className="table__th user__roles">
-                                    Shared Projects
-                                </th>}
+                                {(projectId === 'all')
+                                    && <th scope="col" className="table__th user__roles">
+                                        Shared Projects
+                                    </th>}
                             </tr>
                         </thead>
                         <tbody>
