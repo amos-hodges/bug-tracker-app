@@ -15,7 +15,6 @@ const Team = () => {
         isSuccess: isProjectSuccess,
         isError: isProjectError
     } = useGetProjectsQuery('projectsList', {
-        //every 15 seconds
         pollingInterval: 15000,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
@@ -28,7 +27,6 @@ const Team = () => {
         isError,
         error
     } = useGetUsersQuery('usersList', {
-        //every 15 seconds
         pollingInterval: 15000,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
@@ -49,40 +47,45 @@ const Team = () => {
 
         let tableContent
 
-        if (projectId === 'all') {
-
-            //figure out beter formatting, links to projects, add message button
-            tableContent = Object.values(entities)
-                .filter((user) => user.id !== currentUser.id) // Exclude current user
-                .map((user) => {
-
-                    const sharedProjects = projects.ids.filter((projectId) =>
-                        user.projects.some((userProjectId) => userProjectId === projectId)
-                    )
-
-                    return sharedProjects?.length ? (
-                        <tr key={user.id}>
-                            <td className="table__cell">{user.username}</td>
-                            <td className="table__cell">
-                                {sharedProjects.map((projectId) => {
-                                    const project = projects.entities[projectId]
-                                    return <span key={project.id}>{project.title}</span>
-                                })}
-                            </td>
-                        </tr>
-                    ) : null;
-                })
-        } else {
-
-            //const project = projects.entities[projectId]
-            tableContent = Object.values(entities)
-                .filter((user) => user.projects.includes(projectId) && user.id !== userId)
-                .map((user) => (
-                    <tr key={user.id}>
-                        <td className="table__cell">{user.username}</td>
-                    </tr>
-                ))
+        const handleMessageClicked = (username) => {
+            //TO-DO
+            console.log(`messaging ${username}`)
         }
+
+        //exclude current user
+        //only display shared projects on 'all' page
+        tableContent = Object.values(entities)
+            .filter((user) => user.id !== currentUser.id && (projectId === 'all' || (user.projects.includes(projectId) && user.id !== userId)))
+            .map((user) => (
+                <tr key={user.id}>
+                    <td className="table__cell">
+                        {user.username}
+                        <button
+                            className="message-button"
+                            onClick={() => handleMessageClicked(user.username)}
+                        >
+                            Message
+                        </button>
+                    </td>
+                    {projectId === 'all' && (
+                        <td className="table__cell">
+                            {projects.ids
+                                .filter((projectId) => currentUser.projects.includes(projectId) && user.projects.includes(projectId))
+                                .map((projectId) => {
+                                    const project = projects.entities[projectId];
+                                    return (
+                                        <span key={project.id} className="project-link">
+                                            <Link to={`/dashboard/projects/${projectId}/tickets`}>
+                                                {project.title}
+                                            </Link>
+                                        </span>
+                                    );
+                                })}
+                        </td>
+                    )}
+                </tr>
+            ));
+
 
         const tableClass = (projectId === 'all')
             ? "table--team"

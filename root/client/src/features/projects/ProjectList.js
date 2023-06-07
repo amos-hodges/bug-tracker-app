@@ -124,7 +124,7 @@ const ProjectList = () => {
                             </th>
                             <th scope="col" className="table__th note__title"
                                 onClick={() => handleSort("updated")}>
-                                Last Update
+                                Last Modified
                                 {sortCategory === "updated" && <SortIndicator order={sortOrder} />}
                             </th>
                             <th scope="col" className="table__th note__title"

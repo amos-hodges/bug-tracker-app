@@ -36,9 +36,17 @@
   transition: transform 0.2s;
 }
 
+
 .navigation-link:hover {
   transform: scale(1.1);
 }
+
+.project-link {
+  background-color: #7c7c7c;
+  padding: 5px;
+  border-radius: 4px;
+}
+
 
 .errmsg {
   display: inline-block;
@@ -89,6 +97,11 @@
 
 .icon-button[disabled] {
   visibility: hidden;
+}
+
+.message-button {
+  margin-left: 10px;
+  margin-right: auto;
 }
 
 .logout {
@@ -383,6 +396,7 @@ tr {
 .table__cell--inactive {
   background-color: var(--INACTIVE);
 }
+
 
 /* ||  TICKET */
 
