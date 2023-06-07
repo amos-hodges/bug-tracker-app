@@ -3,6 +3,8 @@ import { useGetUsersQuery } from './usersApiSlice'
 import { useGetProjectsQuery } from '../projects/projectsApiSlice'
 import useAuth from '../../hooks/useAuth'
 import { useParams, Link } from 'react-router-dom'
+import { useState } from 'react'
+import SortIndicator from '../../components/SortIndicator'
 
 const Team = () => {
 
@@ -34,6 +36,9 @@ const Team = () => {
 
     let content
 
+    const [sortCategory, setSortCategory] = useState(null)
+    const [sortOrder, setSortOrder] = useState(null)
+
     if (isLoading || isProjectLoading) content = <PulseLoader color={"#FFF"} />
 
     if (isError || isProjectError) {
@@ -42,54 +47,79 @@ const Team = () => {
 
     if (isSuccess && isProjectSuccess) {
 
-        const { entities } = users
+        const { ids, entities } = users
         const currentUser = entities[userId]
-
-        let tableContent
 
         const handleMessageClicked = (username) => {
             //TO-DO
             console.log(`messaging ${username}`)
         }
 
-        //exclude current user
-        //only display shared projects on 'all' page
-        tableContent = Object.values(entities)
-            .filter((user) => user.id !== currentUser.id && (projectId === 'all' || (user.projects.includes(projectId) && user.id !== userId)))
-            .map((user) => (
-                <tr key={user.id}>
-                    <td className="table__cell">
-                        {user.username}
-                        <button
-                            className="message-button"
-                            onClick={() => handleMessageClicked(user.username)}
-                        >
-                            Message
-                        </button>
-                    </td>
-                    {projectId === 'all' && (
-                        <td className="table__cell">
-                            {projects.ids
-                                .filter((projectId) => currentUser.projects.includes(projectId) && user.projects.includes(projectId))
-                                .map((projectId) => {
-                                    const project = projects.entities[projectId];
-                                    return (
-                                        <span key={project.id} className="project-link">
-                                            <Link to={`/dashboard/projects/${projectId}/tickets`}>
-                                                {project.title}
-                                            </Link>
-                                        </span>
-                                    );
-                                })}
-                        </td>
-                    )}
-                </tr>
-            ));
-
-
         const tableClass = (projectId === 'all')
             ? "table--team"
             : "table--team__single"
+
+        const handleSort = (category) => {
+            if (sortCategory === category) {
+                setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+            } else {
+                setSortCategory(category)
+                setSortOrder("asc")
+            }
+        }
+
+        const sortedIds = [...ids].sort((a, b) => {
+            const aValue = entities[a][sortCategory]
+            const bValue = entities[b][sortCategory]
+
+            if (sortOrder === "asc") {
+                if (aValue < bValue) return -1
+                if (aValue > bValue) return 1
+                return 0
+            } else {
+                if (bValue < aValue) return -1
+                if (bValue > aValue) return 1
+                return 0
+            }
+        })
+
+        const tableContent = sortedIds
+            .filter((user_Id) => user_Id !== currentUser.id
+                && (projectId === 'all'
+                    || (entities[user_Id].projects.includes(projectId)
+                        && user_Id !== userId)))
+            .map((userId) => {
+                const user = entities[userId];
+                return (
+                    <tr key={user.id}>
+                        <td className="table__cell">
+                            {user.username}
+                            <button
+                                className="message-button"
+                                onClick={() => handleMessageClicked(user.username)}
+                            >
+                                Message
+                            </button>
+                        </td>
+                        {projectId === 'all' && (
+                            <td className="table__cell">
+                                {projects.ids
+                                    .filter((projectId) => currentUser.projects.includes(projectId) && user.projects.includes(projectId))
+                                    .map((projectId) => {
+                                        const project = projects.entities[projectId];
+                                        return (
+                                            <span key={project.id} className="project-link">
+                                                <Link to={`/dashboard/projects/${projectId}/tickets`}>
+                                                    {project.title}
+                                                </Link>
+                                            </span>
+                                        );
+                                    })}
+                            </td>
+                        )}
+                    </tr>
+                );
+            });
 
         content = (
             <>
@@ -100,8 +130,10 @@ const Team = () => {
                     <table className={`table ${tableClass}`}>
                         <thead className="table__head">
                             <tr>
-                                <th scope="col" className="table__th user__username">
+                                <th scope="col" className="table__th user__username"
+                                    onClick={() => handleSort("username")}>
                                     User
+                                    {sortCategory === "username" && <SortIndicator order={sortOrder} />}
                                 </th>
                                 {(projectId === 'all') && <th scope="col" className="table__th user__roles">
                                     Shared Projects
