@@ -1,7 +1,9 @@
 import { useGetUsersQuery } from './usersApiSlice'
 import { Link } from 'react-router-dom'
+import SortIndicator from '../../components/SortIndicator'
 import User from './User'
 import PulseLoader from 'react-spinners/PulseLoader'
+import { useState } from 'react'
 
 const UsersList = () => {
 
@@ -20,6 +22,9 @@ const UsersList = () => {
 
     let content
 
+    const [sortCategory, setSortCategory] = useState(null)
+    const [sortOrder, setSortOrder] = useState(null)
+
     if (isLoading) content = <PulseLoader color={"#FFF"} />
 
     if (isError) {
@@ -27,9 +32,40 @@ const UsersList = () => {
     }
 
     if (isSuccess) {
-        const { ids } = users
 
-        const tableContent = ids?.length && ids.map(userId => <User key={userId} userId={userId} />)
+        const categoryMap = {
+            username: "username",
+            roles: "roles",
+            projects: "projectTitles"
+        }
+
+        const { ids, entities } = users
+
+        const sortedIds = [...ids].sort((a, b) => {
+            const aValue = entities[a][categoryMap[sortCategory]]
+            const bValue = entities[b][categoryMap[sortCategory]]
+
+            if (sortOrder === "asc") {
+                if (aValue < bValue) return -1
+                if (aValue > bValue) return 1
+                return 0
+            } else {
+                if (bValue < aValue) return -1
+                if (bValue > aValue) return 1
+                return 0
+            }
+        })
+
+        const tableContent = sortedIds?.length && sortedIds.map(userId => <User key={userId} userId={userId} />)
+
+        const handleSort = (category) => {
+            if (sortCategory === category) {
+                setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+            } else {
+                setSortCategory(category)
+                setSortOrder("asc")
+            }
+        }
 
         content = (
             <>
@@ -41,14 +77,20 @@ const UsersList = () => {
                     <table className="table table--users">
                         <thead className="table__head">
                             <tr>
-                                <th scope="col" className="table__th user__username">
+                                <th scope="col" className="table__th user__username"
+                                    onClick={() => handleSort("username")}>
                                     Username
+                                    {sortCategory === "username" && <SortIndicator order={sortOrder} />}
                                 </th>
-                                <th scope="col" className="table__th user__roles">
+                                <th scope="col" className="table__th user__roles"
+                                    onClick={() => handleSort("roles")}>
                                     Roles
+                                    {sortCategory === "roles" && <SortIndicator order={sortOrder} />}
                                 </th>
-                                <th scope="col" className="table__th user__roles">
+                                <th scope="col" className="table__th user__roles"
+                                    onClick={() => handleSort("projects")}>
                                     Current Projects
+                                    {sortCategory === "projects" && <SortIndicator order={sortOrder} />}
                                 </th>
                                 <th scope="col" className="table__th user__edit">
                                     Edit

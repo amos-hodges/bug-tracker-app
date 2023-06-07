@@ -30,8 +30,9 @@ const Project = ({ projectId, hideEdit, ticketCount, userCount }) => {
 
 
                 <td className="table__cell note__title">
+                    {project.title}
                     <button className="title-button" onClick={handleTitleClick}>
-                        {project.title}
+                        Open
                     </button>
                 </td>
                 <td className="table__cell note__username">{project.description}</td>

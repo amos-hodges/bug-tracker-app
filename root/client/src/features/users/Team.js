@@ -5,6 +5,7 @@ import useAuth from '../../hooks/useAuth'
 import { useParams, Link } from 'react-router-dom'
 
 const Team = () => {
+
     const { userId, isAdmin, isManager } = useAuth()
 
     const { projectId } = useParams()
@@ -20,7 +21,6 @@ const Team = () => {
         refetchOnMountOrArgChange: true
     })
 
-
     const {
         data: users,
         isLoading,
@@ -33,7 +33,6 @@ const Team = () => {
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })
-
 
     let content
 
@@ -74,31 +73,36 @@ const Team = () => {
                     ) : null;
                 })
         } else {
-            const project = projects.entities[projectId]
+
+            //const project = projects.entities[projectId]
             tableContent = Object.values(entities)
                 .filter((user) => user.projects.includes(projectId) && user.id !== userId)
                 .map((user) => (
                     <tr key={user.id}>
                         <td className="table__cell">{user.username}</td>
-                        <td className="table__cell">{project.title}</td>
                     </tr>
                 ))
         }
+
+        const tableClass = (projectId === 'all')
+            ? "table--team"
+            : "table--team__single"
+
         content = (
             <>
                 <div className="form__title-row">
-                    <h2>My Teams</h2>
+                    <h2>{(projectId === 'all') ? 'My Teams' : 'My Team'}</h2>
                 </div>
                 <div className="list-container">
-                    <table className="table table--team">
+                    <table className={`table ${tableClass}`}>
                         <thead className="table__head">
                             <tr>
                                 <th scope="col" className="table__th user__username">
                                     User
                                 </th>
-                                <th scope="col" className="table__th user__roles">
+                                {(projectId === 'all') && <th scope="col" className="table__th user__roles">
                                     Shared Projects
-                                </th>
+                                </th>}
                             </tr>
                         </thead>
                         <tbody>

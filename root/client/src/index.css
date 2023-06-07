@@ -587,6 +587,10 @@ tr {
     grid-template-columns: 1fr 2fr;
   }
 
+  .table--team__single {
+    grid-template-columns: 1fr;
+  }
+
   .table--tickets {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }

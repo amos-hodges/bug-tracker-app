@@ -29,11 +29,10 @@ const ProjectList = () => {
         refetchOnMountOrArgChange: true
     })
 
-
     let content
 
-    const [sortCategory, setSortCategory] = useState(null);
-    const [sortOrder, setSortOrder] = useState(null);
+    const [sortCategory, setSortCategory] = useState(null)
+    const [sortOrder, setSortOrder] = useState(null)
 
     if (isLoading) content = <PulseLoader color={"#FFF"} />
 
@@ -52,10 +51,9 @@ const ProjectList = () => {
             employees: "userCount"
         }
 
-
         const { ids, entities } = projects
 
-        //Only display assigned projects for employees, do not allow employees to edit a project
+        //Only display assigned projects for employees
         const filteredProjectIds = (isAdmin || isManager)
             ? ids
             : user?.projects || [];
