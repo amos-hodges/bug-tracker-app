@@ -27,9 +27,9 @@ const TicketsList = () => {
     let content
     let projTitle
 
-    const [sortCategory, setSortCategory] = useState(null);
-    const [sortOrder, setSortOrder] = useState(null);
-
+    const [sortCategory, setSortCategory] = useState(null)
+    const [sortOrder, setSortOrder] = useState(null)
+    const [searchQuery, setSearchQuery] = useState('')
 
     if (isLoading) content = <PulseLoader color={"#FFF"} />
 
@@ -73,7 +73,18 @@ const TicketsList = () => {
             }
         })
 
-        const tableContent = sortedIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
+        const filteredAndSortedIds = sortedIds.filter((ticketId) => {
+            const ticket = entities[ticketId];
+            if (!ticket) {
+                return false; // Skip if ticket is undefined
+            }
+            return (
+                ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                ticket.username.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        })
+
+        const tableContent = filteredAndSortedIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
 
         const tableClass = (projectId !== 'all')
             ? "table table--tickets"
@@ -93,9 +104,14 @@ const TicketsList = () => {
             }
         }
 
+        const handleSearchInputChange = (e) => {
+            setSearchQuery(e.target.value);
+        }
+
         content = (
             <>
                 <h1>{projTitle}</h1>
+                <input type="text" placeholder="Search..." value={searchQuery} onChange={handleSearchInputChange} />
                 <div className="list-container">
                     <table className={tableClass}>
                         <thead className="table__thead">
