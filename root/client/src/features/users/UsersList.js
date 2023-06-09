@@ -24,6 +24,7 @@ const UsersList = () => {
 
     const [sortCategory, setSortCategory] = useState(null)
     const [sortOrder, setSortOrder] = useState(null)
+    const [searchQuery, setSearchQuery] = useState('')
 
     if (isLoading) content = <PulseLoader color={"#FFF"} />
 
@@ -56,7 +57,19 @@ const UsersList = () => {
             }
         })
 
-        const tableContent = sortedIds?.length && sortedIds.map(userId => <User key={userId} userId={userId} />)
+        const filteredAndSortedIds = sortedIds.filter((userId) => {
+            const user = entities[userId]
+            if (!user) {
+                return false
+            }
+            return (
+                user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                user.roles.some((role) => role.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                user.projectTitles.some((title) => title.toLowerCase().includes(searchQuery.toLowerCase()))
+            )
+        })
+
+        const tableContent = filteredAndSortedIds?.length && filteredAndSortedIds.map(userId => <User key={userId} userId={userId} />)
 
         const handleSort = (category) => {
             if (sortCategory === category) {
@@ -67,11 +80,21 @@ const UsersList = () => {
             }
         }
 
+        const handleSearchInputChange = (e) => {
+            setSearchQuery(e.target.value)
+        }
+
         content = (
             <>
                 <div className="form__title-row">
                     <h2>User Settings</h2>
                 </div>
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                />
                 <div className="list-container">
 
                     <table className="table table--users">

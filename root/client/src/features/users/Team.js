@@ -38,6 +38,7 @@ const Team = () => {
 
     const [sortCategory, setSortCategory] = useState(null)
     const [sortOrder, setSortOrder] = useState(null)
+    const [searchQuery, setSearchQuery] = useState('')
 
     if (isLoading || isProjectLoading) content = <PulseLoader color={"#FFF"} />
 
@@ -59,14 +60,7 @@ const Team = () => {
             ? "table--team"
             : "table--team__single"
 
-        const handleSort = (category) => {
-            if (sortCategory === category) {
-                setSortOrder(sortOrder === "asc" ? "desc" : "asc")
-            } else {
-                setSortCategory(category)
-                setSortOrder("asc")
-            }
-        }
+
 
         const sortedIds = [...ids].sort((a, b) => {
             const aValue = entities[a][sortCategory]
@@ -83,7 +77,31 @@ const Team = () => {
             }
         })
 
-        const tableContent = sortedIds
+        const filteredAndSortedIds = sortedIds.filter((userId) => {
+            const user = entities[userId]
+            if (!user) {
+                return false
+            }
+            return (
+                user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                user.projectTitles.some((title) => title.toLowerCase().includes(searchQuery.toLowerCase()))
+            )
+        })
+
+        const handleSort = (category) => {
+            if (sortCategory === category) {
+                setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+            } else {
+                setSortCategory(category)
+                setSortOrder("asc")
+            }
+        }
+
+        const handleSearchInputChange = (e) => {
+            setSearchQuery(e.target.value)
+        }
+
+        const tableContent = filteredAndSortedIds
             .filter((user_Id) => user_Id !== currentUser.id
                 && (projectId === 'all'
                     || (entities[user_Id].projects.includes(projectId)
@@ -126,6 +144,12 @@ const Team = () => {
                 <div className="form__title-row">
                     <h2>{(projectId === 'all') ? 'My Teams' : 'My Team'}</h2>
                 </div>
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                />
                 <div className="list-container">
                     <table className={`table ${tableClass}`}>
                         <thead className="table__head">
