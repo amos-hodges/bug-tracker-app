@@ -74,14 +74,19 @@ const TicketsList = () => {
         })
 
         const filteredAndSortedIds = sortedIds.filter((ticketId) => {
-            const ticket = entities[ticketId];
+            const ticket = entities[ticketId]
             if (!ticket) {
-                return false; // Skip if ticket is undefined
+                return false
             }
             return (
-                ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                ticket.username.toLowerCase().includes(searchQuery.toLowerCase())
-            );
+                (projectId === 'all' &&
+                    (ticket.projectTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        ticket.username.toLowerCase().includes(searchQuery.toLowerCase()))) ||
+                (projectId !== 'all' &&
+                    (ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        ticket.username.toLowerCase().includes(searchQuery.toLowerCase())))
+            )
         })
 
         const tableContent = filteredAndSortedIds.map(ticketId => <Ticket key={ticketId} ticketId={ticketId} />)
@@ -91,8 +96,8 @@ const TicketsList = () => {
             : "table table--tickets__all"
 
         if (filteredIds.length > 0) {
-            const firstTicket = entities[filteredIds[0]];
-            projTitle = firstTicket.projectTitle;
+            const firstTicket = entities[filteredIds[0]]
+            projTitle = firstTicket.projectTitle
         }
 
         const handleSort = (category) => {
@@ -105,13 +110,18 @@ const TicketsList = () => {
         }
 
         const handleSearchInputChange = (e) => {
-            setSearchQuery(e.target.value);
+            setSearchQuery(e.target.value)
         }
 
         content = (
             <>
                 <h1>{projTitle}</h1>
-                <input type="text" placeholder="Search..." value={searchQuery} onChange={handleSearchInputChange} />
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                />
                 <div className="list-container">
                     <table className={tableClass}>
                         <thead className="table__thead">
