@@ -33,6 +33,7 @@ const ProjectList = () => {
 
     const [sortCategory, setSortCategory] = useState(null)
     const [sortOrder, setSortOrder] = useState(null)
+    const [searchQuery, setSearchQuery] = useState('')
 
     if (isLoading) content = <PulseLoader color={"#FFF"} />
 
@@ -72,8 +73,26 @@ const ProjectList = () => {
             }
         })
 
-        const tableContent = sortedIds.length > 0 ? (
-            sortedIds.map(projectId => (
+        const filteredAndSortedIds = sortedIds.filter((projectId) => {
+            const project = entities[projectId]
+            if (!project) {
+                return false
+            }
+            return (
+                project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                project.description.toLowerCase().includes(searchQuery.toLowerCase())
+                // (projectId === 'all' &&
+                //     (ticket.projectTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                //         ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                //         ticket.username.toLowerCase().includes(searchQuery.toLowerCase()))) ||
+                // (projectId !== 'all' &&
+                //     (ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                //         ticket.username.toLowerCase().includes(searchQuery.toLowerCase())))
+            )
+        })
+
+        const tableContent = filteredAndSortedIds.length > 0 ? (
+            filteredAndSortedIds.map(projectId => (
                 <Project
                     key={projectId}
                     projectId={projectId}
@@ -102,49 +121,61 @@ const ProjectList = () => {
             }
         }
 
+        const handleSearchInputChange = (e) => {
+            setSearchQuery(e.target.value)
+        }
+
         content = (
-            <div className="list-container">
-                <table className={tableClass}>
-                    <thead className="table__thead">
-                        <tr>
-                            <th scope="col" className="table__th note__title"
-                                onClick={() => handleSort("project")}>
-                                Project
-                                {sortCategory === "project" && <SortIndicator order={sortOrder} />}
-                            </th>
-                            <th scope="col" className="table__th note__title"
-                                onClick={() => handleSort("description")}>
-                                Description
-                                {sortCategory === "description" && <SortIndicator order={sortOrder} />}
-                            </th>
-                            <th scope="col" className="table__th note__title"
-                                onClick={() => handleSort("created")}>
-                                Created
-                                {sortCategory === "created" && <SortIndicator order={sortOrder} />}
-                            </th>
-                            <th scope="col" className="table__th note__title"
-                                onClick={() => handleSort("updated")}>
-                                Last Modified
-                                {sortCategory === "updated" && <SortIndicator order={sortOrder} />}
-                            </th>
-                            <th scope="col" className="table__th note__title"
-                                onClick={() => handleSort("tickets")}>
-                                Tickets
-                                {sortCategory === "tickets" && <SortIndicator order={sortOrder} />}
-                            </th>
-                            <th scope="col" className="table__th note__title"
-                                onClick={() => handleSort("employees")}>
-                                Active Employees
-                                {sortCategory === "employees" && <SortIndicator order={sortOrder} />}
-                            </th>
-                            {editColumn}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tableContent}
-                    </tbody>
-                </table>
-            </div>
+            <>
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                />
+                <div className="list-container">
+                    <table className={tableClass}>
+                        <thead className="table__thead">
+                            <tr>
+                                <th scope="col" className="table__th note__title"
+                                    onClick={() => handleSort("project")}>
+                                    Project
+                                    {sortCategory === "project" && <SortIndicator order={sortOrder} />}
+                                </th>
+                                <th scope="col" className="table__th note__title"
+                                    onClick={() => handleSort("description")}>
+                                    Description
+                                    {sortCategory === "description" && <SortIndicator order={sortOrder} />}
+                                </th>
+                                <th scope="col" className="table__th note__title"
+                                    onClick={() => handleSort("created")}>
+                                    Created
+                                    {sortCategory === "created" && <SortIndicator order={sortOrder} />}
+                                </th>
+                                <th scope="col" className="table__th note__title"
+                                    onClick={() => handleSort("updated")}>
+                                    Last Modified
+                                    {sortCategory === "updated" && <SortIndicator order={sortOrder} />}
+                                </th>
+                                <th scope="col" className="table__th note__title"
+                                    onClick={() => handleSort("tickets")}>
+                                    Tickets
+                                    {sortCategory === "tickets" && <SortIndicator order={sortOrder} />}
+                                </th>
+                                <th scope="col" className="table__th note__title"
+                                    onClick={() => handleSort("employees")}>
+                                    Active Employees
+                                    {sortCategory === "employees" && <SortIndicator order={sortOrder} />}
+                                </th>
+                                {editColumn}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tableContent}
+                        </tbody>
+                    </table>
+                </div>
+            </>
         )
     }
     return content
