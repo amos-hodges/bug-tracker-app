@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const Ticket = require('../models/Ticket')
 const Project = require('../models/Project')
+const { handleTicketAssigned } = require('./notificationController')
 
 // @desc Get all tickets
 // @route GET /tickets
@@ -46,6 +47,8 @@ const createNewTicket = async (req, res) => {
     const ticket = await Ticket.create({ user, project, title, text, importance })
 
     if (ticket) {
+        console.log(user, ticket._id)
+        await handleTicketAssigned(user, ticket._id)
         return res.status(201).json({ message: 'Ticket succesfuly created' })
     } else {
         return res.status(400).json({ message: 'Invalid ticket data recieved' })
