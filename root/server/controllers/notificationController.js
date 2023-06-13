@@ -8,7 +8,7 @@ const Project = require('../models/Project')
 // @access Private
 
 const getUserNotifications = async (req, res) => {
-    console.log(req.user._id)
+    //console.log(req.user._id)
     const notifications = await Notification.find({ recipient: req.user._id })
 
     if (!notifications?.length) {
@@ -28,7 +28,7 @@ const createNewNotification = async (recipient, message) => {
         recipient,
         message,
     })
-
+    console.log(notification)
     // if (notification) {
     //     return res.status(201).json({ message: 'Notification succesfuly created' })
     // } else {
@@ -66,7 +66,7 @@ const handleTicketAssigned = async (assignedUserId, ticketId) => {
 
     const ticket = await Ticket.findById(ticketId);
     const assignedUser = await User.findById(assignedUserId);
-    console.log(ticket, assignedUser)
+    //console.log(ticket.title, assignedUser.username)
     if (!ticket || !assignedUser) {
         console.log('not found')
         // Ticket or assigned user not found, handle the error accordingly

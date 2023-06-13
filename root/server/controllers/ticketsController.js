@@ -29,7 +29,7 @@ const getAllTickets = async (req, res) => {
 const createNewTicket = async (req, res) => {
 
     const { user, project, title, text, importance } = req.body
-    console.log(req.body)
+    //console.log(req.body)
     //confrim data
 
     if (!user || !project || !title || !text || !importance) {
