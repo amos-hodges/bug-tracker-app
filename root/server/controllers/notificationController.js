@@ -41,7 +41,12 @@ const createNewNotification = async (recipient, message) => {
 // @access Private
 
 const updateNotification = async (req, res) => {
+    const { id } = req.params;
 
+    // Update the notification based on the provided ID and request body
+    await Notification.findByIdAndUpdate(id, req.body);
+
+    res.json({ message: 'Notification updated successfully' })
 }
 
 // @desc Delete a notification
@@ -49,7 +54,12 @@ const updateNotification = async (req, res) => {
 // @access Private
 
 const deleteNotification = async (req, res) => {
+    const { id } = req.params;
 
+    // Delete the notification based on the provided ID
+    await Notification.findByIdAndDelete(id);
+
+    res.json({ message: 'Notification deleted successfully' })
 }
 
 const handleTicketAssigned = async (assignedUserId, ticketId) => {
