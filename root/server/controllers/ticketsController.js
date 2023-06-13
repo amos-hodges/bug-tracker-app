@@ -47,7 +47,7 @@ const createNewTicket = async (req, res) => {
     const ticket = await Ticket.create({ user, project, title, text, importance })
 
     if (ticket) {
-        console.log(user, ticket._id)
+        //console.log(user, ticket._id)
         await handleTicketAssigned(user, ticket._id)
         return res.status(201).json({ message: 'Ticket succesfuly created' })
     } else {
