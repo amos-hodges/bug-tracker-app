@@ -8,7 +8,7 @@ const Project = require('../models/Project')
 // @access Private
 
 const getUserNotifications = async (req, res) => {
-    //console.log(req.user._id)
+    console.log(req.user._id)
     const notifications = await Notification.find({ recipient: req.user._id })
 
     if (!notifications?.length) {
@@ -28,7 +28,7 @@ const createNewNotification = async (recipient, message) => {
         recipient,
         message,
     })
-    console.log(notification)
+    //console.log(notification)
     // if (notification) {
     //     return res.status(201).json({ message: 'Notification succesfuly created' })
     // } else {
