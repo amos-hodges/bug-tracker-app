@@ -47,7 +47,7 @@ const createNewTicket = async (req, res) => {
     const ticket = await Ticket.create({ user, project, title, text, importance })
 
     if (ticket) {
-        //console.log(user, ticket._id)
+        //assign notification to user 
         await handleTicketAssigned(user, ticket._id)
         return res.status(201).json({ message: 'Ticket succesfuly created' })
     } else {
@@ -61,7 +61,7 @@ const createNewTicket = async (req, res) => {
 // @access Private
 const updateTicket = async (req, res) => {
     const { id, user, title, text, completed, importance } = req.body
-    console.log(`${id} updated`)
+    //console.log(`${id} updated`)
     //confirm data
     if (!id || !user || !title || !text || typeof completed !== 'boolean' || !importance) {
         console.log(id, user, title, text, typeof completed)
@@ -97,8 +97,6 @@ const updateTicket = async (req, res) => {
 // @route DELETE /tickets
 // @access Private
 const deleteTicket = async (req, res) => {
-
-    //may want to add completed to ensure open tickets are not deleted
     const { id } = req.body
 
     if (!id) {
