@@ -61,7 +61,6 @@ const createNewTicket = async (req, res) => {
 // @access Private
 const updateTicket = async (req, res) => {
     const { id, user, title, text, completed, importance } = req.body
-    //console.log(`${id} updated`)
     //confirm data
     if (!id || !user || !title || !text || typeof completed !== 'boolean' || !importance) {
         console.log(id, user, title, text, typeof completed)

@@ -29,11 +29,11 @@ const createNewNotification = async (recipient, message) => {
         message,
     })
 
-    if (notification) {
-        return res.status(201).json({ message: 'Notification succesfuly created' })
-    } else {
-        return res.status(400).json({ message: 'Invalid notification data recieved' })
-    }
+    // if (notification) {
+    //     return res.status(201).json({ message: 'Notification succesfuly created' })
+    // } else {
+    //     return res.status(400).json({ message: 'Invalid notification data recieved' })
+    // }
 }
 
 // @desc Update a notification

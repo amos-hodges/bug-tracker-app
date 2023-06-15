@@ -5,6 +5,7 @@ import { usersApiSlice } from '../users/usersApiSlice'
 import { projectsApiSlice } from '../projects/projectsApiSlice'
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
+import { notificationsApiSlice } from '../notifications/notificationApiSlice'
 
 const Prefetch = () => {
 
@@ -12,6 +13,7 @@ const Prefetch = () => {
         store.dispatch(ticketsApiSlice.util.prefetch('getTickets', 'ticketsList', { force: true }))
         store.dispatch(usersApiSlice.util.prefetch('getUsers', 'usersList', { force: true }))
         store.dispatch(projectsApiSlice.util.prefetch('getProjects', 'projectsList', { force: true }))
+        store.dispatch(notificationsApiSlice.util.prefetch('getNotifications', 'notificationsList', { force: true }))
     }, [])
 
     return <Outlet />

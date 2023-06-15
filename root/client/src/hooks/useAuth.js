@@ -21,7 +21,7 @@ const useAuth = () => {
         //admin highest status
         if (isAdmin) status = "Admin"
 
-        return { username, roles, userId, status, isManager, isAdmin }
+        return { username, roles, userId: _id, status, isManager, isAdmin }
     }
     return { username: '', roles: [], userId: '', status, isManager, isAdmin }
 }
