@@ -7,7 +7,7 @@ const NotificationModal = ({ isOpen, onClose, children }) => {
         if (isOpen) {
             timeoutId = setTimeout(() => {
                 onClose();
-            }, 8000)
+            }, 80000)
         }
 
         return () => {

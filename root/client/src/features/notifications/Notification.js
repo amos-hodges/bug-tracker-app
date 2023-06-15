@@ -9,7 +9,14 @@ const Notification = ({ notificationId }) => {
 
     if (notification) {
 
-        const updated = new Date(notification.updatedAt).toLocaleString('en-US', {
+        //use when updating status
+        // const updated = new Date(notification.updatedAt).toLocaleString('en-US', {
+        //     day: 'numeric',
+        //     month: 'long',
+        //     hour: 'numeric',
+        //     minute: 'numeric',
+        // })
+        const created = new Date(notification.createdAt).toLocaleString('en-US', {
             day: 'numeric',
             month: 'long',
             hour: 'numeric',
@@ -18,10 +25,10 @@ const Notification = ({ notificationId }) => {
 
 
         return (
-            <>
-                <div>{notification.createdAt}</div>
+            <div className="notification-content">
+                <div>{created}</div>
                 <div>{notification.message}</div>
-            </>
+            </div>
         )
     }
 }
