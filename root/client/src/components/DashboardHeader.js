@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faRightFromBracket,
@@ -8,17 +8,22 @@ import {
     faGear,
     faUsersGear,
     faUserPlus,
+    faBell,
     faBars
 } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import useAuth from '../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
+import NotificationModal from '../features/notifications/NotificationModal'
+import { useGetNotificationsQuery } from '../features/notifications/notificationApiSlice'
+import NotificationList from '../features/notifications/NotificationList'
+
 
 const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
-//const TICKETS_REGEX = /^\/dashboard\/projects\/\w+\/tickets(\/)?$/
 const TICKETS_REGEX = /^\/dashboard\/projects\/(?!all\b)\w+\/tickets(\/)?$/
 const USERS_REGEX = /^\/dashboard\/users(\/)?$/
+
 //DISPLAY THE CURRENT PROJECT IN THE HEADER
 const DashboardHeader = ({ toggleSidebar }) => {
 
@@ -30,6 +35,8 @@ const DashboardHeader = ({ toggleSidebar }) => {
 
     const { pathname } = useLocation()
 
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     const [sendLogout, {
         isLoading,
         isSuccess,
@@ -37,11 +44,20 @@ const DashboardHeader = ({ toggleSidebar }) => {
         error
     }] = useSendLogoutMutation()
 
+    //const [unreadNotifications, setUnreadNotifications] = useState(0)
+
     useEffect(() => {
         if (isSuccess) {
             navigate('/')
         }
     }, [isSuccess, navigate])
+
+    // useEffect(() => {
+    //     if (notifications) {
+    //       const unreadCount = notifications.filter((notification) => !notification.read).length;
+    //       setUnreadNotifications(unreadCount);
+    //     }
+    //   }, [notifications])
 
     const onNewProjectClicked = () => navigate('/dashboard/projects/new')
     const onNewTicketClicked = () => navigate(`projects/${projectId}/tickets/new`)
@@ -49,6 +65,30 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const onUserSettingsClicked = () => navigate('/dashboard/users')
     const onProfileClicked = () => navigate('/dashboard/profile')
     const onSettingsClicked = () => navigate('/dashboard/settings')
+    const handleNotificationsClicked = () => {
+        setIsModalOpen(!isModalOpen)
+    }
+
+    const modalContent = (
+        <NotificationModal isOpen={isModalOpen} onClose={handleNotificationsClicked}>
+            <NotificationList />
+        </NotificationModal>
+    )
+
+    let notificationIcon = (
+        <button
+            className="icon-button"
+            title="Notifications"
+            onClick={handleNotificationsClicked}
+        >
+            <FontAwesomeIcon icon={faBell} />
+            {/* {unreadNotifications > 0
+                && <span className="notification-bubble">
+                    {unreadNotifications}
+                </span>
+            } */}
+        </button>
+    )
 
     let sidebarToggle = (
         <button
@@ -124,7 +164,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const profileButton = (
         <button
             className='icon-button'
-            title="profile"
+            title="Profile"
             onClick={onProfileClicked}
         >
             {/* Eventually replace with user thumbnail */}
@@ -134,7 +174,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const settingsButton = (
         <button
             className='icon-button'
-            title="settings"
+            title="Settings"
             onClick={onSettingsClicked}
         >
             <FontAwesomeIcon icon={faGear} />
@@ -165,6 +205,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
                 {ticketsButton}
                 {userSettingsButton}
                 {profileButton}
+                {notificationIcon}
                 {settingsButton}
                 {/* {logoutButton} */}
             </>
@@ -186,6 +227,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
                     </nav>
                 </div>
             </header>
+            {modalContent}
         </>
     )
     return content

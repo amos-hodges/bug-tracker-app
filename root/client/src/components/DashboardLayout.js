@@ -33,7 +33,6 @@ const DashboardLayout = () => {
             <div className="content-container">
                 <Sidebar isSidebarOpen={isSidebarOpen} />
                 <div className={containerClass}>
-
                     <Outlet />
                 </div>
 
