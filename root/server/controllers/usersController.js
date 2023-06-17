@@ -116,7 +116,7 @@ const updateUser = async (req, res) => {
         user.projects = projects;
 
 
-        // Check for project additions or removals
+        // THIS CREATES NOTIFICATIONS FOR EVERY PROJECT!
         for (const projectId of projects) {
             if (!previousProjects.includes(projectId)) {
                 // User is newly assigned to the project
@@ -125,7 +125,7 @@ const updateUser = async (req, res) => {
             }
         }
 
-
+        // THIS CREATES NOTIFICATIONS FOR EVERY PROJECT !
         for (const projectId of previousProjects) {
             if (!projects.includes(projectId)) {
                 console.log(`removing ${projectId}`)

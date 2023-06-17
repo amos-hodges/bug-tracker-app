@@ -82,9 +82,9 @@ const deleteNotification = async (req, res) => {
         return res.status(400).json({ message: 'Notification not found' })
     }
     // Check if the notification has been read
-    if (!notification.status) {
-        return res.status(403).json({ message: 'Cannot delete an unread notification' });
-    }
+    // if (!notification.status) {
+    //     return res.status(403).json({ message: 'Cannot delete an unread notification' });
+    // }
     const result = await notification.deleteOne()
 
     const reply = `Notification: '${result.message}', with ID ${result._id} deleted`

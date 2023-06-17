@@ -1,7 +1,7 @@
 import Notification from "./Notification"
 import { useGetNotificationsQuery } from "./notificationApiSlice"
 import PulseLoader from 'react-spinners/PulseLoader'
-const NotificationList = ({ updateUnreadCount }) => {
+const NotificationList = () => {
 
     const {
         data: notifications,

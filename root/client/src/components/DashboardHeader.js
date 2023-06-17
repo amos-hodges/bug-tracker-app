@@ -44,7 +44,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
         error
     }] = useSendLogoutMutation()
 
-    const [unreadNotifications, setUnreadNotifications] = useState(0)
+    // const [unreadNotifications, setUnreadNotifications] = useState(0)
 
     useEffect(() => {
         if (isSuccess) {
@@ -68,6 +68,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
         </NotificationModal>
     )
 
+    const unreadNotifications = 11
     let notificationIcon = (
         <button
             className="icon-button notify"
