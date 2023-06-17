@@ -1,7 +1,7 @@
 import Notification from "./Notification"
 import { useGetNotificationsQuery } from "./notificationApiSlice"
 import PulseLoader from 'react-spinners/PulseLoader'
-const NotificationList = () => {
+const NotificationList = ({ updateUnreadCount }) => {
 
     const {
         data: notifications,
@@ -25,7 +25,13 @@ const NotificationList = () => {
     }
 
     if (isSuccess) {
-        const { ids } = notifications
+        const { ids, entities } = notifications
+
+        const unreadNotifications = ids.filter(
+            (id) => !entities[id].status
+        )
+        //updateUnreadCount(unreadNotifications)
+
         const notificationContent = ids?.length ? (
             ids.map(notificationId => (
                 <Notification

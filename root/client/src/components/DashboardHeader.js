@@ -44,20 +44,13 @@ const DashboardHeader = ({ toggleSidebar }) => {
         error
     }] = useSendLogoutMutation()
 
-    //const [unreadNotifications, setUnreadNotifications] = useState(0)
+    const [unreadNotifications, setUnreadNotifications] = useState(0)
 
     useEffect(() => {
         if (isSuccess) {
             navigate('/')
         }
     }, [isSuccess, navigate])
-
-    // useEffect(() => {
-    //     if (notifications) {
-    //       const unreadCount = notifications.filter((notification) => !notification.read).length;
-    //       setUnreadNotifications(unreadCount);
-    //     }
-    //   }, [notifications])
 
     const onNewProjectClicked = () => navigate('/dashboard/projects/new')
     const onNewTicketClicked = () => navigate(`projects/${projectId}/tickets/new`)
@@ -77,16 +70,16 @@ const DashboardHeader = ({ toggleSidebar }) => {
 
     let notificationIcon = (
         <button
-            className="icon-button"
+            className="icon-button notify"
             title="Notifications"
             onClick={handleNotificationsClicked}
         >
             <FontAwesomeIcon icon={faBell} />
-            {/* {unreadNotifications > 0
+            {unreadNotifications > 0
                 && <span className="notification-bubble">
                     {unreadNotifications}
                 </span>
-            } */}
+            }
         </button>
     )
 

@@ -47,7 +47,28 @@
   border-radius: 4px;
 }
 
+.notification-bubble {
+  position: absolute;
+  top: 5px;
+  right: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background-color: red;
+  border-radius: 50%;
+  font-size: 12px;
+  color: white;
+}
+
+.notify {
+  position: relative;
+  width: fit-content
+}
+
 .notification-content {
+  position: relative;
   background-color: #7c7c7c;
   border: 2px;
   border-color: whitesmoke;
@@ -55,21 +76,6 @@
   padding: 10px;
   z-index: 9999;
   margin-bottom: 5px;
-}
-
-.notification-bubble {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: red;
-  color: white;
-  font-size: 12px;
 }
 
 .modal-overlay {
@@ -97,6 +103,27 @@
   left: 50%;
   transform: translate(-50%, -50%); */
   /* Add additional styles for the modal content, such as width, height, padding, etc. */
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #aaa;
 }
 
 .errmsg {

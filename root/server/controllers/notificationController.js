@@ -11,14 +11,11 @@ const Project = require('../models/Project')
 
 const getUserNotifications = async (req, res) => {
 
-
     const notifications = await Notification.find({ recipient: req.user._id })
-
 
     if (!notifications?.length) {
         return res.status(400).json({ message: 'No notifications found' })
     }
-
 
     res.json(notifications)
 }
@@ -31,18 +28,12 @@ const getUserNotifications = async (req, res) => {
 
 const createNewNotification = async (recipient, message) => {
 
-
     const notification = await Notification.create({
         recipient,
         message,
     })
 
-
-    // if (notification) {
-    //     return res.status(201).json({ message: 'Notification succesfuly created' })
-    // } else {
-    //     return res.status(400).json({ message: 'Invalid notification data recieved' })
-    // }
+    console.log('Successfully created notification')
 }
 
 
@@ -54,24 +45,19 @@ const createNewNotification = async (recipient, message) => {
 const updateNotification = async (req, res) => {
     const { id } = req.body
 
-
     const notification = await Notification.findById(id)
     //confirm data
     if (!notification) {
         return res.status(404).json({ message: 'Notification not found' })
     }
 
-
     // Update the status property to true
     notification.status = true;
-
 
     // Save the updated notification
     const updatedNotification = await notification.save()
 
-
     res.json({ message: `Notification: '${updatedNotification.message}'. Status updated successfully` })
-
 
 }
 
@@ -82,17 +68,15 @@ const updateNotification = async (req, res) => {
 
 
 const deleteNotification = async (req, res) => {
-    const { id } = req.body
 
+    const { id } = req.body
 
     if (!id) {
         return res.status(400).json({ message: 'Notification ID required' })
     }
 
-
     //confirm notification exists
     const notification = await Notification.findById(id).exec()
-
 
     if (!notification) {
         return res.status(400).json({ message: 'Notification not found' })
@@ -103,9 +87,7 @@ const deleteNotification = async (req, res) => {
     }
     const result = await notification.deleteOne()
 
-
     const reply = `Notification: '${result.message}', with ID ${result._id} deleted`
-
 
     res.json(reply)
 }
