@@ -37,7 +37,6 @@ const NotificationList = () => {
 
         content = (
             <div>
-                <h1>Notifications</h1>
                 {notificationContent}
             </div>
         )
