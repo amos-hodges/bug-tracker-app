@@ -108,10 +108,10 @@ const updateUser = async (req, res) => {
     // Update projects assigned to the user
     if (projects && Array.isArray(projects)) {
 
-        const previousProjects = user.projects || [];
+        const previousProjects = user.projects || []
 
         // Find newly assigned projects
-        const newProjects = projects.filter((projectId) => !previousProjects.includes(projectId));
+        const newProjects = projects.filter((projectId) => !previousProjects.includes(projectId))
 
         // Find removed projects
         const removedProjects = previousProjects.filter((projectId) => !projects.includes(projectId.toString()))
@@ -124,15 +124,13 @@ const updateUser = async (req, res) => {
 
         // Generate notifications for removed projects
         for (const projectId of removedProjects) {
-            // if (!newProjects.includes(projectId.toString()) && projects.includes(projectId.toString())) {
-            console.log(`removing ${projectId}`);
-            const action = 'removed from';
-            await handleAddOrRemoveProject(id, projectId.toString(), action);
-            // }
+            //console.log(`removing ${projectId}`)
+            const action = 'removed from'
+            await handleAddOrRemoveProject(id, projectId.toString(), action)
         }
 
         // Update the user's projects
-        user.projects = projects;
+        user.projects = projects
     }
 
     //dont want to require pwd change every time

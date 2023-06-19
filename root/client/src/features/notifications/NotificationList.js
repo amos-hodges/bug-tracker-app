@@ -27,9 +27,9 @@ const NotificationList = () => {
     if (isSuccess) {
         const { ids, entities } = notifications
 
-        const unreadNotifications = ids.filter(
-            (id) => !entities[id].status
-        )
+        // const unreadNotifications = ids.filter(
+        //     (id) => !entities[id].status
+        // )
         //updateUnreadCount(unreadNotifications)
 
         const notificationContent = ids?.length ? (
