@@ -424,6 +424,7 @@ a:focus-visible {
   background-color: #cacaca67;
   width: 85%;
   margin: 0 auto;
+
   border: 2px solid #cccccca9;
   border-radius: 8px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);

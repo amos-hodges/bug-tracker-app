@@ -108,34 +108,32 @@ const updateUser = async (req, res) => {
     // Update projects assigned to the user
     if (projects && Array.isArray(projects)) {
 
+        const previousProjects = user.projects || [];
 
-        const previousProjects = user.projects || []
+        // Find newly assigned projects
+        const newProjects = projects.filter((projectId) => !previousProjects.includes(projectId));
 
+        // Find removed projects
+        const removedProjects = previousProjects.filter((projectId) => !projects.includes(projectId.toString()))
+
+        // Generate notifications for newly assigned projects
+        for (const projectId of newProjects) {
+            const action = 'assigned to';
+            await handleAddOrRemoveProject(id, projectId, action);
+        }
+
+        // Generate notifications for removed projects
+        for (const projectId of removedProjects) {
+            // if (!newProjects.includes(projectId.toString()) && projects.includes(projectId.toString())) {
+            console.log(`removing ${projectId}`);
+            const action = 'removed from';
+            await handleAddOrRemoveProject(id, projectId.toString(), action);
+            // }
+        }
 
         // Update the user's projects
         user.projects = projects;
-
-
-        // THIS CREATES NOTIFICATIONS FOR EVERY PROJECT!
-        for (const projectId of projects) {
-            if (!previousProjects.includes(projectId)) {
-                // User is newly assigned to the project
-                const action = 'assigned to'
-                await handleAddOrRemoveProject(id, projectId, action)
-            }
-        }
-
-        // THIS CREATES NOTIFICATIONS FOR EVERY PROJECT !
-        for (const projectId of previousProjects) {
-            if (!projects.includes(projectId)) {
-                console.log(`removing ${projectId}`)
-                // User is removed from the project
-                const action = 'removed from'
-                await handleAddOrRemoveProject(id, projectId, action)
-            }
-        }
     }
-
 
     //dont want to require pwd change every time
     if (password) {
