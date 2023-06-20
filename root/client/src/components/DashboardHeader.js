@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faRightFromBracket,
@@ -27,6 +27,9 @@ const USERS_REGEX = /^\/dashboard\/users(\/)?$/
 //DISPLAY THE CURRENT PROJECT IN THE HEADER
 const DashboardHeader = ({ toggleSidebar }) => {
 
+    const modalRef = useRef()
+    const buttonRef = useRef()
+
     const { projectId } = useParams()
 
     const { isManager, isAdmin } = useAuth()
@@ -52,6 +55,23 @@ const DashboardHeader = ({ toggleSidebar }) => {
         }
     }, [isSuccess, navigate])
 
+    useEffect(() => {
+        const handler = (e) => {
+            if (!modalRef.current) {
+                return
+            }
+            if (!modalRef.current.contains(e.target) && !buttonRef.current.contains(e.target)) {
+                setIsModalOpen(false)
+            }
+        }
+
+        document.addEventListener('click', handler, true)
+
+        return () => {
+            document.removeEventListener('click', handler)
+        }
+    }, [])
+
     const onNewProjectClicked = () => navigate('/dashboard/projects/new')
     const onNewTicketClicked = () => navigate(`projects/${projectId}/tickets/new`)
     const onNewUserClicked = () => navigate('/dashboard/users/new')
@@ -71,6 +91,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const unreadNotifications = 11
     let notificationIcon = (
         <button
+            ref={buttonRef}
             className="icon-button notify"
             title="Notifications"
             onClick={handleNotificationsClicked}
@@ -221,7 +242,9 @@ const DashboardHeader = ({ toggleSidebar }) => {
                     </nav>
                 </div>
             </header>
-            {modalContent}
+            <div ref={modalRef}>
+                {modalContent}
+            </div>
         </>
     )
     return content
