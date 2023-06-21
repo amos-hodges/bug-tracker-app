@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import Notification from "./Notification"
 import { useGetNotificationsQuery } from "./notificationApiSlice"
 import PulseLoader from 'react-spinners/PulseLoader'
@@ -12,25 +13,22 @@ const NotificationList = () => {
     } = useGetNotificationsQuery('notificationList', {
         pollingInterval: 15000,
         refetchOnFocus: true,
-        refetchOnMountOrArgChange: true
+        refetchOnMountOrArgChange: true,
+        cacheTime: 0
     })
 
     let content
 
-
     if (isLoading) content = <PulseLoader color={"#FFF"} />
 
     if (isError) {
-        content = <p className="errmsg">{error?.data?.message}</p>
+        console.log(error?.data?.message)
+        content = <p className="notification-error">{error?.data?.message}</p>
     }
 
     if (isSuccess) {
-        const { ids, entities } = notifications
 
-        // const unreadNotifications = ids.filter(
-        //     (id) => !entities[id].status
-        // )
-        //updateUnreadCount(unreadNotifications)
+        const { ids, entities } = notifications
 
         const notificationContent = ids?.length ? (
             ids.map(notificationId => (
@@ -46,8 +44,9 @@ const NotificationList = () => {
                 {notificationContent}
             </div>
         )
-        return content
+
     }
+    return content
 
 }
 

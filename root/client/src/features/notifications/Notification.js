@@ -15,11 +15,11 @@ const Notification = ({ notificationId }) => {
         error
     }] = useDeleteNotificationMutation()
 
-    useEffect(() => {
-        if (isSuccess) {
-            console.log('deleted notification')
-        }
-    }, [isSuccess, notificationId])
+    // useEffect(() => {
+    //     if (isSuccess) {
+    //         console.log('deleted notification')
+    //     }
+    // }, [isSuccess, notificationId])
 
     const handleDelete = async () => {
         console.log(notification.id)

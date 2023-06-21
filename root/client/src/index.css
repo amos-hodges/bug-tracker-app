@@ -47,6 +47,14 @@
   border-radius: 4px;
 }
 
+.notification-error {
+  font-size: 20px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .notification-bubble {
   position: absolute;
   top: 5px;
