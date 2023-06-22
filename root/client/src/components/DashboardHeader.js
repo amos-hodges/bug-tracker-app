@@ -52,6 +52,9 @@ const DashboardHeader = ({ toggleSidebar }) => {
     //     }
     // }, [isSuccess, navigate])
 
+    useEffect(() => {
+        console.log('open')
+    }, [isModalOpen])
 
     useEffect(() => {
         const handler = (e) => {
