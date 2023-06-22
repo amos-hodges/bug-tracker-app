@@ -16,9 +16,8 @@ import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import useAuth from '../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
 import NotificationModal from '../features/notifications/NotificationModal'
-import { useGetNotificationsQuery } from '../features/notifications/notificationApiSlice'
 import NotificationList from '../features/notifications/NotificationList'
-
+import { useGetNotificationsQuery } from '../features/notifications/notificationApiSlice'
 
 const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
 const TICKETS_REGEX = /^\/dashboard\/projects\/(?!all\b)\w+\/tickets(\/)?$/
@@ -47,13 +46,12 @@ const DashboardHeader = ({ toggleSidebar }) => {
         error
     }] = useSendLogoutMutation()
 
-    // const [unreadNotifications, setUnreadNotifications] = useState(0)
+    // useEffect(() => {
+    //     if (isSuccess) {
+    //         navigate('/')
+    //     }
+    // }, [isSuccess, navigate])
 
-    useEffect(() => {
-        if (isSuccess) {
-            navigate('/')
-        }
-    }, [isSuccess, navigate])
 
     useEffect(() => {
         const handler = (e) => {

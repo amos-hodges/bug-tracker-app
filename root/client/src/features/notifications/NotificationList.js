@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import Notification from "./Notification"
 import { useGetNotificationsQuery } from "./notificationApiSlice"
 import PulseLoader from 'react-spinners/PulseLoader'
@@ -26,8 +25,8 @@ const NotificationList = () => {
         content = <p className="notification-error">{error?.data?.message}</p>
     }
 
-    if (isSuccess) {
-
+    if (isSuccess && notifications) {
+        console.log(`There are ${notifications?.length} notifications`)
         const { ids, entities } = notifications
 
         const notificationContent = ids?.length ? (

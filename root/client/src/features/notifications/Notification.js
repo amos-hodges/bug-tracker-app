@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { useGetNotificationsQuery, useDeleteNotificationMutation } from "./notificationApiSlice"
 
 const Notification = ({ notificationId }) => {
+
     const { notification } = useGetNotificationsQuery('notificationsList', {
         selectFromResult: ({ data }) => ({
             notification: data?.entities[notificationId]
@@ -27,7 +28,7 @@ const Notification = ({ notificationId }) => {
     }
     //console.log(notificationId)
     if (notification) {
-
+        console.log(`ready to render ${notificationId}`)
         const created = new Date(notification.createdAt).toLocaleString('en-US', {
             day: 'numeric',
             month: 'long',
