@@ -11,17 +11,17 @@ const NotificationList = () => {
         isError,
         error
     } = useGetNotificationsQuery('notificationList', {
-        pollingInterval: 5000,
+        pollingInterval: 15000,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true,
         cacheTime: 0
     })
     //console.log(notifications)
-    useEffect(() => {
-        if (isSuccess) {
-            console.log(`${notifications} to render`)
-        }
-    }, [isSuccess, notifications])
+    // useEffect(() => {
+    //     if (isSuccess) {
+    //         console.log(`${notifications} to render`)
+    //     }
+    // }, [isSuccess, notifications])
 
     let content
 

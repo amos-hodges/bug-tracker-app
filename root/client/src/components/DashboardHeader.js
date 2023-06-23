@@ -17,7 +17,6 @@ import useAuth from '../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
 import NotificationModal from '../features/notifications/NotificationModal'
 import NotificationList from '../features/notifications/NotificationList'
-//import { useGetNotificationsQuery } from '../features/notifications/notificationApiSlice'
 import socketIOClient from "socket.io-client"
 export const socket = socketIOClient("http://localhost:3500/")
 
@@ -28,11 +27,8 @@ const USERS_REGEX = /^\/dashboard\/users(\/)?$/
 //DISPLAY THE CURRENT PROJECT IN THE HEADER
 const DashboardHeader = ({ toggleSidebar }) => {
 
-    socket.on('notification', (notification) => {
-        // Handle the received notification
-        console.log('Received notification:', notification);
-        // Perform any further actions based on the notification
-    })
+
+
 
     const modalRef = useRef()
     const buttonRef = useRef()
@@ -46,7 +42,37 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const { pathname } = useLocation()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [notifications, setNotifications] = useState([])
+    const [isNewNotification, setIsNewNotification] = useState(false)
 
+    useEffect(() => {
+        socket.emit("initial_data");
+        socket.on("get_data", getData);
+        socket.on("change_data", changeData);
+        return () => {
+            socket.off("get_data");
+            socket.off("change_data");
+        };
+    }, [])
+
+    const getData = (notifications) => {
+        console.log(notifications)
+        if (notifications.length && notifications.some((notification) => notification.status === true)) {
+            setIsNewNotification(true);
+        } else {
+            setIsNewNotification(false);
+        }
+        setNotifications(notifications);
+    }
+
+    const changeData = () => socket.emit("initial_data")
+
+
+    // socket.on('notification', (notification) => {
+    //     // Handle the received notification
+    //     console.log('Received notification:', notification);
+    //     // Perform any further actions based on the notification
+    // })
     const [sendLogout, {
         isLoading,
         isSuccess,
@@ -59,10 +85,6 @@ const DashboardHeader = ({ toggleSidebar }) => {
     //         navigate('/')
     //     }
     // }, [isSuccess, navigate])
-
-    // useEffect(() => {
-    //     console.log('open')
-    // }, [isModalOpen])
 
     useEffect(() => {
         const handler = (e) => {
