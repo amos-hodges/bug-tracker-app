@@ -19,7 +19,7 @@ import NotificationModal from '../features/notifications/NotificationModal'
 import NotificationList from '../features/notifications/NotificationList'
 //import { useGetNotificationsQuery } from '../features/notifications/notificationApiSlice'
 import socketIOClient from "socket.io-client"
-export const socket = socketIOClient("http://localhost:3000/")
+export const socket = socketIOClient("http://localhost:3500/")
 
 const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
 const TICKETS_REGEX = /^\/dashboard\/projects\/(?!all\b)\w+\/tickets(\/)?$/

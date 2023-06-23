@@ -12,15 +12,9 @@ const connectDB = require('./config/dbConn')
 const mongoose = require('mongoose')
 const { logEvents } = require('./middleware/logger')
 const PORT = process.env.PORT || 3500
-console.log(process.env.NODE_ENV)
+console.log(`${process.env.NODE_ENV} mode`)
 
 connectDB()
-
-const http = require('http')
-const socketIO = require('socket.io')
-const server = http.createServer(app)
-const io = socketIO(server)
-
 
 app.use(logger)
 
@@ -40,8 +34,6 @@ app.use('/tickets', require('./routes/ticketRoutes'))
 app.use('/projects', require('./routes/projectRoutes'))
 app.use('/notifications', require('./routes/notificationRoutes'))
 
-
-
 app.all('*', (req, res) => {
     res.status(404)
     if (req.accepts('html')) {
@@ -53,8 +45,17 @@ app.all('*', (req, res) => {
     }
 })
 
-
 app.use(errorHandler)
+
+const http = require('http')
+const socketIO = require('socket.io')
+const allowedOrigins = require('./config/allowedOrigins')
+const server = http.createServer(app)
+const io = socketIO(server, {
+    cors: {
+        origin: allowedOrigins
+    }
+})
 
 io.on("connect_error", (err) => {
     console.log(`connect_error due to ${err.message}`);
@@ -62,7 +63,7 @@ io.on("connect_error", (err) => {
 
 io.on('connection', socket => {
 
-    console.log(socket)
+    //console.log(socket)
     console.log(`Socket connected: ${socket.id}`)
 })
 
