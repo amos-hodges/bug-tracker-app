@@ -24,8 +24,12 @@ app.use(express.json())
 
 app.use(cookieParser())
 
-app.use('/', express.static(path.join(__dirname, '/public')))
+const http = require('http')
+const server = http.createServer(app)
+const { initialize } = require('./socket/socket')
+initialize(server)
 
+app.use('/', express.static(path.join(__dirname, '/public')))
 
 app.use('/', require('./routes/root'))
 app.use('/auth', require('./routes/authRoutes'))
@@ -47,27 +51,6 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler)
 
-const http = require('http')
-const socketIO = require('socket.io')
-const allowedOrigins = require('./config/allowedOrigins')
-const server = http.createServer(app)
-const io = socketIO(server, {
-    cors: {
-        origin: allowedOrigins
-    }
-})
-
-io.on("connect_error", (err) => {
-    console.log(`connect_error due to ${err.message}`);
-})
-
-io.on('connection', socket => {
-
-    //console.log(socket)
-    console.log(`Socket connected: ${socket.id}`)
-})
-
-
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
     server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
@@ -77,3 +60,4 @@ mongoose.connection.on('error', err => {
     console.log(err)
     logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log')
 })
+

@@ -28,6 +28,12 @@ const USERS_REGEX = /^\/dashboard\/users(\/)?$/
 //DISPLAY THE CURRENT PROJECT IN THE HEADER
 const DashboardHeader = ({ toggleSidebar }) => {
 
+    socket.on('notification', (notification) => {
+        // Handle the received notification
+        console.log('Received notification:', notification);
+        // Perform any further actions based on the notification
+    })
+
     const modalRef = useRef()
     const buttonRef = useRef()
 

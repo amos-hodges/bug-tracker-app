@@ -2,11 +2,14 @@ const Notification = require('../models/Notification')
 const User = require('../models/User')
 const Ticket = require('../models/Ticket')
 const Project = require('../models/Project')
+const { getIO } = require('../socket/socket')
 
 
 // @desc Get all notifications
 // @route GET /notifications
 // @access Private
+
+const io = getIO()
 
 
 const getUserNotifications = async (req, res) => {
@@ -32,7 +35,7 @@ const createNewNotification = async (recipient, message) => {
         recipient,
         message,
     })
-
+    io.emit('notification', notification)
     console.log('Successfully created notification')
 }
 
