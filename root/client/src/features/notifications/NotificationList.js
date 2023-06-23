@@ -16,7 +16,7 @@ const NotificationList = () => {
         refetchOnMountOrArgChange: true,
         cacheTime: 0
     })
-    console.log(notifications)
+    //console.log(notifications)
     useEffect(() => {
         if (isSuccess) {
             console.log(`${notifications} to render`)

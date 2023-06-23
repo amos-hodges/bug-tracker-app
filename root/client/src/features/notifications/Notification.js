@@ -28,7 +28,7 @@ const Notification = ({ notificationId }) => {
     }
     //console.log(notificationId)
     if (notification) {
-        console.log(`ready to render ${notificationId}`)
+        //console.log(`ready to render ${notificationId}`)
         const created = new Date(notification.createdAt).toLocaleString('en-US', {
             day: 'numeric',
             month: 'long',

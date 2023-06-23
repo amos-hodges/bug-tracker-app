@@ -17,7 +17,9 @@ import useAuth from '../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
 import NotificationModal from '../features/notifications/NotificationModal'
 import NotificationList from '../features/notifications/NotificationList'
-import { useGetNotificationsQuery } from '../features/notifications/notificationApiSlice'
+//import { useGetNotificationsQuery } from '../features/notifications/notificationApiSlice'
+import socketIOClient from "socket.io-client"
+export const socket = socketIOClient("http://localhost:3000/")
 
 const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
 const TICKETS_REGEX = /^\/dashboard\/projects\/(?!all\b)\w+\/tickets(\/)?$/
@@ -52,9 +54,9 @@ const DashboardHeader = ({ toggleSidebar }) => {
     //     }
     // }, [isSuccess, navigate])
 
-    useEffect(() => {
-        console.log('open')
-    }, [isModalOpen])
+    // useEffect(() => {
+    //     console.log('open')
+    // }, [isModalOpen])
 
     useEffect(() => {
         const handler = (e) => {
@@ -196,6 +198,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
             <FontAwesomeIcon icon={faGear} />
         </button>
     )
+
     //Game time decision
     // const logoutButton = (
     //     <button

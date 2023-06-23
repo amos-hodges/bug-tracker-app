@@ -12,10 +12,15 @@ const connectDB = require('./config/dbConn')
 const mongoose = require('mongoose')
 const { logEvents } = require('./middleware/logger')
 const PORT = process.env.PORT || 3500
-
 console.log(process.env.NODE_ENV)
 
 connectDB()
+
+const http = require('http')
+const socketIO = require('socket.io')
+const server = http.createServer(app)
+const io = socketIO(server)
+
 
 app.use(logger)
 
@@ -27,12 +32,15 @@ app.use(cookieParser())
 
 app.use('/', express.static(path.join(__dirname, '/public')))
 
+
 app.use('/', require('./routes/root'))
 app.use('/auth', require('./routes/authRoutes'))
 app.use('/users', require('./routes/userRoutes'))
 app.use('/tickets', require('./routes/ticketRoutes'))
 app.use('/projects', require('./routes/projectRoutes'))
 app.use('/notifications', require('./routes/notificationRoutes'))
+
+
 
 app.all('*', (req, res) => {
     res.status(404)
@@ -45,10 +53,23 @@ app.all('*', (req, res) => {
     }
 })
 
+
 app.use(errorHandler)
+
+io.on("connect_error", (err) => {
+    console.log(`connect_error due to ${err.message}`);
+})
+
+io.on('connection', socket => {
+
+    console.log(socket)
+    console.log(`Socket connected: ${socket.id}`)
+})
+
+
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+    server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 })
 
 mongoose.connection.on('error', err => {
