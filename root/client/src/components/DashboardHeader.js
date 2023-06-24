@@ -17,8 +17,8 @@ import useAuth from '../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
 import NotificationModal from '../features/notifications/NotificationModal'
 import NotificationList from '../features/notifications/NotificationList'
-import socketIOClient from "socket.io-client"
-export const socket = socketIOClient("http://localhost:3500/")
+import socketIOClient from 'socket.io-client'
+export const socket = socketIOClient('http://localhost:3500/')
 
 const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
 const TICKETS_REGEX = /^\/dashboard\/projects\/(?!all\b)\w+\/tickets(\/)?$/
@@ -27,15 +27,12 @@ const USERS_REGEX = /^\/dashboard\/users(\/)?$/
 //DISPLAY THE CURRENT PROJECT IN THE HEADER
 const DashboardHeader = ({ toggleSidebar }) => {
 
-
-
-
     const modalRef = useRef()
     const buttonRef = useRef()
 
     const { projectId } = useParams()
 
-    const { isManager, isAdmin } = useAuth()
+    const { userId, isManager, isAdmin } = useAuth()
 
     const navigate = useNavigate()
 
@@ -46,26 +43,30 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const [isNewNotification, setIsNewNotification] = useState(false)
 
     useEffect(() => {
-        socket.emit("initial_data");
-        socket.on("get_data", getData);
-        socket.on("change_data", changeData);
+        //this will likely go somewhere else
+        socket.emit('user_connected', userId)
+        socket.emit('initial_data', userId)
+        socket.on('get_data', getData);
+        socket.on('change_data', changeData);
         return () => {
-            socket.off("get_data");
-            socket.off("change_data");
+            socket.off('get_data');
+            socket.off('change_data');
         };
     }, [])
 
     const getData = (notifications) => {
-        console.log(notifications)
+
         if (notifications.length && notifications.some((notification) => notification.status === true)) {
             setIsNewNotification(true);
         } else {
             setIsNewNotification(false);
         }
+        console.log('setting new notifications')
         setNotifications(notifications);
     }
+    console.log(`${notifications.length} notifications`)
 
-    const changeData = () => socket.emit("initial_data")
+    const changeData = () => socket.emit('initial_data', userId)
 
 
     // socket.on('notification', (notification) => {
@@ -110,9 +111,10 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const onProfileClicked = () => navigate('/dashboard/profile')
     const onSettingsClicked = () => navigate('/dashboard/settings')
     const handleNotificationsClicked = () => {
+        socket.emit('check_notifications', userId)
         setIsModalOpen(!isModalOpen)
     }
-
+    console.log(notifications)
     const modalContent = (
         <NotificationModal isOpen={isModalOpen} onClose={handleNotificationsClicked}>
             <NotificationList />
@@ -123,7 +125,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
     let notificationIcon = (
         <button
             ref={buttonRef}
-            className="icon-button notify"
+            className='icon-button notify'
             title="Notifications"
             onClick={handleNotificationsClicked}
         >

@@ -2,7 +2,7 @@ const Notification = require('../models/Notification')
 const User = require('../models/User')
 const Ticket = require('../models/Ticket')
 const Project = require('../models/Project')
-const { getIO } = require('../socket/socket')
+const { getIO, connectedSockets } = require('../socket/socket')
 
 
 // @desc Get all notifications
@@ -11,6 +11,46 @@ const { getIO } = require('../socket/socket')
 
 const io = getIO()
 
+// io.on('initial_data', async ({ userId }) => {
+//     console.log('getting initial data for ' + userId)
+//     const socketId = connectedSockets[userId]
+//     const notifications = await Notification.find({ userId }).sort({ createdAt: -1 });
+
+//     if (socketId && notifications) {
+//         io.to(socketId).emit('get_data', notifications);
+//     } else {
+//         console.log('error sending initial data')
+//     }
+// })
+
+// io.on('check_notifications', async ({ userId }) => {
+//     console.log('checking notifications for ' + userId)
+//     const socketId = connectedSockets[userId]
+//     const notifications = await Notification.find({ userId })
+
+//     notifications.forEach((notification) => {
+//         notification.status = true
+//     });
+
+//     await Notification.create(notifications)
+
+//     if (socketId && notifications) {
+//         io.to(socketId).emit('change_data')
+//     } else {
+//         console.log('error checking notifications data')
+//     }
+
+// })
+
+
+const emitNotifications = (userId, notifications) => {
+    const socketId = connectedSockets[userId];
+    if (socketId) {
+        io.to(socketId).emit('get_data', notifications);
+    } else {
+        console.log('error sending')
+    }
+}
 
 const getUserNotifications = async (req, res) => {
 
@@ -31,12 +71,22 @@ const getUserNotifications = async (req, res) => {
 
 const createNewNotification = async (recipient, message) => {
 
+    const socketId = connectedSockets[recipient]
+
     const notification = await Notification.create({
         recipient,
         message,
     })
-    io.emit('notification', notification)
+    if (socketId) {
+        io.to(socketId).emit('change_data')
+        console.log('change data sent')
+    } else {
+        console.log('error sending')
+    }
+    // io.emit('notification', notification)
     console.log('Successfully created notification')
+    //io.emit('change_data')
+    // emitNotifications(recipient, [notification])
 }
 
 
