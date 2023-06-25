@@ -47,7 +47,7 @@ function initialize(server) {
             const recipientId = new mongoose.Types.ObjectId(userId)
             const socketId = connectedSockets[userId]
             const notifications = await Notification.find({ recipient: recipientId })
-            //console.log(notifications)
+            //update read status once notifications are opened
             notifications.forEach((notification) => {
                 notification.status = true
             });

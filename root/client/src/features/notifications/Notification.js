@@ -1,14 +1,15 @@
 import { useEffect } from "react"
 import { useGetNotificationsQuery, useDeleteNotificationMutation } from "./notificationApiSlice"
 
-const Notification = ({ notificationId }) => {
+const Notification = ({ message, created, onDelete }) => {
 
-    const { notification } = useGetNotificationsQuery('notificationsList', {
-        selectFromResult: ({ data }) => ({
-            notification: data?.entities[notificationId]
-        })
-    })
 
+    // const { notification } = useGetNotificationsQuery('notificationsList', {
+    //     selectFromResult: ({ data }) => ({
+    //         notification: data?.entities[notificationId]
+    //     })
+    // })
+    //console.log(notification)
     const [deleteNotification, {
         isLoading,
         isSuccess,
@@ -17,19 +18,23 @@ const Notification = ({ notificationId }) => {
     }] = useDeleteNotificationMutation()
 
     // useEffect(() => {
+    //     console.log(notification)
+    // }, [notification])
+
+    // useEffect(() => {
     //     if (isSuccess) {
     //         console.log('deleted notification')
     //     }
     // }, [isSuccess, notificationId])
 
-    const handleDelete = async () => {
-        console.log(notification.id)
-        await deleteNotification({ id: notification.id })
-    }
+    // const handleDelete = async () => {
+    //     console.log(notification.id)
+    //     await deleteNotification({ id: notification.id })
+    // }
     //console.log(notificationId)
-    if (notification) {
+    if (message) {
         //console.log(`ready to render ${notificationId}`)
-        const created = new Date(notification.createdAt).toLocaleString('en-US', {
+        const createdTime = new Date(created).toLocaleString('en-US', {
             day: 'numeric',
             month: 'long',
             hour: 'numeric',
@@ -38,11 +43,11 @@ const Notification = ({ notificationId }) => {
 
         return (
             <div className="notification-content">
-                <div>{created}</div>
-                <div>{notification.message}</div>
+                <div>{createdTime}</div>
+                <div>{message}</div>
                 <button
                     className="close-button"
-                    onClick={handleDelete}
+                    onClick={onDelete}
                 >x</button>
             </div>
         )

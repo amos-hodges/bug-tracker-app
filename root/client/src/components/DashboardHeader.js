@@ -42,6 +42,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const [notifications, setNotifications] = useState([])
     const [isNewNotification, setIsNewNotification] = useState(false)
     const [unreadNotifications, setUnreadNotifications] = useState(0)
+
     useEffect(() => {
         //this will likely go somewhere else
         socket.emit('user_connected', userId)
@@ -53,17 +54,6 @@ const DashboardHeader = ({ toggleSidebar }) => {
             socket.off('change_data');
         };
     }, [])
-
-    // const getData = (notifications) => {
-
-    //     if (notifications.length && notifications.some((notification) => notification.status === false)) {
-    //         setIsNewNotification(true);
-    //     } else {
-    //         setIsNewNotification(false);
-    //     }
-    //     console.log('setting new notifications')
-    //     setNotifications(notifications);
-    // }
 
     const getData = (notifications) => {
         const unreadNotifications = notifications.filter(notification => !notification.status).length
@@ -86,6 +76,10 @@ const DashboardHeader = ({ toggleSidebar }) => {
         isError,
         error
     }] = useSendLogoutMutation()
+
+    useEffect(() => {
+        console.log('rerendering')
+    }, [notifications])
 
     // useEffect(() => {
     //     if (isSuccess) {
@@ -123,7 +117,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
     //console.log(notifications)
     const modalContent = (
         <NotificationModal isOpen={isModalOpen} onClose={handleNotificationsClicked}>
-            <NotificationList />
+            <NotificationList notifications={notifications} />
         </NotificationModal>
     )
 
