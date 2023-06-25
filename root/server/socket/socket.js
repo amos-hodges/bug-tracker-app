@@ -30,7 +30,7 @@ function initialize(server) {
 
         socket.on('initial_data', async (userId) => {
             console.log('getting initial data for ' + userId)
-            //const recipientId = new mongoose.Types.ObjectId(userId)
+            const recipientId = new mongoose.Types.ObjectId(userId)
             const socketId = connectedSockets[userId]
             const notifications = await Notification.find({ recipient: recipientId }).sort({ createdAt: -1 });
 
@@ -47,7 +47,7 @@ function initialize(server) {
             const recipientId = new mongoose.Types.ObjectId(userId)
             const socketId = connectedSockets[userId]
             const notifications = await Notification.find({ recipient: recipientId })
-            console.log(notifications)
+            //console.log(notifications)
             notifications.forEach((notification) => {
                 notification.status = true
             });

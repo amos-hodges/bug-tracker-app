@@ -41,7 +41,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [notifications, setNotifications] = useState([])
     const [isNewNotification, setIsNewNotification] = useState(false)
-
+    const [unreadNotifications, setUnreadNotifications] = useState(0)
     useEffect(() => {
         //this will likely go somewhere else
         socket.emit('user_connected', userId)
@@ -54,26 +54,32 @@ const DashboardHeader = ({ toggleSidebar }) => {
         };
     }, [])
 
-    const getData = (notifications) => {
+    // const getData = (notifications) => {
 
-        if (notifications.length && notifications.some((notification) => notification.status === true)) {
-            setIsNewNotification(true);
+    //     if (notifications.length && notifications.some((notification) => notification.status === false)) {
+    //         setIsNewNotification(true);
+    //     } else {
+    //         setIsNewNotification(false);
+    //     }
+    //     console.log('setting new notifications')
+    //     setNotifications(notifications);
+    // }
+
+    const getData = (notifications) => {
+        const unreadNotifications = notifications.filter(notification => !notification.status).length
+
+        if (unreadNotifications > 0) {
+            setIsNewNotification(true)
         } else {
-            setIsNewNotification(false);
+            setIsNewNotification(false)
         }
-        console.log('setting new notifications')
-        setNotifications(notifications);
+
+        setNotifications(notifications)
+        setUnreadNotifications(unreadNotifications)
     }
-    console.log(`${notifications.length} notifications`)
 
     const changeData = () => socket.emit('initial_data', userId)
 
-
-    // socket.on('notification', (notification) => {
-    //     // Handle the received notification
-    //     console.log('Received notification:', notification);
-    //     // Perform any further actions based on the notification
-    // })
     const [sendLogout, {
         isLoading,
         isSuccess,
@@ -114,14 +120,14 @@ const DashboardHeader = ({ toggleSidebar }) => {
         socket.emit('check_notifications', userId)
         setIsModalOpen(!isModalOpen)
     }
-    console.log(notifications)
+    //console.log(notifications)
     const modalContent = (
         <NotificationModal isOpen={isModalOpen} onClose={handleNotificationsClicked}>
             <NotificationList />
         </NotificationModal>
     )
 
-    const unreadNotifications = 11
+    //const unreadNotifications = 11
     let notificationIcon = (
         <button
             ref={buttonRef}
