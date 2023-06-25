@@ -53,7 +53,7 @@ Bug Tracking App User Stories
         - [ ] addition/modificaiton/removal of employees
     - [ ] Employee 
         - [ ] Reminders for assigned tickets (due dates, open too long etc.)
-        - [ ] new project & ticket assignments (addition and removal)
+        - [x] new project & ticket assignments (addition and removal)
         
 - [x] Once logged in users can navigate between pages, refresh and go back without losing privilege
 - [ ] Users have the option to customize there profile and various settings of the app

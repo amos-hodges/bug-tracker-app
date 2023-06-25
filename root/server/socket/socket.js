@@ -63,6 +63,15 @@ function initialize(server) {
 
         })
 
+        socket.on('delete_notification', async (notificationId) => {
+            console.log(`deleting notification: ${notificationId}`)
+
+            const notification = await Notification.findById(notificationId).exec()
+            const result = await notification.deleteOne()
+            console.log(result._id + ' deleted')
+            io.sockets.emit('change_data')
+        })
+
         socket.on('disconnect', () => {
             console.log('user disconnected')
             const userId = Object.keys(connectedSockets).find(

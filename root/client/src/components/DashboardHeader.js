@@ -17,6 +17,7 @@ import useAuth from '../hooks/useAuth'
 import PulseLoader from 'react-spinners/PulseLoader'
 import NotificationModal from '../features/notifications/NotificationModal'
 import NotificationList from '../features/notifications/NotificationList'
+
 import socketIOClient from 'socket.io-client'
 export const socket = socketIOClient('http://localhost:3500/')
 
@@ -40,7 +41,6 @@ const DashboardHeader = ({ toggleSidebar }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [notifications, setNotifications] = useState([])
-    const [isNewNotification, setIsNewNotification] = useState(false)
     const [unreadNotifications, setUnreadNotifications] = useState(0)
 
     useEffect(() => {
@@ -56,13 +56,8 @@ const DashboardHeader = ({ toggleSidebar }) => {
     }, [])
 
     const getData = (notifications) => {
+        //count # of notifications with status === false
         const unreadNotifications = notifications.filter(notification => !notification.status).length
-
-        if (unreadNotifications > 0) {
-            setIsNewNotification(true)
-        } else {
-            setIsNewNotification(false)
-        }
 
         setNotifications(notifications)
         setUnreadNotifications(unreadNotifications)
@@ -77,9 +72,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
         error
     }] = useSendLogoutMutation()
 
-    useEffect(() => {
-        console.log('rerendering')
-    }, [notifications])
+
 
     // useEffect(() => {
     //     if (isSuccess) {
