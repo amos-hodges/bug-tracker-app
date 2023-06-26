@@ -95,22 +95,14 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.85);
   overflow-y: auto;
-  /* Semi-transparent background 
-  z-index: 9999;
-  Ensure the modal is on top of other elements */
 }
 
 .modal-content {
-
   position: absolute;
   padding-top: 15px;
   padding-bottom: 100px;
   padding-left: 15px;
   padding-right: 15px;
-  /* top: 100%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
-  /* Add additional styles for the modal content, such as width, height, padding, etc. */
 }
 
 
