@@ -1,18 +1,18 @@
 import { useEffect } from "react"
 
-const Modal = ({ onClose, children }) => {
+const Modal = ({ className, timeOut, onClose, children }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             onClose()
-        }, 3000)
+        }, timeOut)
 
         return () => {
             clearTimeout(timer)
         }
-    }, [onClose])
+    }, [timeOut, onClose])
 
     return (
-        <div className="modal">
+        <div className={className}>
             {children}
         </div>
     )

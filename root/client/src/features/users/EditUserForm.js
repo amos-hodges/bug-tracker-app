@@ -225,7 +225,10 @@ const EditUserForm = ({ user, projects, tickets }) => {
                 </form>
             </div>
             {showModal && (
-                <Modal onClose={() => setShowModal(false)}>
+                <Modal
+                    className={"modal"}
+                    timeOut={3000}
+                    onClose={() => setShowModal(false)}>
                     <p>User has tickets open in that project!</p>
                 </Modal>)}
         </>

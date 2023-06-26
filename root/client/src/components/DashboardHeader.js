@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-    faRightFromBracket,
+    // faRightFromBracket,
     faFileCirclePlus,
     faFolderPlus,
     faCircleUser,
@@ -12,13 +12,13 @@ import {
     faBars
 } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
-import { useSendLogoutMutation } from '../features/auth/authApiSlice'
+//import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import useAuth from '../hooks/useAuth'
-import PulseLoader from 'react-spinners/PulseLoader'
-import NotificationModal from '../features/notifications/NotificationModal'
+//import PulseLoader from 'react-spinners/PulseLoader'
 import NotificationList from '../features/notifications/NotificationList'
 
 import socketIOClient from 'socket.io-client'
+import Modal from './Modal'
 export const socket = socketIOClient('http://localhost:3500/')
 
 const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
@@ -58,21 +58,18 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const getData = (notifications) => {
         //count # of notifications with status === false
         const unreadNotifications = notifications.filter(notification => !notification.status).length
-
         setNotifications(notifications)
         setUnreadNotifications(unreadNotifications)
     }
 
     const changeData = () => socket.emit('initial_data', userId)
 
-    const [sendLogout, {
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    }] = useSendLogoutMutation()
-
-
+    // const [sendLogout, {
+    //     isLoading,
+    //     isSuccess,
+    //     isError,
+    //     error
+    // }] = useSendLogoutMutation()
 
     // useEffect(() => {
     //     if (isSuccess) {
@@ -80,6 +77,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
     //     }
     // }, [isSuccess, navigate])
 
+    //close modal when clicked off
     useEffect(() => {
         const handler = (e) => {
             if (!modalRef.current) {
@@ -89,7 +87,6 @@ const DashboardHeader = ({ toggleSidebar }) => {
                 setIsModalOpen(false)
             }
         }
-
         document.addEventListener('click', handler, true)
 
         return () => {
@@ -107,15 +104,21 @@ const DashboardHeader = ({ toggleSidebar }) => {
         socket.emit('check_notifications', userId)
         setIsModalOpen(!isModalOpen)
     }
-    //console.log(notifications)
-    const modalContent = (
-        <NotificationModal isOpen={isModalOpen} onClose={handleNotificationsClicked}>
-            <NotificationList notifications={notifications} />
-        </NotificationModal>
+
+    const modalContent = isModalOpen && (
+        <Modal
+            className={"modal-overlay"}
+            timeOut={15000}
+            onClose={handleNotificationsClicked}>
+            <div className="modal-content">
+                <NotificationList notifications={notifications} />
+            </div>
+        </Modal>
     )
 
-    //const unreadNotifications = 11
-    let notificationIcon = (
+
+
+    let notificationButton = (
         <button
             ref={buttonRef}
             className='icon-button notify'
@@ -128,16 +131,6 @@ const DashboardHeader = ({ toggleSidebar }) => {
                     {unreadNotifications}
                 </span>
             }
-        </button>
-    )
-
-    let sidebarToggle = (
-        <button
-            className="icon-button"
-            title="sidebar"
-            onClick={toggleSidebar}
-        >
-            <FontAwesomeIcon icon={faBars} />
         </button>
     )
 
@@ -155,6 +148,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
             )
         }
     }
+
     let newTicketButton = null
     if (TICKETS_REGEX.test(pathname)) {
         newTicketButton = (
@@ -198,10 +192,8 @@ const DashboardHeader = ({ toggleSidebar }) => {
         }
     }
 
-    let ticketsButton = null
 
     // AVAILABLE ON ALL PAGES
-
     const profileButton = (
         <button
             className='icon-button'
@@ -233,30 +225,40 @@ const DashboardHeader = ({ toggleSidebar }) => {
     //     </button>
     // )
 
-    const errClass = isError ? "errMsg" : "offscreen"
+    //const errClass = isError ? "errMsg" : "offscreen"
 
     let buttonContent
-    if (isLoading) {
-        buttonContent = <PulseLoader color={"#FFF"} />
-    } else {
-        buttonContent = (
-            <>
-                {newProjectButton}
-                {newTicketButton}
-                {newUserButton}
-                {ticketsButton}
-                {userSettingsButton}
-                {profileButton}
-                {notificationIcon}
-                {settingsButton}
-                {/* {logoutButton} */}
-            </>
-        )
-    }
+
+    // if (isLoading) {
+    //     buttonContent = <PulseLoader color={"#FFF"} />
+    // } else {
+    buttonContent = (
+        <>
+            {newProjectButton}
+            {newTicketButton}
+            {newUserButton}
+            {userSettingsButton}
+            {profileButton}
+            {notificationButton}
+            {settingsButton}
+            {/* {logoutButton} */}
+        </>
+    )
+    // }
+
+    let sidebarToggle = (
+        <button
+            className="icon-button"
+            title="sidebar"
+            onClick={toggleSidebar}
+        >
+            <FontAwesomeIcon icon={faBars} />
+        </button>
+    )
 
     const content = (
         <>
-            <p className={errClass}>{error?.data?.message}</p>
+            {/* <p className={errClass}>{error?.data?.message}</p> */}
 
             <header className="dash-header">
                 <div className="dash-header__container">
