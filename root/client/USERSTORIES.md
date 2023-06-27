@@ -52,7 +52,9 @@ Bug Tracking App User Stories
         - Project related notifications (backlog/late/urgent tickets etc)
         - [ ] addition/modificaiton/removal of employees
     - [ ] Employee 
-        - [ ] Reminders for assigned tickets (due dates, open too long etc.)
+        - [ ] Reminders for assigned tickets
+            - [ ] due dates, 
+            - [x] open too long
         - [x] new project & ticket assignments (addition and removal)
         
 - [x] Once logged in users can navigate between pages, refresh and go back without losing privilege

@@ -30,11 +30,11 @@ const createNewNotification = async (recipient, message) => {
 
 const scheduleReminder = (userId, ticket) => {
     console.log('schedululing for user: ' + userId + ' ticket: ' + ticket.title)
-    // Calculate the date and time one week from the ticket's createdAt timestamp
     const notificationDate = new Date(ticket.createdAt)
     //testing
     notificationDate.setSeconds(notificationDate.getSeconds() + 30)
-    //notificationDate.setDate(notificationDate.getDate() + 7);
+    //production
+    //notificationDate.setDate(notificationDate.getDate() + 7)
     const message = `The following ticket has been open for an extended time: \n ${ticket.title}`
     // Schedule a job to create a notification at the calculated date and time
     schedule.scheduleJob(notificationDate, async () => {
