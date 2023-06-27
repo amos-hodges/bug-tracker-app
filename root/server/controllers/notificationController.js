@@ -28,17 +28,24 @@ const createNewNotification = async (recipient, message) => {
 
 }
 
-// NEED TO SCHEDULE DIFFERENT JOBS FOR DIFFERENT ROLES
-//PERIODICALLY CHECK FOR ALL USERS
-const scheduleChecks = () => {
-    schedule.scheduleJob('0 * * * *', async () => {
+const scheduleReminder = (userId, ticket) => {
+    console.log('schedululing for user: ' + userId + ' ticket: ' + ticket.title)
+    // Calculate the date and time one week from the ticket's createdAt timestamp
+    const notificationDate = new Date(ticket.createdAt)
+    //testing
+    notificationDate.setSeconds(notificationDate.getSeconds() + 30)
+    //notificationDate.setDate(notificationDate.getDate() + 7);
+    const message = `The following ticket has been open for an extended time: \n ${ticket.title}`
+    // Schedule a job to create a notification at the calculated date and time
+    schedule.scheduleJob(notificationDate, async () => {
         try {
-            await determineOverdue()
-            console.log('Ticket status check completed.')
+            // Create the notification for the ticket
+            await createNewNotification(userId, message);
+            console.log(`Reminder created.`);
         } catch (error) {
-            console.error('An error occurred during ticket status check:', error);
+            console.error('Error creating reminder notification:', error);
         }
-    })
+    });
 }
 
 // *** EMPLOYEE NOTIFICATIONS ***
@@ -73,28 +80,11 @@ const handleAddOrRemoveProject = async (userId, projectId, action) => {
     await createNewNotification(assignedUser._id, message);
 }
 
-const determineOverdue = async (userId) => {
-
-    const assignedTickets = await Ticket.find({ user: userId })
-
-    const currentTime = new Date()
-    //set to one day, change per requirements
-    const timeLimit = 24 * 60 * 60 * 1000
-
-    for (const ticket of assignedTickets) {
-        const timeDifference = currentTime - ticket.createdAt
-
-        if (timeDifference >= timeLimit) {
-            const message = `The following ticket has been open for an extended period:\n ${ticket.title}.`
-            await createNewNotification(userId, message)
-        }
-    }
-}
 
 
 module.exports = {
     createNewNotification,
     handleTicketAssigned,
     handleAddOrRemoveProject,
-    scheduleChecks
+    scheduleReminder
 }

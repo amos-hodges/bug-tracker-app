@@ -1,9 +1,9 @@
-const socketIO = require('socket.io');
-const allowedOrigins = require('../config/allowedOrigins');
+const socketIO = require('socket.io')
+const allowedOrigins = require('../config/allowedOrigins')
 const Notification = require('../models/Notification')
 const mongoose = require('mongoose')
 
-let io;
+let io
 
 const connectedSockets = {}
 
@@ -29,7 +29,7 @@ function initialize(server) {
         })
 
         socket.on('initial_data', async (userId) => {
-            console.log('getting initial data for ' + userId)
+            //console.log('getting initial data for ' + userId)
             const recipientId = new mongoose.Types.ObjectId(userId)
             const socketId = connectedSockets[userId]
             const notifications = await Notification.find({ recipient: recipientId }).sort({ createdAt: -1 });
@@ -43,14 +43,14 @@ function initialize(server) {
         })
 
         socket.on('check_notifications', async (userId) => {
-            console.log('checking notifications for ' + userId)
+            //console.log('checking notifications for ' + userId)
             const recipientId = new mongoose.Types.ObjectId(userId)
             const socketId = connectedSockets[userId]
             const notifications = await Notification.find({ recipient: recipientId })
             //update read status once notifications are opened
             notifications.forEach((notification) => {
                 notification.status = true
-            });
+            })
 
             await Notification.create(notifications)
 
@@ -64,7 +64,7 @@ function initialize(server) {
         })
 
         socket.on('delete_notification', async (notificationId) => {
-            console.log(`deleting notification: ${notificationId}`)
+            //console.log(`deleting notification: ${notificationId}`)
 
             const notification = await Notification.findById(notificationId).exec()
             const result = await notification.deleteOne()
@@ -86,9 +86,9 @@ function initialize(server) {
 
 function getIO() {
     if (!io) {
-        throw new Error('Socket.io has not been initialized.');
+        throw new Error('Socket.io has not been initialized.')
     }
-    return io;
+    return io
 }
 
 module.exports = {
