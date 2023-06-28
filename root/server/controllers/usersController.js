@@ -1,7 +1,7 @@
 const User = require('../models/User')
 const Ticket = require('../models/Ticket')
 const Project = require('../models/Project')
-const { handleAddOrRemoveProject } = require('./notificationController')
+const { handleAddOrRemoveProject, handleEmployeeUpdate } = require('./notificationController')
 const bcrypt = require('bcrypt')
 
 
@@ -10,12 +10,10 @@ const bcrypt = require('bcrypt')
 // @access Private
 const getAllUsers = async (req, res) => {
 
-
     const users = await User.find().select('-password').lean()
     if (!users?.length) {
         return res.status(400).json({ message: 'No users found' })
     }
-
 
     const usersWithProjects = await Promise.all(users.map(async (user) => {
         //retrive project titles without modifying user.projects array
@@ -23,15 +21,10 @@ const getAllUsers = async (req, res) => {
             { _id: { $in: user.projects } },
             'title'
         ).lean();
-
-
         return { ...user, projectTitles: projectTitles.map((project) => project.title) };
     }))
 
-
     res.json(usersWithProjects)
-
-
 }
 
 
@@ -41,7 +34,6 @@ const getAllUsers = async (req, res) => {
 const createNewUser = async (req, res) => {
     const { username, password, roles } = req.body
 
-
     if (!username || !password) {
         return res.status(400).json({ message: 'All fields are required' })
     }
@@ -49,24 +41,20 @@ const createNewUser = async (req, res) => {
     //collation - fix for case sensitivity. duplicate will be found regardless of case
     const duplicate = await User.findOne({ username }).collation({ locale: 'en', strength: 2 }).lean().exec()
 
-
     if (duplicate) {
         return res.status(409).json({ message: 'Duplicate username' })
     }
     //hash password
     const hashedPwd = await bcrypt.hash(password, 10) //salt round
 
-
     // const userObject = { username, 'password': hashedPwd, roles }
     const userObject = (!Array.isArray(roles) || !roles.length)
         ? { username, "password": hashedPwd }
         : { username, "password": hashedPwd, roles }
 
-
     //create and store new user
     const user = await User.create(userObject)
-
-
+    handleEmployeeUpdate(`${username} has just been added to the team!`)
     if (user) {
         res.status(201).json({ message: `New user ${username} created` })
     } else {
@@ -85,9 +73,7 @@ const updateUser = async (req, res) => {
         return res.status(400).json({ message: 'All fields except password are required' })
     }
 
-
     const user = await User.findById(id).exec()
-
 
     if (!user) {
         return res.status(400).json({ message: 'User not found' })
@@ -99,15 +85,24 @@ const updateUser = async (req, res) => {
         return res.status(409).json({ message: 'Duplicate username' })
     }
 
+    let message = ''
+
+    if (user.username !== username) {
+        message += 'Username changed'
+    }
+    if (user.active !== active) {
+        if (message) {
+            message += ' & '
+        }
+        message += 'Account status changed'
+    }
 
     user.username = username
     user.roles = roles
     user.active = active
 
-
     // Update projects assigned to the user
     if (projects && Array.isArray(projects)) {
-
         const previousProjects = user.projects || []
 
         // Find newly assigned projects
@@ -138,10 +133,10 @@ const updateUser = async (req, res) => {
         //hash password
         user.password = await bcrypt.hash(password, 10)
     }
-
-
     const updatedUser = await user.save()
-
+    if (message) {
+        handleEmployeeUpdate(`The following updates were performed on ${username}'s account: ${message}`)
+    }
 
     res.json({ message: `${updatedUser.username} updated` })
 }
@@ -173,7 +168,7 @@ const deleteUser = async (req, res) => {
 
 
     const result = await user.deleteOne()
-
+    handleEmployeeUpdate(`${user.username} was just removed from the team.`)
 
     const reply = `Username ${result.username} with ID ${result._id} deleted`
 
