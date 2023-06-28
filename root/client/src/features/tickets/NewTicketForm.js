@@ -5,12 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { faSave } from '@fortawesome/free-solid-svg-icons'
 import { STATUS } from '../../config/statuses'
+
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 //ADD A BUTTON TO DIRECTLY ADD A NEW USER TO THE PROJECT
 
 const NewTicketForm = ({ users }) => {
 
     const { projectId } = useParams()
-    //console.log(projectId)
+
     const [addNewTicket, {
         isLoading,
         isSuccess,
@@ -24,7 +27,7 @@ const NewTicketForm = ({ users }) => {
     const [text, setText] = useState('')
     const [importance, setImportance] = useState('')
     const [userId, setUserId] = useState('')
-    //const [userId, setUserId] = useState(users[0].id)
+    const [dueDate, setDueDate] = useState(null)
     useEffect(() => {
         if (isSuccess) {
 
@@ -32,6 +35,7 @@ const NewTicketForm = ({ users }) => {
             setText('')
             setImportance('')
             setUserId('')
+            setDueDate(null)
             navigate(`/dashboard/projects/${projectId}/tickets`)
         }
     }, [isSuccess, navigate, projectId])
@@ -41,13 +45,14 @@ const NewTicketForm = ({ users }) => {
     const onTextChanged = e => setText(e.target.value)
     const onUserIdChanged = e => setUserId(e.target.value)
     const onImportanceChanged = e => setImportance(e.target.value)
+    const onDueDateChanged = date => setDueDate(date)
 
-    const canSave = [projectId, title, text, importance, userId].every(Boolean) && !isLoading
+    const canSave = [projectId, title, text, importance, userId, dueDate].every(Boolean) && !isLoading
 
     const onSaveTicketClicked = async (e) => {
         e.preventDefault()
         if (canSave) {
-            await addNewTicket({ user: userId, project: projectId, title, text, importance })
+            await addNewTicket({ user: userId, project: projectId, title, text, importance, dueDate })
         }
     }
 
@@ -79,6 +84,7 @@ const NewTicketForm = ({ users }) => {
         ))
     ]
 
+
     const errClass = isError ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
     const validTextClass = !text ? "form__input--incomplete" : ''
@@ -91,6 +97,7 @@ const NewTicketForm = ({ users }) => {
             Back to project
         </button>
     )
+
 
     const content = (
         <>
@@ -156,6 +163,19 @@ const NewTicketForm = ({ users }) => {
                     >
                         {statusOptions}
                     </select>
+
+                    <label className="form__label" htmlFor="dueDate">
+                        Due Date:
+                    </label>
+                    <DatePicker
+                        id="dueDate"
+                        name="dueDate"
+                        selected={dueDate}
+                        onChange={onDueDateChanged}
+                        className="form__input"
+                        placeholderText="Select due date"
+                        minDate={new Date()}
+                    />
 
                 </form>
             </div>

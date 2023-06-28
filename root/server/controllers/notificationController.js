@@ -28,20 +28,19 @@ const createNewNotification = async (recipient, message) => {
 
 }
 
-const scheduleReminder = (userId, ticket) => {
-    console.log('schedululing for user: ' + userId + ' ticket: ' + ticket.title)
-    const notificationDate = new Date(ticket.createdAt)
-    //testing
-    notificationDate.setSeconds(notificationDate.getSeconds() + 30)
-    //production
-    //notificationDate.setDate(notificationDate.getDate() + 7)
-    const message = `The following ticket has been open for an extended time: \n ${ticket.title}`
+const scheduleDueDateReminder = (userId, ticket, dueDate) => {
+
+    const notificationDate = new Date(dueDate)
+
+    //remind user 1 day before due date
+    notificationDate.setDate(notificationDate.getDate() - 1)
+    const message = `The following ticket is due is 24 hours: ${ticket.title}.`
     // Schedule a job to create a notification at the calculated date and time
     schedule.scheduleJob(notificationDate, async () => {
         try {
             // Create the notification for the ticket
             await createNewNotification(userId, message);
-            console.log(`Reminder created.`);
+            console.log(`Reminder created for ${notificationDate}.`);
         } catch (error) {
             console.error('Error creating reminder notification:', error);
         }
@@ -86,5 +85,5 @@ module.exports = {
     createNewNotification,
     handleTicketAssigned,
     handleAddOrRemoveProject,
-    scheduleReminder
+    scheduleDueDateReminder
 }

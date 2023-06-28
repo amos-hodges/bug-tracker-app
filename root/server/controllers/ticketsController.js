@@ -28,12 +28,11 @@ const getAllTickets = async (req, res) => {
 // @access Private
 const createNewTicket = async (req, res) => {
 
-    const { user, project, title, text, importance } = req.body
-    //console.log(req.body)
-    //confrim data
+    const { user, project, title, text, importance, dueDate } = req.body
 
-    if (!user || !project || !title || !text || !importance) {
-        console.log(user, project, title, text, importance)
+    //confirm data
+    console.log(dueDate)
+    if (!user || !project || !title || !text || !importance || !dueDate) {
         return res.status(400).json({ message: 'All fields are required.' })
     }
 
@@ -49,7 +48,7 @@ const createNewTicket = async (req, res) => {
     if (ticket) {
         //assign notification to user 
         await handleTicketAssigned(user, ticket._id)
-        scheduleReminder(user, ticket)
+        scheduleReminder(user, ticket, dueDate)
         return res.status(201).json({ message: 'Ticket succesfuly created' })
     } else {
         return res.status(400).json({ message: 'Invalid ticket data recieved' })

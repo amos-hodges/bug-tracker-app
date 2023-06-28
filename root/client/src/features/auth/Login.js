@@ -72,7 +72,7 @@ const Login = () => {
             </header>
             <main className="login">
                 <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
-                <form className="form" onSubmit={handleSubmit}>
+                <form className="form panel" onSubmit={handleSubmit}>
                     <label htmlFor="username">Username:</label>
                     <input
                         className="form__input"

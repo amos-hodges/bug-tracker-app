@@ -246,8 +246,24 @@ a:focus-visible {
   flex-grow: 1;
 }
 
+.panel {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  padding: 0.75rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  background-color: #abc3e7a9;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  align-items: center;
+
+}
+
+
 .public__main,
 .login {
+  /* border: #000;
+  border-radius: 5px; */
   flex-grow: 1;
   border-top: 2px solid var(--BORDER-COLOR);
   border-bottom: 2px solid var(--BORDER-COLOR);

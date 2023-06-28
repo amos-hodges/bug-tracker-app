@@ -10,7 +10,7 @@ Bug Tracking App User Stories
 - [ ] Levels of privelege for different user types
     - [x] Admin 
         - [ ] create/delete user accounts, 
-        - [ ]all manager and employee privilege
+        - [ ] all manager and employee privilege
     - [ ] Manager 
         - [ ] create projects 
         - [ ] add users to specific projects
@@ -51,10 +51,8 @@ Bug Tracking App User Stories
     - [ ] Manager 
         - Project related notifications (backlog/late/urgent tickets etc)
         - [ ] addition/modificaiton/removal of employees
-    - [ ] Employee 
-        - [ ] Reminders for assigned tickets
-            - [ ] due dates, 
-            - [x] open too long
+    - [x] Employee 
+        - [x] Due date reminders for assigned tickets
         - [x] new project & ticket assignments (addition and removal)
         
 - [x] Once logged in users can navigate between pages, refresh and go back without losing privilege
