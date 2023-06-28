@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useUpdateUserMutation, useDeleteUserMutation } from './usersApiSlice'
 import { useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { ROLES } from '../../config/roles'
@@ -23,6 +24,8 @@ const EditUserForm = ({ user, projects, tickets }) => {
         error: delerror
     }] = useDeleteUserMutation()
 
+    const { isAdmin, isManager } = useAuth()
+    const isOnlyManager = (isManager && !isAdmin)
     const navigate = useNavigate()
 
     const [username, setUsername] = useState(user.username)
@@ -135,7 +138,7 @@ const EditUserForm = ({ user, projects, tickets }) => {
     const noTickets = !tickets.length ? true : false
 
     let deleteButton
-    if (noTickets) {
+    if (noTickets && isAdmin) {
         deleteButton = (
             <button
                 className="icon-button"
@@ -163,8 +166,10 @@ const EditUserForm = ({ user, projects, tickets }) => {
             <div className="page-container">
                 <p className={errClass}>{errContent}</p>
                 <form className="form" onSubmit={e => e.preventDefault()}>
+                    {isOnlyManager && <h1>{username}</h1>}
                     <div className="form__title-row">
-                        <h2>Edit User</h2>
+
+                        <h2>Edit User {isOnlyManager && 'Projects'}</h2>
                         <div className="form__action-buttons">
                             <button
                                 className="icon-button"
@@ -177,46 +182,49 @@ const EditUserForm = ({ user, projects, tickets }) => {
                             {deleteButton}
                         </div>
                     </div>
-                    <label className="form__label" htmlFor="username">
-                        Username: <span className="nowrap">[3-20 letter]</span>
-                    </label>
-                    <input
-                        className={`form__input ${validUserClass}`}
-                        id="username"
-                        name="username"
-                        type="text"
-                        autoComplete="off"
-                        value={username}
-                        onChange={onUsernameChanged}
-                    />
-                    <label className="form__label" htmlFor="password">
-                        Password: <span className="nowrap">[empty = no change]</span> <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
-                    <input
-                        className={`form__input ${validPwdClass}`}
-                        id="password"
-                        name="password"
-                        type="password"
-                        value={password}
-                        onChange={onPasswordChanged}
-                    />
 
-                    <label className="form__label form__checkbox-container" htmlFor="user-active">
-                        ACTIVE:
-                        <input
-                            className="form__checkbox"
-                            id="user-active"
-                            name="user-active"
-                            type="checkbox"
-                            checked={active}
-                            onChange={onActiveChanged}
-                        />
-                    </label>
+                    {isAdmin && (
+                        <>
+                            <label className="form__label" htmlFor="username">
+                                Username: <span className="nowrap">[3-20 letter]</span>
+                            </label>
+                            <input
+                                className={`form__input ${validUserClass}`}
+                                id="username"
+                                name="username"
+                                type="text"
+                                autoComplete="off"
+                                value={username}
+                                onChange={onUsernameChanged}
+                            />
+                            <label className="form__label" htmlFor="password">
+                                Password: <span className="nowrap">[empty = no change]</span> <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
+                            <input
+                                className={`form__input ${validPwdClass}`}
+                                id="password"
+                                name="password"
+                                type="password"
+                                value={password}
+                                onChange={onPasswordChanged}
+                            />
 
-                    <label className="form__label" htmlFor="roles">
-                        ASSIGNED ROLES:
-                    </label>
-                    {options}
+                            <label className="form__label form__checkbox-container" htmlFor="user-active">
+                                ACTIVE:
+                                <input
+                                    className="form__checkbox"
+                                    id="user-active"
+                                    name="user-active"
+                                    type="checkbox"
+                                    checked={active}
+                                    onChange={onActiveChanged}
+                                />
+                            </label>
 
+                            <label className="form__label" htmlFor="roles">
+                                ASSIGNED ROLES:
+                            </label>
+                            {options}
+                        </>)}
                     <label className="form__label" htmlFor="projects">
                         ASSIGNED PROJECTS:
                     </label>

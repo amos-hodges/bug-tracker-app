@@ -10,14 +10,14 @@ Bug Tracking App User Stories
 - [ ] Levels of privelege for different user types
     - [x] Admin 
         - [ ] create/delete user accounts, 
-        - [ ] all manager and employee privilege
+        - [x] all manager and employee privilege
     - [ ] Manager 
         - [ ] create projects 
         - [ ] add users to specific projects
         - [ ] re-assign tickets
         - [ ] create announcements (group message)
-        - [ ] request addition/removal of employees, 
-        - [ ] all employee privelege
+        - [ ] request removal of employees
+        - [x] all employee privelege
     - [ ] Employee 
         - [ ] change statuses and add notes on thier own tickets
         - [ ] cannot close ticket without manager approval
