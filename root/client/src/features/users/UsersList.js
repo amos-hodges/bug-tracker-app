@@ -4,6 +4,7 @@ import SortIndicator from '../../components/SortIndicator'
 import User from './User'
 import PulseLoader from 'react-spinners/PulseLoader'
 import { useState } from 'react'
+import useAuth from '../../hooks/useAuth'
 
 const UsersList = () => {
 
@@ -19,6 +20,8 @@ const UsersList = () => {
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })
+
+    const { isAdmin, isManager } = useAuth()
 
     let content
 
@@ -124,9 +127,10 @@ const UsersList = () => {
                             {tableContent}
                         </tbody>
                     </table>
-                    <Link to={'/dashboard/users/new'} className="new-ticket-button">
+                    {isAdmin && <Link to={'/dashboard/users/new'} className="new-ticket-button">
                         New User
-                    </Link >
+                    </Link >}
+                    {isManager && <button className='new-ticket-button'>Admin Request</button>}
                 </div>
             </>
         )

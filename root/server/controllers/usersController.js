@@ -54,7 +54,7 @@ const createNewUser = async (req, res) => {
 
     //create and store new user
     const user = await User.create(userObject)
-    handleEmployeeUpdate(`${username} has just been added to the team!`)
+    handleEmployeeUpdate(`${username} has just been added to the team!`, 'Manager')
     if (user) {
         res.status(201).json({ message: `New user ${username} created` })
     } else {
@@ -88,13 +88,13 @@ const updateUser = async (req, res) => {
     let message = ''
 
     if (user.username !== username) {
-        message += 'Username changed'
+        message += `Username change from ${user.username} to ${username}.`
     }
     if (user.active !== active) {
         if (message) {
             message += ' & '
         }
-        message += 'Account status changed'
+        message += `Account active status changed to ${active}.`
     }
 
     user.username = username
@@ -104,38 +104,32 @@ const updateUser = async (req, res) => {
     // Update projects assigned to the user
     if (projects && Array.isArray(projects)) {
         const previousProjects = user.projects || []
-
-        // Find newly assigned projects
         const newProjects = projects.filter((projectId) => !previousProjects.includes(projectId))
-
-        // Find removed projects
         const removedProjects = previousProjects.filter((projectId) => !projects.includes(projectId.toString()))
-
         // Generate notifications for newly assigned projects
         for (const projectId of newProjects) {
             const action = 'assigned to';
             await handleAddOrRemoveProject(id, projectId, action);
         }
-
         // Generate notifications for removed projects
         for (const projectId of removedProjects) {
             //console.log(`removing ${projectId}`)
             const action = 'removed from'
             await handleAddOrRemoveProject(id, projectId.toString(), action)
         }
-
         // Update the user's projects
         user.projects = projects
     }
 
-    //dont want to require pwd change every time
+    //dont want to require pwd change
     if (password) {
         //hash password
         user.password = await bcrypt.hash(password, 10)
+        handleEmployeeUpdate(`${user.username}'s password was just changed.`, 'Admin')
     }
     const updatedUser = await user.save()
     if (message) {
-        handleEmployeeUpdate(`The following updates were performed on ${username}'s account: ${message}`)
+        handleEmployeeUpdate(`The following updates were performed on ${username}'s account: ${message}`, 'Manager')
     }
 
     res.json({ message: `${updatedUser.username} updated` })
@@ -168,7 +162,7 @@ const deleteUser = async (req, res) => {
 
 
     const result = await user.deleteOne()
-    handleEmployeeUpdate(`${user.username} was just removed from the team.`)
+    handleEmployeeUpdate(`${user.username} was just removed from the team.`, 'Manager')
 
     const reply = `Username ${result.username} with ID ${result._id} deleted`
 

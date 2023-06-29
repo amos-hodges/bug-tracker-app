@@ -47,11 +47,11 @@ const DashboardHeader = ({ toggleSidebar }) => {
         //this will likely go somewhere else
         socket.emit('user_connected', userId)
         socket.emit('initial_data', userId)
-        socket.on('get_data', getData);
-        socket.on('change_data', changeData);
+        socket.on('get_data', getData)
+        socket.on('change_data', changeData)
         return () => {
-            socket.off('get_data');
-            socket.off('change_data');
+            socket.off('get_data')
+            socket.off('change_data')
         };
     }, [])
 
@@ -163,7 +163,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
     }
 
     let newUserButton = null
-    if (isManager || isAdmin) {
+    if (isAdmin) {
         if (USERS_REGEX.test(pathname)) {
             newUserButton = (
                 <button

@@ -11,10 +11,12 @@ const io = getIO()
 
 const createNewNotification = async (recipient, message) => {
     const socketId = connectedSockets[recipient]
-    const notification = await Notification.create({
+    //const notification =
+    await Notification.create({
         recipient,
         message,
     })
+    //console.log(notification)
     if (socketId) {
         io.to(socketId).emit('change_data')
         console.log('change data sent')
@@ -24,22 +26,7 @@ const createNewNotification = async (recipient, message) => {
     console.log('Successfully created notification: ' + message)
 }
 
-const scheduleDueDateReminder = (userId, ticket, dueDate) => {
-    const notificationDate = new Date(dueDate)
-    //remind user 1 day before due date
-    notificationDate.setDate(notificationDate.getDate() - 1)
-    const message = `The following ticket is due is 24 hours: ${ticket.title}.`
-    // Schedule a job to create a notification at the calculated date and time
-    schedule.scheduleJob(notificationDate, async () => {
-        try {
-            // Create the notification for the ticket
-            await createNewNotification(userId, message)
-            console.log(`Reminder created for ${notificationDate}.`)
-        } catch (error) {
-            console.error('Error creating reminder notification:', error)
-        }
-    })
-}
+
 
 
 // *** EMPLOYEE SPECIFIC NOTIFICATIONS ***
@@ -71,21 +58,41 @@ const handleAddOrRemoveProject = async (userId, projectId, action) => {
     await createNewNotification(assignedUser._id, message)
 }
 
+// @desc Reminder 1 day before ticket due date
+const scheduleDueDateReminder = (userId, ticket, dueDate) => {
+    const notificationDate = new Date(dueDate)
+    //remind user 1 day before due date
+    notificationDate.setDate(notificationDate.getDate() - 1)
+    const message = `The following ticket is due is 24 hours: ${ticket.title}.`
+    // Schedule a job to create a notification at the calculated date and time
+    schedule.scheduleJob(notificationDate, async () => {
+        try {
+            // Create the notification for the ticket
+            await createNewNotification(userId, message)
+            console.log(`Reminder created for ${notificationDate}.`)
+        } catch (error) {
+            console.error('Error creating reminder notification:', error)
+        }
+    })
+}
 
-// *** MANAGER SPECIFIC NOTIFICATIONS ***
+
+// *** MANAGER & ADMIN SPECIFIC NOTIFICATIONS ***
+
+
+// @desc Notify managers of backlog/late/urgent tickets
 
 
 // @desc Addition/Modification/Removal of employees
 
-const handleEmployeeUpdate = async (message) => {
+const handleEmployeeUpdate = async (message, role) => {
 
-    const managers = await User.find({ roles: { $in: ['Manager'] } })
+    const toNotify = await User.find({ roles: { $in: [role] } })
 
-    for (const manager of managers) {
-        const recipient = manager._id
+    for (const manager_or_admin of toNotify) {
+        const recipient = manager_or_admin._id
         await createNewNotification(recipient, message)
     }
-
 }
 
 module.exports = {
