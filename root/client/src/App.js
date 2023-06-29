@@ -20,6 +20,7 @@ import RequireAuth from './features/auth/RequireAuth'
 import UserProfile from './features/settings/UserProfile'
 import UserSettings from './features/settings/UserSettings'
 import Team from './features/users/Team'
+import UserRequestForm from './features/users/UserRequestForm'
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
                     <Route index element={<UsersList />} />
                     <Route path=":id" element={<EditUser />} />
                     <Route path="new" element={<NewUserForm />} />
+                    <Route path="request" element={<UserRequestForm />} />
                   </Route>
 
                 </Route> {/* End Admin/Manager Only*/}

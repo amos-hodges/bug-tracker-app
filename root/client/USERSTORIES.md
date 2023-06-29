@@ -42,15 +42,19 @@ Bug Tracking App User Stories
     - [ ] Profile - Users can customize various aspects of their profile, reset password etc
     - [ ] Settings - Users can change settings related to app functionality (font size, theme, notifications etc..)
 
-- [ ] Notification system available to each user type on the dashboard (click notification icon to open)
+- [x] Notification system available to each user type on the dashboard (click notification icon to open)
 - [ ] Each user type will recieve different types/levels of notifications
     - [ ] Admin 
-        - [ ] Requests to add/modify/remove employees & privelege
-        - [ ] changes made to teams
-        - [ ] password changes
+        - [ ] Requests to add/modify/remove employees
+        - [x] password changes
+        - [ ] server issues? invalid password attempts?
     - [ ] Manager 
-        - Project related notifications (backlog/late/urgent tickets etc)
-        - [ ] addition/modificaiton/removal of employees
+        - [ ] Project related notifications
+            - [ ] backlog (past due)
+            - [ ] late tickets (missed deadline)
+            - [ ] urgent status tickets
+            - [ ] extension requests
+        - [x] addition/modificaiton/removal of employees
     - [x] Employee 
         - [x] Due date reminders for assigned tickets
         - [x] new project & ticket assignments (addition and removal)

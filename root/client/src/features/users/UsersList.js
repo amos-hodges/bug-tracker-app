@@ -130,7 +130,10 @@ const UsersList = () => {
                     {isAdmin && <Link to={'/dashboard/users/new'} className="new-ticket-button">
                         New User
                     </Link >}
-                    {isManager && <button className='new-ticket-button'>Admin Request</button>}
+                    {isManager && <Link to={'/dashboard/users/request'} className="new-ticket-button">
+                        Admin Request
+                    </Link >}
+
                 </div>
             </>
         )
