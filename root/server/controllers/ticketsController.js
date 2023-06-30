@@ -1,7 +1,11 @@
 const User = require('../models/User')
 const Ticket = require('../models/Ticket')
 const Project = require('../models/Project')
-const { handleTicketAssigned, scheduleDueDateReminder } = require('./notificationController')
+const {
+    handleTicketAssigned,
+    scheduleDueDateReminder,
+    handleCriticalNotification
+} = require('./notificationController')
 
 // @desc Get all tickets
 // @route GET /tickets
@@ -31,7 +35,7 @@ const createNewTicket = async (req, res) => {
     const { user, project, title, text, importance, dueDate } = req.body
 
     //confirm data
-    console.log(dueDate)
+    console.log(user.username)
     if (!user || !project || !title || !text || !importance || !dueDate) {
         return res.status(400).json({ message: 'All fields are required.' })
     }
@@ -49,6 +53,10 @@ const createNewTicket = async (req, res) => {
         //assign notification to user 
         await handleTicketAssigned(user, ticket._id)
         scheduleDueDateReminder(user, ticket, dueDate)
+
+        if (ticket.importance === 'Critical') {
+            handleCriticalNotification(ticket, user)
+        }
         return res.status(201).json({ message: 'Ticket succesfuly created' })
     } else {
         return res.status(400).json({ message: 'Invalid ticket data recieved' })

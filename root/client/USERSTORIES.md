@@ -52,9 +52,10 @@ Bug Tracking App User Stories
         - [ ] Project related notifications
             - [ ] backlog (past due)
             - [ ] late tickets (missed deadline)
-            - [ ] urgent status tickets
+            - [x] urgent status tickets
             - [ ] extension requests
         - [x] addition/modificaiton/removal of employees
+        - [ ] any employees with no tickets assigned for a certain time
     - [x] Employee 
         - [x] Due date reminders for assigned tickets
         - [x] new project & ticket assignments (addition and removal)

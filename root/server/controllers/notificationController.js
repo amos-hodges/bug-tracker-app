@@ -82,6 +82,16 @@ const scheduleDueDateReminder = (userId, ticket, dueDate) => {
 
 // @desc Notify managers of backlog/late/urgent tickets
 
+const handleCriticalNotification = async (ticket, userId) => {
+    const user = await User.findById(userId)
+    const managers = await User.find({ roles: { $in: ['Manager'] } })
+    const message = `${user.username} was assigned a ticket with critical importance: ${ticket.title}`
+    for (const manager of managers) {
+        const reciepient = manager._id
+        await createNewNotification(reciepient, message)
+    }
+
+}
 
 // @desc Addition/Modification/Removal of employees
 
@@ -100,5 +110,6 @@ module.exports = {
     handleTicketAssigned,
     handleAddOrRemoveProject,
     scheduleDueDateReminder,
-    handleEmployeeUpdate
+    handleEmployeeUpdate,
+    handleCriticalNotification
 }

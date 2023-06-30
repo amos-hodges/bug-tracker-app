@@ -227,7 +227,6 @@ const EditTicketForm = ({ ticket, users }) => {
                         <div className="form__divider">
                             <p>Revision History:</p>
                             <p>Dropdown list of revisions..</p>
-                            <button>Revert</button>
                             <p className="form__created">Created:<br />{created}</p>
                             <p className="form__updated">Last Update:<br />{updated}</p>
                         </div>
