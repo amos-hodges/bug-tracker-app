@@ -4,7 +4,8 @@ const Project = require('../models/Project')
 const {
     handleTicketAssigned,
     scheduleDueDateReminder,
-    handleCriticalNotification
+    handleCriticalNotification,
+    handleDueDateCheck
 } = require('./notificationController')
 
 // @desc Get all tickets
@@ -46,14 +47,16 @@ const createNewTicket = async (req, res) => {
     if (duplicate) {
         return res.status(409).json({ message: 'Duplicate ticket title' })
     }
-
+    //ADD DUEDATE PROPERTY TO TICKET MODEL
     const ticket = await Ticket.create({ user, project, title, text, importance })
 
     if (ticket) {
         //assign notification to user 
         await handleTicketAssigned(user, ticket._id)
-        scheduleDueDateReminder(user, ticket, dueDate)
 
+        //can these be combined?
+        scheduleDueDateReminder(user, ticket, dueDate)
+        handleDueDateCheck(user, ticket, dueDate)
         if (ticket.importance === 'Critical') {
             handleCriticalNotification(ticket, user)
         }
