@@ -106,6 +106,7 @@ const handleEmployeeUpdate = async (message, role) => {
 }
 
 // @desc Schedule a check to see if ticket has been closed by due date
+
 const handleDueDateCheck = async (userId, ticket, dueDate) => {
     const notificationDate = new Date(dueDate)
     //check 60 seconds after the due date if the ticket is marked 'completed'

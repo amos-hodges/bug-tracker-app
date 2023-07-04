@@ -12,8 +12,8 @@ Bug Tracking App User Stories
         - [ ] create/delete user accounts, 
         - [x] all manager and employee privilege
     - [ ] Manager 
-        - [ ] create projects 
-        - [ ] add users to specific projects
+        - [x] create projects 
+        - [x] add users to specific projects
         - [ ] re-assign tickets
         - [ ] create announcements (group message)
         - [ ] request removal of employees
@@ -50,7 +50,7 @@ Bug Tracking App User Stories
         - [ ] server issues? invalid password attempts?
     - [ ] Manager 
         - [ ] Project related notifications
-            - [ ] backlog (past due)
+            - [ ] backlog (# of past due)
             - [ ] late tickets (missed deadline)
             - [x] urgent status tickets
             - [ ] extension requests
@@ -61,14 +61,15 @@ Bug Tracking App User Stories
         - [x] new project & ticket assignments (addition and removal)
         
 - [x] Once logged in users can navigate between pages, refresh and go back without losing privilege
+
 - [ ] Users have the option to customize there profile and various settings of the app
-    - [ ] change proile picture
+    - [ ] change profile picture
     - [ ] change password
     - [ ] font (style, size)
     - [ ] theme (dark mode etc..)
     - [ ] certain notification options (add notification triggers on top of essentials)
 
-- [ ] There will be demo users available for each privilege level to demonstrate different functionality
+- [x] There will be demo users available for each privilege level to demonstrate different functionality
 - [x] Users will be prompted to log in every 24 hours
 - [x] Users can logout out
 
