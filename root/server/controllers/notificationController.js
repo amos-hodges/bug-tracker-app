@@ -58,18 +58,42 @@ const handleAddOrRemoveProject = async (userId, projectId, action) => {
     await createNewNotification(assignedUser._id, message)
 }
 
-// @desc Reminder 1 day before ticket due date
-const scheduleDueDateReminder = (userId, ticket, dueDate) => {
-    const notificationDate = new Date(dueDate)
+// @desc Remind User 1 day before ticket due date - Notify manager if not complete by due date
+const scheduleDueDateNotifications = async (userId, ticket, dueDate) => {
+    const user = await User.findById(userId)
+    const managers = await User.find({ roles: { $in: ['Manager'] } })
+
+    const reminderDate = new Date(dueDate)
+    const lateDate = new Date(dueDate)
+
     //remind user 1 day before due date
-    notificationDate.setDate(notificationDate.getDate() - 1)
-    const message = `The following ticket is due is 24 hours: ${ticket.title}.`
+    reminderDate.setDate(reminderDate.getDate() - 1)
+
+    //notify manager 1 min after due date
+    lateDate.setSeconds(lateDate.getSeconds() + 60)
+
+    const reminderMessage = `The following ticket is due is 24 hours: ${ticket.title}.`
+    const lateMessage = `${user.username} did not complete the following ticket by the due date (${dueDate}): ${ticket.title}.`
     // Schedule a job to create a notification at the calculated date and time
-    schedule.scheduleJob(notificationDate, async () => {
+    schedule.scheduleJob(reminderDate, async () => {
         try {
             // Create the notification for the ticket
-            await createNewNotification(userId, message)
-            console.log(`Reminder created for ${notificationDate}.`)
+            await createNewNotification(userId, reminderMessage)
+            console.log(`Reminder created for ${reminderDate}.`)
+        } catch (error) {
+            console.error('Error creating reminder notification:', error)
+        }
+    })
+
+    schedule.scheduleJob(lateDate, async () => {
+        try {
+            if (!ticket.completed) {
+                for (const manager of managers) {
+                    const reciepient = manager._id
+                    await createNewNotification(reciepient, lateMessage)
+                }
+                console.log(`Managers notified of late ticket on ${lateDate}.`)
+            }
         } catch (error) {
             console.error('Error creating reminder notification:', error)
         }
@@ -105,33 +129,11 @@ const handleEmployeeUpdate = async (message, role) => {
     }
 }
 
-// @desc Schedule a check to see if ticket has been closed by due date
-
-const handleDueDateCheck = async (userId, ticket, dueDate) => {
-    const notificationDate = new Date(dueDate)
-    //check 60 seconds after the due date if the ticket is marked 'completed'
-    notificationDate.setSeconds(notificationDate.getSeconds() + 60)
-    const message = `The following ticket was not completed by the set due date (${dueDate}): ${ticket.title}.`
-    // Schedule a job to create a notification at the calculated date and time
-    schedule.scheduleJob(notificationDate, async () => {
-        try {
-            // Create the notification for the ticket
-            if (!ticket.completed) {
-                await createNewNotification(userId, message)
-                console.log(`Reminder created for ${notificationDate}.`)
-            }
-        } catch (error) {
-            console.error('Error creating reminder notification:', error)
-        }
-    })
-}
-
 module.exports = {
     createNewNotification,
     handleTicketAssigned,
     handleAddOrRemoveProject,
-    scheduleDueDateReminder,
+    scheduleDueDateNotifications,
     handleEmployeeUpdate,
     handleCriticalNotification,
-    handleDueDateCheck
 }

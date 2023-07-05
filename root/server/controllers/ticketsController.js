@@ -3,7 +3,7 @@ const Ticket = require('../models/Ticket')
 const Project = require('../models/Project')
 const {
     handleTicketAssigned,
-    scheduleDueDateReminder,
+    scheduleDueDateNotifications,
     handleCriticalNotification,
     handleDueDateCheck
 } = require('./notificationController')
@@ -54,9 +54,8 @@ const createNewTicket = async (req, res) => {
         //assign notification to user 
         await handleTicketAssigned(user, ticket._id)
 
-        //can these be combined?
-        scheduleDueDateReminder(user, ticket, dueDate)
-        handleDueDateCheck(user, ticket, dueDate)
+        scheduleDueDateNotifications(user, ticket, dueDate)
+
         if (ticket.importance === 'Critical') {
             handleCriticalNotification(ticket, user)
         }
