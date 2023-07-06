@@ -43,7 +43,7 @@ const UserRequestForm = () => {
             <input
                 type="checkbox"
                 value={type}
-                checked={requestType === type}
+                checked={type === requestType}
                 onChange={() => setRequestType(type)}
             />{' '}
             {type}

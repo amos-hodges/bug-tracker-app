@@ -60,9 +60,9 @@ const EditUserForm = ({ user, projects, tickets }) => {
 
     const toggleRole = (role) => {
         if (roles.includes(role)) {
-            setRoles(roles.filter((r) => r !== role))
+            setRoles([])
         } else {
-            setRoles([...roles, role])
+            setRoles([role])
         }
     };
 
@@ -103,12 +103,12 @@ const EditUserForm = ({ user, projects, tickets }) => {
             <input
                 type="checkbox"
                 value={role}
-                checked={roles.includes(role)}
+                checked={role === roles[0]}
                 onChange={() => toggleRole(role)}
             />{' '}
             {role}
         </label>
-    ));
+    ))
 
     const projectOptions = projects.map((project) => (
         <label key={project.id} className="checkbox-label">

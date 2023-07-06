@@ -51,11 +51,10 @@ Bug Tracking App User Stories
     - [ ] Manager 
         - [ ] Project related notifications
             - [ ] backlog (# of past due)
-            - [ ] late tickets (missed deadline)
+            - [x] late tickets (missed deadline)
             - [x] urgent status tickets
             - [ ] extension requests
         - [x] addition/modificaiton/removal of employees
-        - [ ] any employees with no tickets assigned for a certain time
     - [x] Employee 
         - [x] Due date reminders for assigned tickets
         - [x] new project & ticket assignments (addition and removal)
