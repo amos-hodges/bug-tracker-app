@@ -36,7 +36,7 @@ const EditTicketForm = ({ ticket, users }) => {
     const [importance, setImportance] = useState(ticket.importance)
     const [completed, setCompleted] = useState(ticket.completed)
     const [userId, setUserId] = useState(ticket.user)
-    const [dueDate, setDueDate] = useState(null)
+    const [dueDate, setDueDate] = useState(new Date(ticket.dueDate))
 
     useEffect(() => {
         if (isSuccess || isDelSuccess) {
@@ -54,7 +54,10 @@ const EditTicketForm = ({ ticket, users }) => {
     const onCompletedChanged = e => setCompleted(prev => !prev)
     const onUserIdChanged = e => setUserId(e.target.value)
     const onDueDateChanged = date => setDueDate(date)
-    const canSave = [title, text, importance, userId].every(Boolean) && !isLoading
+    const handleExtensionRequest = () => {
+        console.log('routing to extion request form')
+    }
+    const canSave = [title, text, importance, userId, dueDate].every(Boolean) && !isLoading
 
     const onNewNoteClicked = () => {
         //add a note once ticket model has been updated to accomodate
@@ -64,7 +67,7 @@ const EditTicketForm = ({ ticket, users }) => {
 
     const onSaveTicketClicked = async (e) => {
         if (canSave) {
-            await updateTicket({ id: ticket.id, user: userId, title, text, importance, completed })
+            await updateTicket({ id: ticket.id, user: userId, title, text, importance, completed, dueDate })
         }
     }
 
@@ -276,6 +279,12 @@ const EditTicketForm = ({ ticket, users }) => {
                         <label className="form__label form__checkbox-container" htmlFor="importance">
                             IMPORTANCE:</label>
                         <p>{importance}</p>
+
+                        <button
+                            onClick={handleExtensionRequest}
+                        >
+                            Request Extension
+                        </button>
                         <label className="form__label form__checkbox-container" htmlFor="comments">
                             COMMENTS:</label>
                         <p>List of comments on ticket</p>

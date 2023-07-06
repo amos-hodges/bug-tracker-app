@@ -73,7 +73,7 @@ const updateTicket = async (req, res) => {
     const { id, user, title, text, completed, importance, dueDate } = req.body
     //confirm data
     if (!id || !user || !title || !text || typeof completed !== 'boolean' || !importance || !dueDate) {
-        console.log(id, user, title, text, typeof completed)
+        console.log(id, user, title, text, dueDate, typeof completed)
         return res.status(400).json({ message: 'All field are required' })
     }
     //confirm ticket exists
