@@ -6,6 +6,9 @@ import { faSave, faTrashCan, faCommentMedical } from '@fortawesome/free-solid-sv
 import useAuth from '../../hooks/useAuth'
 import { STATUS } from '../../config/statuses'
 
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+
 const EditTicketForm = ({ ticket, users }) => {
     const { userId: currentUser, isManager, isAdmin } = useAuth()
 
@@ -33,6 +36,7 @@ const EditTicketForm = ({ ticket, users }) => {
     const [importance, setImportance] = useState(ticket.importance)
     const [completed, setCompleted] = useState(ticket.completed)
     const [userId, setUserId] = useState(ticket.user)
+    const [dueDate, setDueDate] = useState(null)
 
     useEffect(() => {
         if (isSuccess || isDelSuccess) {
@@ -49,7 +53,7 @@ const EditTicketForm = ({ ticket, users }) => {
     const onImportanceChanged = e => setImportance(e.target.value)
     const onCompletedChanged = e => setCompleted(prev => !prev)
     const onUserIdChanged = e => setUserId(e.target.value)
-
+    const onDueDateChanged = date => setDueDate(date)
     const canSave = [title, text, importance, userId].every(Boolean) && !isLoading
 
     const onNewNoteClicked = () => {
@@ -220,6 +224,19 @@ const EditTicketForm = ({ ticket, users }) => {
                             >
                                 {statusOptions}
                             </select>
+                            <label className="form__label" htmlFor="dueDate">
+                                Due Date:
+                            </label>
+                            <DatePicker
+                                id="dueDate"
+                                name="dueDate"
+                                selected={dueDate}
+                                onChange={onDueDateChanged}
+                                className="form__input"
+                                placeholderText="Select due date"
+                                minDate={new Date()}
+                                autoComplete="off"
+                            />
                             <label className="form__label form__checkbox-container" htmlFor="comments">
                                 COMMENTS:</label>
                             <p>List of comments on ticket...(delete)</p>

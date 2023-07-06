@@ -70,9 +70,9 @@ const createNewTicket = async (req, res) => {
 // @route PATCH /tickets
 // @access Private
 const updateTicket = async (req, res) => {
-    const { id, user, title, text, completed, importance } = req.body
+    const { id, user, title, text, completed, importance, dueDate } = req.body
     //confirm data
-    if (!id || !user || !title || !text || typeof completed !== 'boolean' || !importance) {
+    if (!id || !user || !title || !text || typeof completed !== 'boolean' || !importance || !dueDate) {
         console.log(id, user, title, text, typeof completed)
         return res.status(400).json({ message: 'All field are required' })
     }
@@ -94,6 +94,7 @@ const updateTicket = async (req, res) => {
     ticket.text = text
     ticket.completed = completed
     ticket.importance = importance
+    ticket.dueDate = dueDate
 
     const updatedTicket = await ticket.save()
 
