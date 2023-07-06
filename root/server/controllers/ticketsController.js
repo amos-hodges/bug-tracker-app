@@ -49,7 +49,7 @@ const createNewTicket = async (req, res) => {
     }
     //ADD DUEDATE PROPERTY TO TICKET MODEL
     const ticket = await Ticket.create({ user, project, title, text, importance, dueDate })
-    console.log(ticket)
+
     if (ticket) {
         //assign notification to user 
         await handleTicketAssigned(user, ticket._id)

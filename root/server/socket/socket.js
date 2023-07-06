@@ -1,6 +1,7 @@
 const socketIO = require('socket.io')
 const allowedOrigins = require('../config/allowedOrigins')
 const Notification = require('../models/Notification')
+const User = require('../models/User')
 const mongoose = require('mongoose')
 
 let io
@@ -61,6 +62,15 @@ function initialize(server) {
                 console.log('error checking notifications data')
             }
 
+        })
+
+        socket.on('admin_request', async (message) => {
+            const admins = await User.find({ roles: { $in: ['Admin'] } })
+            for (const admin of admins) {
+                const recipient = admin._id
+                await Notification.create({ recipient, message })
+            }
+            io.sockets.emit('change_data')
         })
 
         socket.on('delete_notification', async (notificationId) => {

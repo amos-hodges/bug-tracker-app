@@ -111,8 +111,8 @@ const handleCriticalNotification = async (ticket, userId) => {
     const managers = await User.find({ roles: { $in: ['Manager'] } })
     const message = `${user.username} was assigned a ticket with critical importance: ${ticket.title}`
     for (const manager of managers) {
-        const reciepient = manager._id
-        await createNewNotification(reciepient, message)
+        const recipient = manager._id
+        await createNewNotification(recipient, message)
     }
 
 }

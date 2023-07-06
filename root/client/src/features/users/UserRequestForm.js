@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { socket } from "../../components/DashboardHeader"
 
 
 const UserRequestForm = () => {
@@ -28,7 +29,10 @@ const UserRequestForm = () => {
     const onTextChanged = e => setRequestDescription(e.target.value)
 
     const handeSendRequest = () => {
-        console.log(`Sending request to ${requestType}: ${employee}. An Admin will review this request and notify upon approval.`)
+        //Add a message to user and timeout
+        //console.log(`Sending request to ${requestType}: ${employee}. An Admin will review this request and notify upon approval.`)
+        const notification = `A team manager has made thie following request: ${requestType}: ${employee}. '${requestDescription}'`
+        socket.emit('admin_request', notification)
         setRequestSent(true)
     }
 
