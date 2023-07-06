@@ -47,7 +47,6 @@ Bug Tracking App User Stories
     - [ ] Admin 
         - [ ] Requests to add/modify/remove employees
         - [x] password changes
-        - [ ] server issues? invalid password attempts?
     - [ ] Manager 
         - [ ] Project related notifications
             - [ ] backlog (# of past due)

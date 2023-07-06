@@ -48,8 +48,8 @@ const createNewTicket = async (req, res) => {
         return res.status(409).json({ message: 'Duplicate ticket title' })
     }
     //ADD DUEDATE PROPERTY TO TICKET MODEL
-    const ticket = await Ticket.create({ user, project, title, text, importance })
-
+    const ticket = await Ticket.create({ user, project, title, text, importance, dueDate })
+    console.log(ticket)
     if (ticket) {
         //assign notification to user 
         await handleTicketAssigned(user, ticket._id)

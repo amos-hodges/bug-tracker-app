@@ -125,6 +125,7 @@ const updateUser = async (req, res) => {
     if (password) {
         //hash password
         user.password = await bcrypt.hash(password, 10)
+
         handleEmployeeUpdate(`${user.username}'s password was just changed.`, 'Admin')
     }
     const updatedUser = await user.save()

@@ -66,7 +66,7 @@ const Sidebar = ({ isSidebarOpen }) => {
                 : <p><Link to="team/all">Collaborate</Link></p>}
 
 
-            <p><Link to="/dashboard/projects/all/tickets">All Tickets</Link></p>
+            <p><Link to="/dashboard/projects/all/tickets">{mode} Tickets</Link></p>
 
 
             <p><Link to="profile">Profile</Link></p>

@@ -4,12 +4,14 @@ import SortIndicator from '../../components/SortIndicator'
 import PulseLoader from 'react-spinners/PulseLoader'
 import { useParams, Link } from 'react-router-dom'
 import { useState } from 'react'
-
+import useAuth from '../../hooks/useAuth'
 
 
 const TicketsList = () => {
 
     const { projectId } = useParams()
+
+    const { userId, isAdmin, isManager } = useAuth()
 
     const {
         data: tickets,
@@ -55,9 +57,15 @@ const TicketsList = () => {
         }
         const { ids, entities } = tickets
 
-        const filteredIds = (projectId !== 'all')
-            ? ids.filter(ticketId => entities[ticketId].project === projectId)
-            : ids
+        let filteredIds = []
+        if (isAdmin || isManager) {
+            filteredIds = ids
+        } else {
+            filteredIds = ids.filter(ticketId => entities[ticketId].user === userId)
+        }
+        if (projectId !== 'all') {
+            filteredIds = filteredIds.filter(ticketId => entities[ticketId].project === projectId)
+        }
 
         const sortedIds = [...filteredIds].sort((a, b) => {
             const aValue = entities[a][categoryMap[sortCategory]]
@@ -115,7 +123,12 @@ const TicketsList = () => {
 
         content = (
             <>
-                <h1>{projTitle}</h1>
+                {projectId === 'all' ? (
+                    <h1>All Tickets</h1>
+                ) : (
+                    <h1>{projTitle}</h1>
+                )}
+
                 <input
                     type="text"
                     placeholder="Search..."
@@ -162,9 +175,10 @@ const TicketsList = () => {
                             {tableContent}
                         </tbody>
                     </table>
-                    {(projectId !== 'all') && <Link to={`/dashboard/projects/${projectId}/tickets/new`} className="new-ticket-button">
-                        New Ticket
-                    </Link >}
+                    {(projectId !== 'all') &&
+                        <Link to={`/dashboard/projects/${projectId}/tickets/new`} className="new-ticket-button">
+                            New Ticket
+                        </Link >}
                 </div>
             </>
         )

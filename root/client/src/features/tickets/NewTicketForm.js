@@ -175,6 +175,7 @@ const NewTicketForm = ({ users }) => {
                         className="form__input"
                         placeholderText="Select due date"
                         minDate={new Date()}
+                        autoComplete="off"
                     />
 
                 </form>

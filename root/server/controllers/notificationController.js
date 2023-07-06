@@ -27,8 +27,6 @@ const createNewNotification = async (recipient, message) => {
 }
 
 
-
-
 // *** EMPLOYEE SPECIFIC NOTIFICATIONS ***
 
 
@@ -57,6 +55,8 @@ const handleAddOrRemoveProject = async (userId, projectId, action) => {
     const message = `You have been ${action} the following project: ${project.title}.`
     await createNewNotification(assignedUser._id, message)
 }
+
+// *** EMPLOYEE & MANAGER NOTIFICATIONS ***
 
 // @desc Remind User 1 day before ticket due date - Notify manager if not complete by due date
 const scheduleDueDateNotifications = async (userId, ticket, dueDate) => {
