@@ -83,9 +83,13 @@ const EditTicketForm = ({ ticket, users }) => {
     const created = new Date(ticket.createdAt).toLocaleString('en-US', {
         day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
     })
-    const updated = new Date(ticket.updatedAt).toLocaleString('en-US', {
+    // const updated = new Date(ticket.updatedAt).toLocaleString('en-US', {
+    //     day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
+    // })
+    const dueOn = new Date(ticket.dueDate).toLocaleString('en-US', {
         day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
     })
+
 
     const options = [
         <option key="" value="">
@@ -248,7 +252,7 @@ const EditTicketForm = ({ ticket, users }) => {
                             <p>Revision History:</p>
                             <p>Dropdown list of revisions..</p>
                             <p className="form__created">Created:<br />{created}</p>
-                            <p className="form__updated">Last Update:<br />{updated}</p>
+                            <p className="form__updated">Due On:<br />{dueOn}</p>
                         </div>
                     </div>
                 </form>
@@ -292,7 +296,7 @@ const EditTicketForm = ({ ticket, users }) => {
                     <div className="form__divider">
                         <p>Revision Version: version#</p>
                         <p className="form__created">Created:<br />{created}</p>
-                        <p className="form__updated">Last Update:<br />{updated}</p>
+                        <p className="form__updated">Due On:<br />{dueOn}</p>
                     </div>
                 </div>
             </div>
@@ -300,7 +304,7 @@ const EditTicketForm = ({ ticket, users }) => {
     )
     return (
         <>
-            {!noProject && (isAdmin || isManager || ticket.user === currentUser) ? editContent : ticketContent}
+            {!noProject && (isAdmin || isManager) ? editContent : ticketContent}
         </>
     )
 
