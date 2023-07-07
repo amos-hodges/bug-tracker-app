@@ -55,7 +55,8 @@ const EditTicketForm = ({ ticket, users }) => {
     const onUserIdChanged = e => setUserId(e.target.value)
     const onDueDateChanged = date => setDueDate(date)
     const handleExtensionRequest = () => {
-        console.log('routing to extion request form')
+        console.log(ticket.id)
+        navigate(`/dashboard/projects/${projectId}/tickets/${ticket.id}/extension`)
     }
     const canSave = [title, text, importance, userId, dueDate].every(Boolean) && !isLoading
 
@@ -307,13 +308,12 @@ const EditTicketForm = ({ ticket, users }) => {
             </div>
         </>
     )
+
     return (
         <>
             {!noProject && (isAdmin || isManager) ? editContent : ticketContent}
         </>
     )
-
-    //return editContent
 }
 
 

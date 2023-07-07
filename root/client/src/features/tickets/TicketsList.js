@@ -57,20 +57,15 @@ const TicketsList = () => {
         }
         const { ids, entities } = tickets
 
+
         let filteredIds = []
         if (isAdmin || isManager) {
-            console.log('all tickets')
             filteredIds = ids
         } else if (projectId !== 'all') {
-            console.log('project tickets')
-            //filteredIds = filteredIds.filter(ticketId => entities[ticketId].project === projectId)
             filteredIds = ids.filter(ticketId => entities[ticketId].project === projectId)
-        }
-        else {
-            console.log('user tickets')
+        } else {
             filteredIds = ids.filter(ticketId => entities[ticketId].user === userId)
         }
-
 
         const sortedIds = [...filteredIds].sort((a, b) => {
             const aValue = entities[a][categoryMap[sortCategory]]

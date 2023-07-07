@@ -21,6 +21,7 @@ import UserProfile from './features/settings/UserProfile'
 import UserSettings from './features/settings/UserSettings'
 import Team from './features/users/Team'
 import UserRequestForm from './features/users/UserRequestForm'
+import ExtensionRequestForm from './features/tickets/ExtensionRequestForm'
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
                   <Route path=":projectId/tickets" element={<TicketsList />} />
                   <Route path=":projectId/tickets/new" element={<NewTicket />} />
                   <Route path=":projectId/tickets/:ticketId" element={<EditTicket />} />
+                  <Route path=":projectId/tickets/:ticketId/extension" element={<ExtensionRequestForm />} />
                 </Route>
 
                 <Route path="team/:projectId" element={<Team />} />
