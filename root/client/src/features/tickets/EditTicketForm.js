@@ -151,6 +151,14 @@ const EditTicketForm = ({ ticket, users }) => {
         </button>
     )
 
+    let extensionRequestButton = (
+        <button
+            onClick={handleExtensionRequest}
+        >
+            Request Extension
+        </button>
+    )
+
     const editContent = (
         <>
             {backButton}
@@ -284,11 +292,7 @@ const EditTicketForm = ({ ticket, users }) => {
                             IMPORTANCE:</label>
                         <p>{importance}</p>
 
-                        <button
-                            onClick={handleExtensionRequest}
-                        >
-                            Request Extension
-                        </button>
+
                         <label className="form__label form__checkbox-container" htmlFor="comments">
                             COMMENTS:</label>
                         <p>List of comments on ticket</p>
@@ -297,6 +301,7 @@ const EditTicketForm = ({ ticket, users }) => {
                         <p>Revision Version: version#</p>
                         <p className="form__created">Created:<br />{created}</p>
                         <p className="form__updated">Due On:<br />{dueOn}</p>
+                        {currentUser === userId && extensionRequestButton}
                     </div>
                 </div>
             </div>
