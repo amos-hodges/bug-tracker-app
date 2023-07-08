@@ -55,7 +55,7 @@ const EditTicketForm = ({ ticket, users }) => {
     const onUserIdChanged = e => setUserId(e.target.value)
     const onDueDateChanged = date => setDueDate(date)
     const handleExtensionRequest = () => {
-        console.log(ticket.id)
+        //console.log(ticket.id)
         navigate(`/dashboard/projects/${projectId}/tickets/${ticket.id}/extension`)
     }
     const canSave = [title, text, importance, userId, dueDate].every(Boolean) && !isLoading
@@ -285,7 +285,17 @@ const EditTicketForm = ({ ticket, users }) => {
                     <div className="form__divider">
                         <label className="form__label form__checkbox-container" htmlFor="note-completed">
                             WORK COMPLETE:</label>
-                        <p>{completed}</p>
+                        {(currentUser === userId)
+                            ? <input
+                                className="form__checkbox"
+                                id="note-completed"
+                                name="completed"
+                                type="checkbox"
+                                checked={completed}
+                                onChange={onCompletedChanged}
+                            />
+                            : <p>{completed ? 'Yes' : 'No'}</p>}
+
                         <label className="form__label form__checkbox-container" htmlFor="note-username">
                             ASSIGNED TO:</label>
                         <p>{ticket.username}</p>

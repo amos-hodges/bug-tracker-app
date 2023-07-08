@@ -1,7 +1,7 @@
 Bug Tracking App User Stories
 
 - [x] Home page with login
-- [x] 'remember me' functionality to prevent refresh page from reseting privileges etc.
+- [x] 'remember me' functionality. Prevent page refresh from reseting privileges etc.
 - [x] Welcome page upon login displays:
     - [x] Only projects assigned to an employee
     - [x] All Projects for manager
@@ -9,18 +9,19 @@ Bug Tracking App User Stories
 
 - [ ] Levels of privelege for different user types
     - [x] Admin 
-        - [ ] create/delete user accounts, 
+        - [x] create/delete user accounts, 
         - [x] all manager and employee privilege
     - [ ] Manager 
         - [x] create projects 
         - [x] add users to specific projects
-        - [ ] re-assign tickets
+        - [x] re-assign tickets/change due date & importance
         - [ ] create announcements (group message)
-        - [ ] request removal of employees
+        - [x] request addition/modification/removal of employees
         - [x] all employee privelege
     - [ ] Employee 
-        - [ ] change statuses and add notes on thier own tickets
-        - [ ] cannot close ticket without manager approval
+        - [x] create new tickets
+        - [ ] add notes to ticket
+        - [ ] completing ticket requires manager review
 
 - [x] Users are assigned projects and can switch between projects
 - [x] Clicking a specific project displays tickets for the selected project with all information
@@ -43,16 +44,15 @@ Bug Tracking App User Stories
     - [ ] Settings - Users can change settings related to app functionality (font size, theme, notifications etc..)
 
 - [x] Notification system available to each user type on the dashboard (click notification icon to open)
-- [ ] Each user type will recieve different types/levels of notifications
-    - [ ] Admin 
-        - [ ] Requests to add/modify/remove employees
+- [x] Each user type will recieve different types/levels of notifications
+    - [x] Admin 
+        - [x] Requests to add/modify/remove employees
         - [x] password changes
-    - [ ] Manager 
-        - [ ] Project related notifications
-            - [ ] backlog (# of past due)
+    - [x] Manager 
+        - [x] Project related notifications
             - [x] late tickets (missed deadline)
             - [x] urgent status tickets
-            - [ ] extension requests
+            - [x] extension requests
         - [x] addition/modificaiton/removal of employees
     - [x] Employee 
         - [x] Due date reminders for assigned tickets
@@ -75,7 +75,6 @@ Nice to have:
 - [ ] Different ways to display tickets on dashboard (list, grid, carousel, etc.)
 - [ ] Profile pictures on users list
 - [ ] Message boards for specific projects
-- [ ] Users can customize profile and display preferences (e.g. dark mode, larger text, etc)
 
 Extra feature ideas:
 - [ ] Notifications are emailed to users
