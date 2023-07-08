@@ -32,7 +32,7 @@ const UserRequestForm = () => {
         //Add a message to user and timeout
         //console.log(`Sending request to ${requestType}: ${employee}. An Admin will review this request and notify upon approval.`)
         const notification = `A team manager has made thie following request: ${requestType}: ${employee}. '${requestDescription}'`
-        socket.emit('admin_request', notification)
+        socket.emit('client_request', 'Admin', notification)
         setRequestSent(true)
     }
 

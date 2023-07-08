@@ -64,10 +64,10 @@ function initialize(server) {
 
         })
 
-        socket.on('admin_request', async (message) => {
-            const admins = await User.find({ roles: { $in: ['Admin'] } })
-            for (const admin of admins) {
-                const recipient = admin._id
+        socket.on('client_request', async (role, message) => {
+            const manager_or_admin = await User.find({ roles: { $in: [role] } })
+            for (const man_ad of manager_or_admin) {
+                const recipient = man_ad._id
                 await Notification.create({ recipient, message })
             }
             io.sockets.emit('change_data')

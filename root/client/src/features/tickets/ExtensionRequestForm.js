@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { useGetTicketsQuery } from "./ticketsApiSlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { socket } from "../../components/DashboardHeader"
@@ -12,16 +13,23 @@ const ExtensionRequestForm = () => {
     const navigate = useNavigate()
     const { projectId, ticketId } = useParams()
 
-    const [dueDate, setDueDate] = useState(null)
-    const [employee, setEmployee] = useState('')
+    const { ticket } = useGetTicketsQuery('ticketsList', {
+        selectFromResult: ({ data }) => ({
+            ticket: data?.entities[ticketId]
+        })
+    })
+
+
+    const [dueDate, setDueDate] = useState(new Date(ticket.dueDate))
     const [requestDescription, setRequestDescription] = useState('')
     const [requestSent, setRequestSent] = useState(false)
 
     useEffect(() => {
         if (requestSent) {
+            setDueDate(null)
             setRequestDescription('')
             setRequestSent(false)
-            navigate('/dashboard/users')
+            navigate(`/dashboard/projects/${projectId}/tickets/`)
         }
     }, [requestSent, navigate])
 
@@ -30,9 +38,10 @@ const ExtensionRequestForm = () => {
 
     const handeSendRequest = () => {
         //Add a message to user and timeout
-        //console.log(`Sending request to ${requestType}: ${employee}. An Admin will review this request and notify upon approval.`)
-        //const notification = `A team manager has made thie following request: ${requestType}: ${employee}. '${requestDescription}'`
-        //socket.emit('admin_request', notification)
+
+        const notification = `${ticket.username} has requested to extend the following ticket: ${ticket.title}. Requested date: ${dueDate}. Reason: '${requestDescription}'`
+        console.log(notification)
+        socket.emit('client_request', 'Manager', notification)
         setRequestSent(true)
     }
 
@@ -40,7 +49,7 @@ const ExtensionRequestForm = () => {
         navigate(`/dashboard/projects/${projectId}/tickets/${ticketId}`)
     }
 
-    const canSend = [requestDescription].every(Boolean)
+    const canSend = [dueDate, requestDescription].every(Boolean)
 
     let backButton = (
         <button
@@ -52,7 +61,7 @@ const ExtensionRequestForm = () => {
     )
 
     const validTextClass = !requestDescription ? "form__input--incomplete" : ''
-    const validUserClass = !employee ? 'form__input--incomplete' : ''
+    const validDateClass = !dueDate ? 'form__input--incomplete' : ''
     const content = (
         <>
             {backButton}
@@ -79,7 +88,7 @@ const ExtensionRequestForm = () => {
                         name="dueDate"
                         selected={dueDate}
                         onChange={onDueDateChanged}
-                        className="form__input"
+                        className={`form__input ${validDateClass}`}
                         placeholderText="Select due date"
                         minDate={new Date()}
                         autoComplete="off"
