@@ -31,7 +31,7 @@ const EditUser = () => {
     if (isUsersLoading || isProjectsLoading || isTicketsLoading) return <PulseLoader color={'#FFF'} />
 
     if (!user || !projects || !tickets) {
-        return <div>Failed to fetch data.</div>;
+        return <div>Failed to fetch data.</div>
     }
 
     const content = <EditUserForm user={user} projects={projects} tickets={tickets} />

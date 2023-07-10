@@ -47,7 +47,7 @@ const createNewTicket = async (req, res) => {
     if (duplicate) {
         return res.status(409).json({ message: 'Duplicate ticket title' })
     }
-    //ADD DUEDATE PROPERTY TO TICKET MODEL
+
     const ticket = await Ticket.create({ user, project, title, text, importance, dueDate })
 
     if (ticket) {
@@ -63,7 +63,6 @@ const createNewTicket = async (req, res) => {
     } else {
         return res.status(400).json({ message: 'Invalid ticket data recieved' })
     }
-
 }
 
 // @desc Update a ticket
@@ -99,8 +98,6 @@ const updateTicket = async (req, res) => {
     const updatedTicket = await ticket.save()
 
     res.json(`${updatedTicket.title} updated`)
-
-
 }
 
 // @desc Delete a ticket

@@ -18,7 +18,6 @@ const logEvents = async (message, logFileName) => {
     }
 }
 
-// middleware (req, res, next)
 const logger = (req, res, next) => {
     //ideally would have conditionals to only log important info
     logEvents(`${req.method}\t${req.url}\t${req.headers.origin}`, 'reqLog.log')

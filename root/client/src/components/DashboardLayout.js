@@ -9,14 +9,14 @@ const DashboardLayout = () => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
         // Retrieve the previous state from local storage or use the default value
-        const storedState = localStorage.getItem('sidebarToggle');
-        return storedState ? JSON.parse(storedState) : true;
-    });
+        const storedState = localStorage.getItem('sidebarToggle')
+        return storedState ? JSON.parse(storedState) : true
+    })
 
     useEffect(() => {
         // Save the sidebar toggle state to local storage whenever it changes
-        localStorage.setItem('sidebarToggle', JSON.stringify(isSidebarOpen));
-    }, [isSidebarOpen]);
+        localStorage.setItem('sidebarToggle', JSON.stringify(isSidebarOpen))
+    }, [isSidebarOpen])
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen)

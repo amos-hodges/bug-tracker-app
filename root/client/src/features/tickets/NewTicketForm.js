@@ -86,8 +86,8 @@ const NewTicketForm = ({ users }) => {
 
 
     const errClass = isError ? "errmsg" : "offscreen"
-    const validTitleClass = !title ? "form__input--incomplete" : ''
-    const validTextClass = !text ? "form__input--incomplete" : ''
+    const validTitleClass = !title ? "form__input--incomplete" : ""
+    const validTextClass = !text ? "form__input--incomplete" : ""
 
     let backButton = (
         <button

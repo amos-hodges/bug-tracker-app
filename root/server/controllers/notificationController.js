@@ -11,12 +11,12 @@ const io = getIO()
 
 const createNewNotification = async (recipient, message) => {
     const socketId = connectedSockets[recipient]
-    //const notification =
+
     await Notification.create({
         recipient,
         message,
     })
-    //console.log(notification)
+
     if (socketId) {
         io.to(socketId).emit('change_data')
         console.log('change data sent')
@@ -74,7 +74,8 @@ const scheduleDueDateNotifications = async (userId, ticket, dueDate) => {
 
     const reminderMessage = `The following ticket is due is 24 hours: ${ticket.title}.`
     const lateMessage = `${user.username} did not complete the following ticket by the due date (${dueDate}): ${ticket.title}.`
-    // Schedule a job to create a notification at the calculated date and time
+
+    // Schedule a job to create notifications at the calculated times
     schedule.scheduleJob(reminderDate, async () => {
         try {
             // Create the notification for the ticket

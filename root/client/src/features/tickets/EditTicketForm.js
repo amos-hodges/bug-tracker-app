@@ -116,8 +116,8 @@ const EditTicketForm = ({ ticket, users }) => {
     ]
 
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
-    const validTitleClass = !title ? "form__input--incomplete" : ''
-    const validTextClass = !text ? "form__input--incomplete" : ''
+    const validTitleClass = !title ? "form__input--incomplete" : ""
+    const validTextClass = !text ? "form__input--incomplete" : ""
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 

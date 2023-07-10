@@ -22,19 +22,16 @@ const Login = () => {
 
     const [login, { isLoading }] = useLoginMutation()
 
-    //empty dependency- only run once when page first loads
     useEffect(() => {
         userRef.current.focus()
     }, [])
 
-    //reset error message once username or password are re-entered
     useEffect(() => {
         setErrMsg('')
     }, [username, password])
 
 
     const handleSubmit = async (e) => {
-        //do not want page to reload on submit
         e.preventDefault()
         try {
             //.unwrap() allows err to be caught in try-catch rather that rtk query states -> 'isError'

@@ -7,7 +7,7 @@ const useAuth = () => {
 
     let isManager = false
     let isAdmin = false
-    let status = "Employee"
+    let status = 'Employee'
 
     if (token) {
         const decoded = jwtDecode(token)
@@ -17,9 +17,9 @@ const useAuth = () => {
         isManager = roles.includes('Manager')
         isAdmin = roles.includes('Admin')
 
-        if (isManager) status = "Manager"
+        if (isManager) status = 'Manager'
         //admin highest status
-        if (isAdmin) status = "Admin"
+        if (isAdmin) status = 'Admin'
 
         return { username, roles, userId: _id, status, isManager, isAdmin }
     }

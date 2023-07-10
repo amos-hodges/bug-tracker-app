@@ -43,8 +43,8 @@ const NewProjectForm = () => {
     }
 
     const errClass = isError ? "errmsg" : "offscreen"
-    const validTitleClass = !title ? "form__input--incomplete" : ''
-    const validDescriptionClass = !description ? "form__input--incomplete" : ''
+    const validTitleClass = !title ? "form__input--incomplete" : ""
+    const validDescriptionClass = !description ? "form__input--incomplete" : ""
 
     let backButton = (
         <button

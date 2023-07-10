@@ -16,7 +16,7 @@ const getAllUsers = async (req, res) => {
     }
 
     const usersWithProjects = await Promise.all(users.map(async (user) => {
-        //retrive project titles without modifying user.projects array
+        //retrieve project titles only
         const projectTitles = await Project.find(
             { _id: { $in: user.projects } },
             'title'
@@ -101,23 +101,21 @@ const updateUser = async (req, res) => {
     user.roles = roles
     user.active = active
 
-    // Update projects assigned to the user
+    // Notifications for updates to user's projects
     if (projects && Array.isArray(projects)) {
         const previousProjects = user.projects || []
         const newProjects = projects.filter((projectId) => !previousProjects.includes(projectId))
         const removedProjects = previousProjects.filter((projectId) => !projects.includes(projectId.toString()))
-        // Generate notifications for newly assigned projects
+        //for newly assigned projects
         for (const projectId of newProjects) {
             const action = 'assigned to';
             await handleAddOrRemoveProject(id, projectId, action);
         }
-        // Generate notifications for removed projects
+        //for removed projects
         for (const projectId of removedProjects) {
-            //console.log(`removing ${projectId}`)
             const action = 'removed from'
             await handleAddOrRemoveProject(id, projectId.toString(), action)
         }
-        // Update the user's projects
         user.projects = projects
     }
 
@@ -153,25 +151,19 @@ const deleteUser = async (req, res) => {
         return res.status(400).json({ message: 'User has active tickets' })
     }
 
-
     const user = await User.findById(id).exec()
-
 
     if (!user) {
         return res.status(400).json({ message: 'User not found' })
     }
-
 
     const result = await user.deleteOne()
     handleEmployeeUpdate(`${user.username} was just removed from the team.`, 'Manager')
 
     const reply = `Username ${result.username} with ID ${result._id} deleted`
 
-
     res.json(reply)
 }
-
-
 
 
 module.exports = {

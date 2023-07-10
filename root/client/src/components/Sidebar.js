@@ -1,11 +1,10 @@
-//import { useState } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBug, faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
-import { Link, useNavigate } from "react-router-dom"
-import useAuth from "../hooks/useAuth"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBug, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { Link, useNavigate } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import PulseLoader from 'react-spinners/PulseLoader'
-import { useEffect } from "react"
+import { useEffect } from 'react'
 
 const Sidebar = ({ isSidebarOpen }) => {
 
@@ -51,7 +50,7 @@ const Sidebar = ({ isSidebarOpen }) => {
         <div className={sideBarClass}>
 
             <div className="sidebar__title">
-                <Link to='/dashboard'>
+                <Link to="/dashboard">
                     <span className="icon-button">
                         <FontAwesomeIcon icon={faBug} />
                     </span>

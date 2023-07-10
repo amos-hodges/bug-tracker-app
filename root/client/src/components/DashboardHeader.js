@@ -52,7 +52,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
         return () => {
             socket.off('get_data')
             socket.off('change_data')
-        };
+        }
     }, [])
 
     const getData = (notifications) => {

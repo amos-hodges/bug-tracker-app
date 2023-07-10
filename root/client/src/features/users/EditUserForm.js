@@ -35,7 +35,7 @@ const EditUserForm = ({ user, projects, tickets }) => {
     const [roles, setRoles] = useState(user.roles)
     const [userProjects, setUserProjects] = useState(user.projects)
     const [active, setActive] = useState(user.active)
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         setValidUsername(USER_REGEX.test(username))
@@ -64,10 +64,10 @@ const EditUserForm = ({ user, projects, tickets }) => {
         } else {
             setRoles([role])
         }
-    };
+    }
 
     const toggleProject = (projectId) => {
-        const hasTickets = tickets.some((ticket) => ticket.project === projectId);
+        const hasTickets = tickets.some((ticket) => ticket.project === projectId)
 
         if (hasTickets) {
             setShowModal(true)
@@ -120,7 +120,7 @@ const EditUserForm = ({ user, projects, tickets }) => {
             />{' '}
             {project.title}
         </label>
-    ));
+    ))
 
     let canSave
     if (password) {

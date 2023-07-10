@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { useGetTicketsQuery } from "./ticketsApiSlice"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useGetTicketsQuery } from './ticketsApiSlice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
-import { socket } from "../../components/DashboardHeader"
+import { socket } from '../../components/DashboardHeader'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -18,7 +18,6 @@ const ExtensionRequestForm = () => {
             ticket: data?.entities[ticketId]
         })
     })
-
 
     const [dueDate, setDueDate] = useState(new Date(ticket.dueDate))
     const [requestDescription, setRequestDescription] = useState('')
@@ -38,7 +37,6 @@ const ExtensionRequestForm = () => {
 
     const handeSendRequest = () => {
         //Add a message to user and timeout
-
         const notification = `${ticket.username} has requested to extend the following ticket: ${ticket.title}. Requested date: ${dueDate}. Reason: '${requestDescription}'`
         console.log(notification)
         socket.emit('client_request', 'Manager', notification)
@@ -60,8 +58,8 @@ const ExtensionRequestForm = () => {
         </button>
     )
 
-    const validTextClass = !requestDescription ? "form__input--incomplete" : ''
-    const validDateClass = !dueDate ? 'form__input--incomplete' : ''
+    const validTextClass = !requestDescription ? "form__input--incomplete" : ""
+    const validDateClass = !dueDate ? 'form__input--incomplete' : ""
     const content = (
         <>
             {backButton}

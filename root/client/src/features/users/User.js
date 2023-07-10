@@ -25,7 +25,7 @@ const User = ({ userId }) => {
             : 'None'
 
         const cellStatus = user.active ? '' : 'table__cell--inactive'
-        //eventually displayt profile pic next to usernames
+        //eventually display profile pic next to usernames
         return (
             <tr className="table__row user">
                 <td className={`table__cell ${cellStatus}`}>{user.username}</td>

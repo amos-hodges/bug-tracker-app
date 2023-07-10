@@ -38,9 +38,9 @@ const UsersList = () => {
     if (isSuccess) {
 
         const categoryMap = {
-            username: "username",
-            roles: "roles",
-            projects: "projectTitles"
+            username: 'username',
+            roles: 'roles',
+            projects: 'projectTitles'
         }
 
         const { ids, entities } = users
@@ -49,7 +49,7 @@ const UsersList = () => {
             const aValue = entities[a][categoryMap[sortCategory]]
             const bValue = entities[b][categoryMap[sortCategory]]
 
-            if (sortOrder === "asc") {
+            if (sortOrder === 'asc') {
                 if (aValue < bValue) return -1
                 if (aValue > bValue) return 1
                 return 0
@@ -76,10 +76,10 @@ const UsersList = () => {
 
         const handleSort = (category) => {
             if (sortCategory === category) {
-                setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
             } else {
                 setSortCategory(category)
-                setSortOrder("asc")
+                setSortOrder('asc')
             }
         }
 

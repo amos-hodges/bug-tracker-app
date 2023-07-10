@@ -6,7 +6,6 @@ const verifyJWT = require('../middleware/verifyJWT')
 router.use(verifyJWT)
 
 router.route('/')
-    //same as chaining
     .get(ticketsController.getAllTickets)
     .post(ticketsController.createNewTicket)
     .patch(ticketsController.updateTicket)

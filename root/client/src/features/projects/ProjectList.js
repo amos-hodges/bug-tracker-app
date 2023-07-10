@@ -13,7 +13,6 @@ const ProjectList = () => {
     const { user } = useGetUsersQuery('usersList', {
         selectFromResult: ({ data }) => ({
             user: data?.entities[userId],
-
         })
     })
 
@@ -44,12 +43,12 @@ const ProjectList = () => {
     if (isSuccess) {
 
         const categoryMap = {
-            project: "title",
-            description: "description",
-            created: "createdAt",
-            updated: "updatedAt",
-            tickets: "ticketCount",
-            employees: "userCount"
+            project: 'title',
+            description: 'description',
+            created: 'createdAt',
+            updated: 'updatedAt',
+            tickets: 'ticketCount',
+            employees: 'userCount'
         }
 
         const { ids, entities } = projects
@@ -57,12 +56,12 @@ const ProjectList = () => {
         //Only display assigned projects for employees
         const filteredProjectIds = (isAdmin || isManager)
             ? ids
-            : user?.projects || [];
+            : user?.projects || []
 
         const sortedIds = [...filteredProjectIds].sort((a, b) => {
             const aValue = entities[a][categoryMap[sortCategory]]
             const bValue = entities[b][categoryMap[sortCategory]]
-            if (sortOrder === "asc") {
+            if (sortOrder === 'asc') {
                 if (aValue < bValue) return -1
                 if (aValue > bValue) return 1
                 return 0
@@ -114,10 +113,10 @@ const ProjectList = () => {
 
         const handleSort = (category) => {
             if (sortCategory === category) {
-                setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
             } else {
                 setSortCategory(category)
-                setSortOrder("asc")
+                setSortOrder('asc')
             }
         }
 
@@ -138,34 +137,34 @@ const ProjectList = () => {
                         <thead className="table__thead">
                             <tr>
                                 <th scope="col" className="table__th note__title"
-                                    onClick={() => handleSort("project")}>
+                                    onClick={() => handleSort('project')}>
                                     Project
-                                    {sortCategory === "project" && <SortIndicator order={sortOrder} />}
+                                    {sortCategory === 'project' && <SortIndicator order={sortOrder} />}
                                 </th>
                                 <th scope="col" className="table__th note__title"
-                                    onClick={() => handleSort("description")}>
+                                    onClick={() => handleSort('description')}>
                                     Description
-                                    {sortCategory === "description" && <SortIndicator order={sortOrder} />}
+                                    {sortCategory === 'description' && <SortIndicator order={sortOrder} />}
                                 </th>
                                 <th scope="col" className="table__th note__title"
-                                    onClick={() => handleSort("created")}>
+                                    onClick={() => handleSort('created')}>
                                     Created
-                                    {sortCategory === "created" && <SortIndicator order={sortOrder} />}
+                                    {sortCategory === 'created' && <SortIndicator order={sortOrder} />}
                                 </th>
                                 <th scope="col" className="table__th note__title"
-                                    onClick={() => handleSort("updated")}>
+                                    onClick={() => handleSort('updated')}>
                                     Last Modified
-                                    {sortCategory === "updated" && <SortIndicator order={sortOrder} />}
+                                    {sortCategory === 'updated' && <SortIndicator order={sortOrder} />}
                                 </th>
                                 <th scope="col" className="table__th note__title"
-                                    onClick={() => handleSort("tickets")}>
+                                    onClick={() => handleSort('tickets')}>
                                     Tickets
-                                    {sortCategory === "tickets" && <SortIndicator order={sortOrder} />}
+                                    {sortCategory === 'tickets' && <SortIndicator order={sortOrder} />}
                                 </th>
                                 <th scope="col" className="table__th note__title"
-                                    onClick={() => handleSort("employees")}>
+                                    onClick={() => handleSort('employees')}>
                                     Active Employees
-                                    {sortCategory === "employees" && <SortIndicator order={sortOrder} />}
+                                    {sortCategory === 'employees' && <SortIndicator order={sortOrder} />}
                                 </th>
                                 {editColumn}
                             </tr>

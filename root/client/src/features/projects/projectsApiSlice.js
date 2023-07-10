@@ -39,7 +39,7 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
                 }
             }),
             invalidatesTags: [
-                { type: 'Project', id: "LIST" }
+                { type: 'Project', id: 'LIST' }
             ]
         }),
         updateProject: builder.mutation({

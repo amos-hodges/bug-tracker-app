@@ -44,7 +44,7 @@ export const ticketsApiSlice = apiSlice.injectEndpoints({
                 }
             }),
             invalidatesTags: [
-                { type: 'Ticket', id: "LIST" }
+                { type: 'Ticket', id: 'LIST' }
             ]
         }),
         updateTicket: builder.mutation({

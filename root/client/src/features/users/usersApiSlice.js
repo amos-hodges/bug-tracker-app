@@ -14,8 +14,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                     return response.status === 200 && !result.isError
                 }
             }),
-            //important for working with mongodb
-            // normalized data needs id property, not _id
+            //mongodb - normalized data needs id property, not _id
             transformResponse: responseData => {
                 const loadedUsers = responseData.map(user => {
                     user.id = user._id

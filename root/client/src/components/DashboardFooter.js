@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate, useLocation } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
-//will eventually switch to a side bar nav with current user--footer will have copyright
+
 const DashboardFooter = () => {
 
     const { username, status } = useAuth()

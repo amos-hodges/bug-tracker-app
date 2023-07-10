@@ -30,21 +30,16 @@ function initialize(server) {
         })
 
         socket.on('initial_data', async (userId) => {
-            //console.log('getting initial data for ' + userId)
             const recipientId = new mongoose.Types.ObjectId(userId)
             const socketId = connectedSockets[userId]
             const notifications = await Notification.find({ recipient: recipientId }).sort({ createdAt: -1 });
 
             if (socketId && notifications) {
                 io.to(socketId).emit('get_data', notifications)
-                console.log('intial data sent')
-            } else {
-                console.log('error sending initial data')
             }
         })
 
         socket.on('check_notifications', async (userId) => {
-            //console.log('checking notifications for ' + userId)
             const recipientId = new mongoose.Types.ObjectId(userId)
             const socketId = connectedSockets[userId]
             const notifications = await Notification.find({ recipient: recipientId })
@@ -57,11 +52,7 @@ function initialize(server) {
 
             if (socketId && notifications) {
                 io.to(socketId).emit('change_data')
-                console.log('check notifications sent')
-            } else {
-                console.log('error checking notifications data')
             }
-
         })
 
         socket.on('client_request', async (role, message) => {
@@ -74,8 +65,6 @@ function initialize(server) {
         })
 
         socket.on('delete_notification', async (notificationId) => {
-            //console.log(`deleting notification: ${notificationId}`)
-
             const notification = await Notification.findById(notificationId).exec()
             const result = await notification.deleteOne()
             console.log(result._id + ' deleted')

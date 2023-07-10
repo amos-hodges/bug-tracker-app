@@ -60,13 +60,11 @@ const Team = () => {
             ? "table--team"
             : "table--team__single"
 
-
-
         const sortedIds = [...ids].sort((a, b) => {
             const aValue = entities[a][sortCategory]
             const bValue = entities[b][sortCategory]
 
-            if (sortOrder === "asc") {
+            if (sortOrder === 'asc') {
                 if (aValue < bValue) return -1
                 if (aValue > bValue) return 1
                 return 0
@@ -90,10 +88,10 @@ const Team = () => {
 
         const handleSort = (category) => {
             if (sortCategory === category) {
-                setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
             } else {
                 setSortCategory(category)
-                setSortOrder("asc")
+                setSortOrder('asc')
             }
         }
 
@@ -107,7 +105,7 @@ const Team = () => {
                     || (entities[user_Id].projects.includes(projectId)
                         && user_Id !== userId)))
             .map((userId) => {
-                const user = entities[userId];
+                const user = entities[userId]
                 return (
                     <tr key={user.id}>
                         <td className="table__cell">
@@ -124,20 +122,20 @@ const Team = () => {
                                 {projects.ids
                                     .filter((projectId) => currentUser.projects.includes(projectId) && user.projects.includes(projectId))
                                     .map((projectId) => {
-                                        const project = projects.entities[projectId];
+                                        const project = projects.entities[projectId]
                                         return (
                                             <span key={project.id} className="project-link">
                                                 <Link to={`/dashboard/projects/${projectId}/tickets`}>
                                                     {project.title}
                                                 </Link>
                                             </span>
-                                        );
+                                        )
                                     })}
                             </td>
                         )}
                     </tr>
-                );
-            });
+                )
+            })
 
         content = (
             <>
