@@ -22,7 +22,7 @@ const ExtensionRequestForm = () => {
     const [dueDate, setDueDate] = useState(new Date(ticket.dueDate))
     const [requestDescription, setRequestDescription] = useState('')
     const [requestSent, setRequestSent] = useState(false)
-
+    //useCallBack??
     useEffect(() => {
         if (requestSent) {
             setDueDate(null)

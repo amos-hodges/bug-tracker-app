@@ -48,45 +48,42 @@ const EditTicketForm = ({ ticket, users }) => {
         }
     }, [isSuccess, isDelSuccess, navigate, projectId])
 
+    const canSave = [title, text, importance, userId, dueDate].every(Boolean) && !isLoading
+    const canDelete = (isManager || isAdmin) && ticket.completed
+
     const onTitleChanged = e => setTitle(e.target.value)
     const onTextChanged = e => setText(e.target.value)
     const onImportanceChanged = e => setImportance(e.target.value)
     const onCompletedChanged = e => setCompleted(prev => !prev)
     const onUserIdChanged = e => setUserId(e.target.value)
     const onDueDateChanged = date => setDueDate(date)
+
     const handleExtensionRequest = () => {
-        //console.log(ticket.id)
         navigate(`/dashboard/projects/${projectId}/tickets/${ticket.id}/extension`)
     }
-    const canSave = [title, text, importance, userId, dueDate].every(Boolean) && !isLoading
 
     const onNewNoteClicked = () => {
         //add a note once ticket model has been updated to accomodate
         console.log('adding new note')
     }
 
+    const handleBackClick = () => {
+        navigate(`/dashboard/projects/${projectId}/tickets`)
+    }
 
     const onSaveTicketClicked = async (e) => {
-        if (canSave) {
-            await updateTicket({ id: ticket.id, user: userId, title, text, importance, completed, dueDate })
-        }
+        await updateTicket({ id: ticket.id, user: userId, title, text, importance, completed, dueDate })
     }
 
     const onDeleteTicketClicked = async () => {
         await deleteTicket({ id: ticket.id })
     }
 
-    const handleBackClick = () => {
-        navigate(`/dashboard/projects/${projectId}/tickets`)
-    }
-
 
     const created = new Date(ticket.createdAt).toLocaleString('en-US', {
         day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
     })
-    // const updated = new Date(ticket.updatedAt).toLocaleString('en-US', {
-    //     day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
-    // })
+
     const dueOn = new Date(ticket.dueDate).toLocaleString('en-US', {
         day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
     })
@@ -104,6 +101,7 @@ const EditTicketForm = ({ ticket, users }) => {
                 </option>
             ))
     ]
+
     const statusOptions = [
         <option key="" value="">
             -- Select Status --
@@ -120,28 +118,6 @@ const EditTicketForm = ({ ticket, users }) => {
     const validTextClass = !text ? "form__input--incomplete" : ""
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
-
-    let deleteButton = null
-    if ((isManager || isAdmin) && ticket.completed) {
-        deleteButton = (
-            <button
-                className="icon-button"
-                title="Delete"
-                onClick={onDeleteTicketClicked}
-            >
-                <FontAwesomeIcon icon={faTrashCan} />
-            </button>
-        )
-    }
-    let noteButton = (
-        <button
-            className="icon-button"
-            title="NewNote"
-            onClick={onNewNoteClicked}
-        >
-            <FontAwesomeIcon icon={faCommentMedical} />
-        </button>
-    )
 
     let backButton = (
         <button
@@ -160,29 +136,53 @@ const EditTicketForm = ({ ticket, users }) => {
         </button>
     )
 
+    let deleteButton = (
+        <button
+            className="icon-button"
+            title="Delete"
+            onClick={onDeleteTicketClicked}
+            disabled={!canDelete}
+        >
+            <FontAwesomeIcon icon={faTrashCan} />
+        </button>
+    )
+
+    let noteButton = (
+        <button
+            className="icon-button"
+            title="NewNote"
+            onClick={onNewNoteClicked}
+        >
+            <FontAwesomeIcon icon={faCommentMedical} />
+        </button>
+    )
+
+    let saveButton = (
+        <button
+            className="icon-button"
+            title="Save"
+            onClick={onSaveTicketClicked}
+            disabled={!canSave}
+        >
+            <FontAwesomeIcon icon={faSave} />
+        </button>
+    )
+
     const editContent = (
         <>
             {backButton}
             <div className="page-container">
                 <p className={errClass}>{errContent}</p>
-
                 <form className="form" onSubmit={e => e.preventDefault()}>
                     <div className="form__title-row">
                         <h2>Edit Ticket</h2>
                         <div className="form__action-buttons">
                             {noteButton}
-                            <button
-                                className="icon-button"
-                                title="Save"
-                                onClick={onSaveTicketClicked}
-                                disabled={!canSave}
-                            >
-                                <FontAwesomeIcon icon={faSave} />
-                            </button>
+                            {saveButton}
                             {deleteButton}
-
                         </div>
                     </div>
+
                     <label className="form__label" htmlFor="note-title">
                         Title:</label>
                     <input
