@@ -4,8 +4,7 @@ const Project = require('../models/Project')
 const {
     handleTicketAssigned,
     scheduleDueDateNotifications,
-    handleCriticalNotification,
-    handleDueDateCheck
+    handleImportantTicketNotification,
 } = require('./notificationController')
 
 // @desc Get all tickets
@@ -57,7 +56,8 @@ const createNewTicket = async (req, res) => {
         scheduleDueDateNotifications(user, ticket, dueDate)
 
         if (ticket.importance === 'Critical') {
-            handleCriticalNotification(ticket, user)
+            const message = `This user was assigned a ticket with critical importance: ${ticket.title}`
+            handleImportantTicketNotification(user, 'Manager', message)
         }
         return res.status(201).json({ message: 'Ticket succesfuly created' })
     } else {
@@ -86,6 +86,14 @@ const updateTicket = async (req, res) => {
     // allow original ticket to be renamed
     if (duplicate && duplicate?._id.toString() !== id) {
         return res.status(409).json({ message: 'Duplicate ticket found' })
+    }
+
+    if (ticket.user.toString() !== user) {
+        handleTicketAssigned(user, ticket.id)
+    }
+    if (ticket.completed !== completed) {
+        const message = `The ticket '${ticket.title}' was changed to ${completed ? 'COMPLETE' : 'UNCOMPLETE'}`
+        handleImportantTicketNotification(user, 'Manager', message)
     }
 
     ticket.user = user

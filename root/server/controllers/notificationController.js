@@ -105,15 +105,15 @@ const scheduleDueDateNotifications = async (userId, ticket, dueDate) => {
 // *** MANAGER & ADMIN SPECIFIC NOTIFICATIONS ***
 
 
-// @desc Notify managers of critical tickets
+// @desc Notify managers of important ticket updates
 
-const handleCriticalNotification = async (ticket, userId) => {
+const handleImportantTicketNotification = async (userId, role, message) => {
     const user = await User.findById(userId)
-    const managers = await User.find({ roles: { $in: ['Manager'] } })
-    const message = `${user.username} was assigned a ticket with critical importance: ${ticket.title}`
+    const managers = await User.find({ roles: { $in: [role] } })
+    const message_with_user = `Notification regarding ${user.username}: ` + message
     for (const manager of managers) {
         const recipient = manager._id
-        await createNewNotification(recipient, message)
+        await createNewNotification(recipient, message_with_user)
     }
 
 }
@@ -136,5 +136,5 @@ module.exports = {
     handleAddOrRemoveProject,
     scheduleDueDateNotifications,
     handleEmployeeUpdate,
-    handleCriticalNotification,
+    handleImportantTicketNotification,
 }

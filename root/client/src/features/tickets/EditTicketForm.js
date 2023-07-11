@@ -50,6 +50,7 @@ const EditTicketForm = ({ ticket, users }) => {
 
     const canSave = [title, text, importance, userId, dueDate].every(Boolean) && !isLoading
     const canDelete = (isManager || isAdmin) && ticket.completed
+    const displayEdit = !noProject && (isAdmin || isManager)
 
     const onTitleChanged = e => setTitle(e.target.value)
     const onTextChanged = e => setText(e.target.value)
@@ -168,7 +169,7 @@ const EditTicketForm = ({ ticket, users }) => {
         </button>
     )
 
-    const editContent = (
+    const content = (
         <>
             {backButton}
             <div className="page-container">
@@ -185,30 +186,38 @@ const EditTicketForm = ({ ticket, users }) => {
 
                     <label className="form__label" htmlFor="note-title">
                         Title:</label>
-                    <input
-                        className={`form__input ${validTitleClass}`}
-                        id="note-title"
-                        name="title"
-                        type="text"
-                        autoComplete="off"
-                        value={title}
-                        onChange={onTitleChanged}
-                    />
+                    {displayEdit
+                        ? <input
+                            className={`form__input ${validTitleClass}`}
+                            id="note-title"
+                            name="title"
+                            type="text"
+                            autoComplete="off"
+                            value={title}
+                            onChange={onTitleChanged}
+                        />
+                        : <p>{ticket.title}</p>}
 
                     <label className="form__label" htmlFor="note-text">
                         Description:</label>
-                    <textarea
-                        className={`form__input form__input--text ${validTextClass}`}
-                        id="note-text"
-                        name="text"
-                        value={text}
-                        onChange={onTextChanged}
-                    />
+                    {displayEdit
+                        ? < textarea
+                            className={`form__input form__input--text ${validTextClass}`}
+                            id="note-text"
+                            name="text"
+                            value={text}
+                            onChange={onTextChanged}
+                        />
+                        : <p>{ticket.text}</p>}
+
                     <div className="form__row">
                         <div className="form__divider">
+
                             <label className="form__label form__checkbox-container" htmlFor="note-completed">
                                 WORK COMPLETE:
-                                <input
+                            </label>
+                            {(currentUser === userId)
+                                ? <input
                                     className="form__checkbox"
                                     id="note-completed"
                                     name="completed"
@@ -216,43 +225,51 @@ const EditTicketForm = ({ ticket, users }) => {
                                     checked={completed}
                                     onChange={onCompletedChanged}
                                 />
-                            </label>
+                                : <p>{completed ? 'Yes' : 'No'}</p>}
 
                             <label className="form__label form__checkbox-container" htmlFor="note-username">
                                 ASSIGNED TO:</label>
-                            <select
-                                id="note-username"
-                                name="username"
-                                className="form__select"
-                                value={userId}
-                                onChange={onUserIdChanged}
-                            >
-                                {options}
-                            </select>
+                            {displayEdit
+                                ? < select
+                                    id="note-username"
+                                    name="username"
+                                    className="form__select"
+                                    value={userId}
+                                    onChange={onUserIdChanged}
+                                >
+                                    {options}
+                                </select>
+                                : <p>{ticket.username}</p>}
+
                             <label className="form__label form__checkbox-container" htmlFor="importance">
                                 IMPORTANCE:</label>
-                            <select
-                                id="importance"
-                                name="importance"
-                                className="form__select"
-                                value={importance}
-                                onChange={onImportanceChanged}
-                            >
-                                {statusOptions}
-                            </select>
+                            {displayEdit
+                                ? < select
+                                    id="importance"
+                                    name="importance"
+                                    className="form__select"
+                                    value={importance}
+                                    onChange={onImportanceChanged}
+                                >
+                                    {statusOptions}
+                                </select>
+                                : <p>{importance}</p>}
+
                             <label className="form__label" htmlFor="dueDate">
                                 Due Date:
                             </label>
-                            <DatePicker
-                                id="dueDate"
-                                name="dueDate"
-                                selected={dueDate}
-                                onChange={onDueDateChanged}
-                                className="form__input"
-                                placeholderText="Select due date"
-                                minDate={new Date()}
-                                autoComplete="off"
-                            />
+                            {displayEdit
+                                ? < DatePicker
+                                    id="dueDate"
+                                    name="dueDate"
+                                    selected={dueDate}
+                                    onChange={onDueDateChanged}
+                                    className="form__input"
+                                    placeholderText="Select due date"
+                                    minDate={new Date()}
+                                    autoComplete="off"
+                                />
+                                : <p>{dueOn}</p>}
                             <label className="form__label form__checkbox-container" htmlFor="comments">
                                 COMMENTS:</label>
                             <p>List of comments on ticket...(delete)</p>
@@ -262,6 +279,7 @@ const EditTicketForm = ({ ticket, users }) => {
                             <p>Dropdown list of revisions..</p>
                             <p className="form__created">Created:<br />{created}</p>
                             <p className="form__updated">Due On:<br />{dueOn}</p>
+                            {currentUser === userId && extensionRequestButton}
                         </div>
                     </div>
                 </form>
@@ -269,61 +287,7 @@ const EditTicketForm = ({ ticket, users }) => {
         </>
     )
 
-    const ticketContent = (
-        <>
-            {backButton}
-            <div className="page-container">
-
-                <div className="form__title-row">
-                    <label className="form__label" htmlFor="note-title">
-                        Title:</label>
-                    {ticket.title}
-                    <label className="form__label" htmlFor="note-text">
-                        Description:</label>
-                </div>
-                <div className="form__row">
-                    <div className="form__divider">
-                        <label className="form__label form__checkbox-container" htmlFor="note-completed">
-                            WORK COMPLETE:</label>
-                        {(currentUser === userId)
-                            ? <input
-                                className="form__checkbox"
-                                id="note-completed"
-                                name="completed"
-                                type="checkbox"
-                                checked={completed}
-                                onChange={onCompletedChanged}
-                            />
-                            : <p>{completed ? 'Yes' : 'No'}</p>}
-
-                        <label className="form__label form__checkbox-container" htmlFor="note-username">
-                            ASSIGNED TO:</label>
-                        <p>{ticket.username}</p>
-                        <label className="form__label form__checkbox-container" htmlFor="importance">
-                            IMPORTANCE:</label>
-                        <p>{importance}</p>
-
-
-                        <label className="form__label form__checkbox-container" htmlFor="comments">
-                            COMMENTS:</label>
-                        <p>List of comments on ticket</p>
-                    </div>
-                    <div className="form__divider">
-                        <p>Revision Version: version#</p>
-                        <p className="form__created">Created:<br />{created}</p>
-                        <p className="form__updated">Due On:<br />{dueOn}</p>
-                        {currentUser === userId && extensionRequestButton}
-                    </div>
-                </div>
-            </div>
-        </>
-    )
-
-    return (
-        <>
-            {!noProject && (isAdmin || isManager) ? editContent : ticketContent}
-        </>
-    )
+    return content
 }
 
 
