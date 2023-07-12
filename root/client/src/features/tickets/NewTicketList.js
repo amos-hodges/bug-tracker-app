@@ -46,12 +46,20 @@ const NewTicketsList = () => {
         },
         {
             label: 'Status',
-            render: (ticket) => ticket.completed ? 'True' : 'False',
+            render: (ticket) => ticket.completed
+                ? <span className="note__status--completed">Closed</span>
+                : <span className="note__status--open">Open</span>,
             sortValue: (ticket) => ticket.completed
         },
         {
             label: 'Last Update',
-            render: (ticket) => ticket.updatedAt,
+            render: (ticket) => new Date(ticket.updatedAt)
+                .toLocaleString('en-US', {
+                    day: 'numeric',
+                    month: 'long',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                }),
             sortValue: (ticket) => ticket.updatedAt
         },
     ]
@@ -69,6 +77,7 @@ const NewTicketsList = () => {
     }
 
     if (isSuccess) {
+
         const ticketsData = Object.values(tickets.entities).map(entity => ({ ...entity }))
 
         content = (
@@ -79,7 +88,7 @@ const NewTicketsList = () => {
                     value={searchQuery}
                     onChange={handleSearchInputChange}
                 /> */}
-                <div>
+                <div className="list-container">
                     <SortableTable data={ticketsData} config={config} keyFn={keyFn} />
                 </div>
             </>
