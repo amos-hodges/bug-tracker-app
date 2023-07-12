@@ -1,14 +1,13 @@
 import { useGetTicketsQuery } from './ticketsApiSlice'
-import Ticket from './Ticket'
 import PulseLoader from 'react-spinners/PulseLoader'
 import { useParams, Link } from 'react-router-dom'
-import { useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 import SortableTable from '../../components/SortableTable'
 
 const NewTicketsList = () => {
-    const { projectId } = useParams()
 
+    const { projectId } = useParams()
+    const allTickets = (projectId === 'all')
     const { userId, isAdmin, isManager } = useAuth()
 
     const {
@@ -23,10 +22,6 @@ const NewTicketsList = () => {
         refetchOnMountOrArgChange: true,
 
     })
-
-    // const handleSearchInputChange = (e) => {
-    //     setSearchQuery(e.target.value)
-    // }
 
     const config = [
         {
@@ -68,6 +63,14 @@ const NewTicketsList = () => {
         return ticket.id
     }
 
+    const newTicketButton = (
+        <Link
+            to={`/dashboard/projects/${projectId}/tickets/new`}
+            className="new-ticket-button">
+            New Ticket
+        </Link >
+    )
+
     let content
 
     if (isLoading) content = <PulseLoader color={"#FFF"} />
@@ -78,19 +81,24 @@ const NewTicketsList = () => {
 
     if (isSuccess) {
 
-        const ticketsData = Object.values(tickets.entities).map(entity => ({ ...entity }))
+        const { ids, entities } = tickets
+
+        let filteredIds = allTickets
+            ? (isAdmin || isManager ? ids : ids.filter((ticketId) => entities[ticketId].user === userId))
+            : ids.filter((ticketId) => entities[ticketId].project === projectId)
+
+        const ticketsData = filteredIds.map((id) => entities[id])
+
+        //come up with better way to display project title
+        const projectTitle = filteredIds.length > 0 ? entities[filteredIds[0]]?.projectTitle : ''
+        const heading = allTickets ? <h1>All Tickets</h1> : <h1>{projectTitle}</h1>
 
         content = (
             <>
-                {/* <input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChange={handleSearchInputChange}
-                /> */}
-                <div className="list-container">
-                    <SortableTable data={ticketsData} config={config} keyFn={keyFn} />
-                </div>
+                {heading}
+                <SortableTable data={ticketsData} config={config} keyFn={keyFn} />
+                {!allTickets && newTicketButton}
+
             </>
         )
 
