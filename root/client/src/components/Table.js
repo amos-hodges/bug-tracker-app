@@ -1,6 +1,13 @@
 import { Fragment } from "react"
 
-const Table = ({ data, config, keyFn }) => {
+const Table = ({ data, config, keyFn, classes }) => {
+
+    const {
+        tableClass,
+        tableHeadClass,
+        cellClass,
+        rowClass
+    } = classes
 
     const renderedHeaders = config.map((col) => {
         if (col.header) {
@@ -12,22 +19,22 @@ const Table = ({ data, config, keyFn }) => {
 
         const renderedCells = config.map((col) => {
             return (
-                <td className="table__cell" key={col.label}>
+                <td className={cellClass} key={col.label}>
                     {col.render(rowData)}
                 </td>
             )
         })
 
         return (
-            <tr className="table__row" key={keyFn(rowData)}>
+            <tr className={rowClass} key={keyFn(rowData)}>
                 {renderedCells}
             </tr>
         )
     })
 
     return (
-        <table className="table table--tickets__all">
-            <thead className="table__thead">
+        <table className={tableClass}>
+            <thead className={tableHeadClass}>
                 <tr>
                     {renderedHeaders}
                 </tr>

@@ -33,3 +33,10 @@ export const ticketListConfig = [
         sortValue: (ticket) => ticket.updatedAt
     },
 ]
+
+export const ticketListClasses = {
+    tableClass: "table table--tickets__all",
+    tableHeadClass: "table__thead",
+    cellClass: "table__cell",
+    rowClass: "table__row"
+}
