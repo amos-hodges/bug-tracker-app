@@ -1,6 +1,6 @@
 import { Fragment } from "react"
 
-function Table({ data, config, keyFn }) {
+const Table = ({ data, config, keyFn }) => {
 
     const renderedHeaders = config.map((col) => {
         if (col.header) {
