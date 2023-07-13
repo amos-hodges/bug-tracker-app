@@ -17,8 +17,12 @@ export const userListConfig = [
 ]
 
 export const userListClasses = {
-    tableClass: "table table--users",
-    tableHeadClass: "table__thead",
-    cellClass: "table__cell",
-    rowClass: "table__row user"
+    // tableClass: "table table--users",
+    // tableHeadClass: "table__thead",
+    // cellClass: "table__cell",
+    // rowClass: "table__row user"
+    tableClass: "",
+    tableHeadClass: "",
+    cellClass: "",
+    rowClass: ""
 }

@@ -17,8 +17,8 @@ export const ticketListConfig = [
     {
         label: 'Status',
         render: (ticket) => ticket.completed
-            ? <span className="note__status--completed">Closed</span>
-            : <span className="note__status--open">Open</span>,
+            ? <p className="status completed">Closed</p>
+            : <p className="status open">Open</p>,
         sortValue: (ticket) => ticket.completed
     },
     {
@@ -35,8 +35,13 @@ export const ticketListConfig = [
 ]
 
 export const ticketListClasses = {
-    tableClass: "table table--tickets__all",
-    tableHeadClass: "table__thead",
-    cellClass: "table__cell",
-    rowClass: "table__row"
+    //     tableClass: "table table--tickets__all",
+    //     tableHeadClass: "table__thead",
+    //     cellClass: "table__cell",
+    //     rowClass: "table__row"
+    // }
+    tableClass: "",
+    tableHeadClass: "",
+    cellClass: "",
+    rowClass: ""
 }

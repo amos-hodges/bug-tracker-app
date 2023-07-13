@@ -24,7 +24,6 @@ const SortableTable = ({ config, data, ...props }) => {
             ...col,
             header: () => (
                 <th
-                    scope="col" className="table__th note__title"
                     onClick={() => handleClick(col.label)}>
                     <div>
                         {getIcons(col.label, sortBy, sortOrder)}
@@ -37,13 +36,15 @@ const SortableTable = ({ config, data, ...props }) => {
 
     return (<>
         {searchBar}
-        <div className="list-container">
+
+        <div className="table__body">
+            {/* <div className="list-container"> */}
             <Table data={sortedData} config={updatedConfig} {...props} />
         </div>
     </>
     )
 }
-
+//convert to arrow
 function getIcons(label, sortBy, sortOrder) {
     if (label !== sortBy) {
         return <div>

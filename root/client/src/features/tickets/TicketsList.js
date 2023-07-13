@@ -62,12 +62,14 @@ const TicketsList = () => {
         const heading = allTickets ? <h1>All Tickets</h1> : <h1>{projectTitle}</h1>
 
         content = (
-            <>
-                {heading}
+            <div className="table">
+                <section className="table__header">
+                    {heading}
+                </section>
                 <SortableTable data={ticketsData} config={config} keyFn={keyFn} classes={classes} />
                 {!allTickets && newTicketButton}
 
-            </>
+            </div>
         )
 
     }

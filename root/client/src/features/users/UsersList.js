@@ -55,12 +55,14 @@ const UsersList = () => {
         const heading = <h2>User Settings</h2>
 
         content = (
-            <>
-                {heading}
+            <div className="table">
+                <section className="table__header">
+                    {heading}
+                </section>
                 <SortableTable data={userData} config={config} keyFn={keyFn} classes={classes} />
                 {isAdmin && newUserButton}
                 {isManager && adminRequestButton}
-            </>
+            </div>
         )
     }
     return content
