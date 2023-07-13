@@ -1,5 +1,5 @@
 import Table from "./Table"
-import { GoArrowDown, GoArrowUp } from 'react-icons/go'
+import { GoChevronDown, GoChevronUp } from 'react-icons/go'
 import useSort from '../hooks/useSort'
 import useSearch from '../hooks/useSearch'
 
@@ -25,9 +25,11 @@ const SortableTable = ({ config, data, ...props }) => {
             header: () => (
                 <th
                     onClick={() => handleClick(col.label)}>
-                    <div>
+                    <div className="header">
+
                         {getIcons(col.label, sortBy, sortOrder)}
                         {col.label}
+
                     </div>
                 </th>
             )
@@ -46,25 +48,19 @@ const SortableTable = ({ config, data, ...props }) => {
 }
 //convert to arrow
 function getIcons(label, sortBy, sortOrder) {
-    if (label !== sortBy) {
-        return <div>
-            <GoArrowUp />
-            <GoArrowDown />
-        </div>
-    }
 
-    if (sortOrder === null) {
-        return <div>
-            <GoArrowUp />
-            <GoArrowDown />
+    if (sortOrder === null || label !== sortBy) {
+        return <div className="sort__icons">
+            <GoChevronUp />
+            <GoChevronDown />
         </div>
     } else if (sortOrder === 'asc') {
-        return <div>
-            <GoArrowUp />
+        return <div className="sort__icons">
+            <GoChevronUp />
         </div>
     } else if (sortOrder === 'desc') {
-        return <div>
-            <GoArrowDown />
+        return <div className="sort__icons">
+            <GoChevronDown />
         </div>
     }
 }

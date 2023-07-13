@@ -29,24 +29,24 @@ const Project = ({ projectId, hideEdit, ticketCount, userCount }) => {
             <tr className="table__row">
 
 
-                <td className="table__cell note__title">
+                <td >
                     {project.title}
                     <button className="title-button" onClick={handleTitleClick}>
                         Open
                     </button>
                 </td>
-                <td className="table__cell note__username">{project.description}</td>
-                <td className="table__cell note__created">{created}</td>
-                <td className="table__cell note__updated">{updated}</td>
-                <td className="table__cell note__updated">{ticketCount}</td>
-                <td className="table__cell">
+                <td >{project.description}</td>
+                <td >{created}</td>
+                <td >{updated}</td>
+                <td >{ticketCount}</td>
+                <td >
                     {userCount}
                     <button className="employees-button" onClick={handleEmployeesClicked}>
                         View Team
                     </button>
                 </td>
 
-                {hideEdit && <td className="table__cell">
+                {hideEdit && <td>
                     <button
                         className="icon-button table__button"
                         onClick={handleEdit}

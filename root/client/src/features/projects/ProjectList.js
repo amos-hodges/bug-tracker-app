@@ -108,7 +108,7 @@ const ProjectList = () => {
 
         const tableClass = isAdmin || isManager ? "table table--projects" : "table table--projects__noEdit"
         const editColumn = isAdmin || isManager ? (
-            <th scope="col" className="table__th note__edit">Edit</th>
+            <th>Edit</th>
         ) : null
 
         const handleSort = (category) => {
@@ -125,43 +125,43 @@ const ProjectList = () => {
         }
 
         content = (
-            <>
+            <div className="table">
                 <input
                     type="text"
                     placeholder="Search..."
                     value={searchQuery}
                     onChange={handleSearchInputChange}
                 />
-                <div className="list-container">
-                    <table className={tableClass}>
+                <div className="table__body">
+                    <table>
                         <thead className="table__thead">
                             <tr>
-                                <th scope="col" className="table__th note__title"
+                                <th
                                     onClick={() => handleSort('project')}>
                                     Project
                                     {sortCategory === 'project' && <SortIndicator order={sortOrder} />}
                                 </th>
-                                <th scope="col" className="table__th note__title"
+                                <th
                                     onClick={() => handleSort('description')}>
                                     Description
                                     {sortCategory === 'description' && <SortIndicator order={sortOrder} />}
                                 </th>
-                                <th scope="col" className="table__th note__title"
+                                <th
                                     onClick={() => handleSort('created')}>
                                     Created
                                     {sortCategory === 'created' && <SortIndicator order={sortOrder} />}
                                 </th>
-                                <th scope="col" className="table__th note__title"
+                                <th
                                     onClick={() => handleSort('updated')}>
                                     Last Modified
                                     {sortCategory === 'updated' && <SortIndicator order={sortOrder} />}
                                 </th>
-                                <th scope="col" className="table__th note__title"
+                                <th
                                     onClick={() => handleSort('tickets')}>
                                     Tickets
                                     {sortCategory === 'tickets' && <SortIndicator order={sortOrder} />}
                                 </th>
-                                <th scope="col" className="table__th note__title"
+                                <th
                                     onClick={() => handleSort('employees')}>
                                     Active Employees
                                     {sortCategory === 'employees' && <SortIndicator order={sortOrder} />}
@@ -174,7 +174,7 @@ const ProjectList = () => {
                         </tbody>
                     </table>
                 </div>
-            </>
+            </div>
         )
     }
     return content

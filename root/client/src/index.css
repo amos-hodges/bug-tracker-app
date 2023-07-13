@@ -11,7 +11,7 @@
 :root {
   /* COLORS */
   --BGCOLOR: #FAF9F6;
-  --BORDER-COLOR: #FFF;
+  --BORDER-COLOR: #d6d6d6;
   --BUTTON-COLOR: #777777c9;
   --COLOR: #000000;
   --ERROR: firebrick;
@@ -332,7 +332,7 @@ a:focus-visible {
   transition: width 0.4s, opacity 0.2s;
   transition-timing-function: ease-out;
   overflow: hidden;
-  background-color: rgba(44, 54, 54, 0.911);
+  background-color: #d5d1defe;
   opacity: 0;
   flex-direction: column;
   align-items: center;
@@ -344,7 +344,7 @@ a:focus-visible {
   transition: width 0.4s, opacity 0.3s;
   border-radius: 4px;
   opacity: 1;
-  background-color: rgba(44, 54, 54, 0.911);
+  background-color: #d5d1defe;
   flex-direction: column;
   align-items: center;
   display: flex;
@@ -373,9 +373,9 @@ a:focus-visible {
 .sidebar--open p {
   margin-bottom: 50px;
   padding: 8px 12px;
-  border: 1px solid;
+  /* border: 1px solid var(--BORDER-COLOR); */
   border-radius: 15px;
-  background-color: rgba(173, 216, 230, 0.5);
+  background-color: #0000000b;
   width: 60%;
   display: inline-block;
   text-align: center;
@@ -384,9 +384,9 @@ a:focus-visible {
 .sidebar p {
   margin-bottom: 50px;
   padding: 8px 12px;
-  border: 1px solid;
+  /* border: 1px solid; */
   border-radius: 15px;
-  background-color: rgba(173, 216, 230, 0.5);
+  background-color: #0000000b;
   width: 60%;
   display: inline-block;
   text-align: center;
@@ -433,70 +433,6 @@ a:focus-visible {
   width: auto;
   height: auto;
 }
-
-
-
-/* || TABLES - GENERAL */
-
-.list-container {
-  background-color: #cacaca67;
-  width: 85%;
-  margin: 0 auto;
-
-  border: 2px solid #cccccca9;
-  border-radius: 8px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-  /* Add a box shadow for a 3D effect */
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
-
-/* thead,
-tbody,
-tr {
-  display: contents;
-} */
-
-/* .table {
-  font-size: 1rem;
-  width: 100%;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  color: var(--TABLE-COLOR);
-  gap: 0.1em;
-} */
-
-.table__button {
-  padding: 0.25em;
-  font-size: 1.5rem;
-  color: var(--TABLE-COLOR);
-}
-
-.table__thead {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-.table__th,
-.table__cell {
-  background-color: var(--TABLE-BGCOLOR);
-  text-align: center;
-  border: 1px solid var(--TABLE-COLOR);
-  padding: 0.5em;
-}
-
-.table__cell:last-child {
-  display: grid;
-  place-content: center;
-}
-
-.table__cell--inactive {
-  background-color: var(--INACTIVE);
-}
-
 
 /* ||  TICKET */
 
