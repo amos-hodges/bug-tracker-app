@@ -225,7 +225,7 @@ a {
 }
 
 a:any-link {
-  color: var(--LINK-COLOR);
+  color: var(-COLOR);
 }
 
 a:hover,
@@ -399,19 +399,17 @@ a:focus-visible {
   padding: 1em;
   flex: 1;
   transition: all 0.3s;
-  margin-left: 20%
+  margin-left: 20%;
+  /* overflow-y: scroll; */
+  /* height: 50%; */
 }
 
 .dash-container-sidebar {
   padding: 1em;
   flex: 1 1 80%;
+  /* overflow-y: scroll; */
+  /* height: 85%; */
 }
-
-.container-closed {
-  flex: 1;
-  overflow: hidden;
-}
-
 
 .dash-footer {
   font-size: 1rem;

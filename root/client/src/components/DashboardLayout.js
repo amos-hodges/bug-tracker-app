@@ -22,7 +22,7 @@ const DashboardLayout = () => {
         setIsSidebarOpen(!isSidebarOpen)
     }
 
-    let containerClass = !isSidebarOpen ? 'dash-container' : 'dash-container-sidebar container-closed'
+    let containerClass = !isSidebarOpen ? 'dash-container' : 'dash-container-sidebar'
 
     return (
         <>
