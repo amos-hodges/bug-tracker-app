@@ -8,7 +8,11 @@
     background-color: #f1f1f1;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 .4rem .8rem #0005;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 .card-header {
@@ -22,6 +26,11 @@
 }
 
 .card-content {
-    padding: 16px;
-    display: none;
+    padding: 1rem;
+}
+
+.card-options {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
 }

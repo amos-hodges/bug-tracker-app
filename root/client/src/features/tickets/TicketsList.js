@@ -3,7 +3,7 @@ import PulseLoader from 'react-spinners/PulseLoader'
 import { useParams, Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import SortableTable from '../../components/SortableTable'
-import { ticketListConfig, ticketListClasses } from '../../config/ticket-list-config'
+import { ticketListConfig } from '../../config/ticket-list-config'
 
 const TicketsList = () => {
 
@@ -12,7 +12,7 @@ const TicketsList = () => {
 
     const allTickets = (projectId === 'all')
     const config = ticketListConfig
-    const classes = ticketListClasses
+
 
     const {
         data: tickets,
@@ -67,7 +67,7 @@ const TicketsList = () => {
                     {heading}
                     {!allTickets && newTicketButton}
                 </section>
-                <SortableTable data={ticketsData} config={config} keyFn={keyFn} classes={classes} />
+                <SortableTable data={ticketsData} config={config} keyFn={keyFn} />
             </div>
         )
 

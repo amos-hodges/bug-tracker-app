@@ -1,6 +1,6 @@
 import PulseLoader from 'react-spinners/PulseLoader'
 import { useGetProjectsQuery } from './projectsApiSlice'
-import ExpandableCard from '../../components/ExpandableCard'
+import Grid from '../../components/Grid'
 const ProjectGrid = () => {
 
     const {
@@ -15,9 +15,9 @@ const ProjectGrid = () => {
         refetchOnMountOrArgChange: true
     })
 
-    const keyFn = (project) => {
-        return project.id
-    }
+    // const keyFn = (project) => {
+    //     return project.id
+    // }
 
     let content
 
@@ -31,10 +31,12 @@ const ProjectGrid = () => {
 
         const { ids, entities } = projects
 
-        gridcontent =  
+        const projectData = ids.map((id) => entities[id])
+
+        content = <Grid data={projectData} />
     }
 
-    return <div className="card-grid">{content}</div> >
+    return content
 }
 
 export default ProjectGrid

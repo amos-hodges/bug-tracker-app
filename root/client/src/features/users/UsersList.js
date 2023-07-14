@@ -2,13 +2,13 @@ import { useGetUsersQuery } from './usersApiSlice'
 import { Link } from 'react-router-dom'
 import PulseLoader from 'react-spinners/PulseLoader'
 import useAuth from '../../hooks/useAuth'
-import { userListConfig, userListClasses } from '../../config/user-list-config'
+import { userListConfig } from '../../config/user-list-config'
 import SortableTable from '../../components/SortableTable'
 const UsersList = () => {
 
     const { isAdmin, isManager } = useAuth()
     const config = userListConfig
-    const classes = userListClasses
+
     const {
         data: users,
         isLoading,
@@ -61,7 +61,7 @@ const UsersList = () => {
                     {isAdmin && newUserButton}
                     {isManager && adminRequestButton}
                 </section>
-                <SortableTable data={userData} config={config} keyFn={keyFn} classes={classes} />
+                <SortableTable data={userData} config={config} keyFn={keyFn} />
             </div>
         )
     }

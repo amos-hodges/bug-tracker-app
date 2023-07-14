@@ -15,14 +15,3 @@ export const userListConfig = [
         sortValue: (user) => user.projectTitles
     },
 ]
-
-export const userListClasses = {
-    // tableClass: "table table--users",
-    // tableHeadClass: "table__thead",
-    // cellClass: "table__cell",
-    // rowClass: "table__row user"
-    tableClass: "",
-    tableHeadClass: "",
-    cellClass: "",
-    rowClass: ""
-}
