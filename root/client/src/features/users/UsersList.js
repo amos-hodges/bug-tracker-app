@@ -28,14 +28,14 @@ const UsersList = () => {
 
     const adminRequestButton = (
         <Link to={'/dashboard/users/request'}
-            className="new-ticket-button">
+            className="button-18">
             Admin Request
         </Link >
     )
 
     const newUserButton = (
         <Link to={'/dashboard/users/new'}
-            className="new-ticket-button">
+            className="button-18">
             New User
         </Link >
     )
@@ -58,10 +58,10 @@ const UsersList = () => {
             <div className="table">
                 <section className="table__header">
                     {heading}
+                    {isAdmin && newUserButton}
+                    {isManager && adminRequestButton}
                 </section>
                 <SortableTable data={userData} config={config} keyFn={keyFn} classes={classes} />
-                {isAdmin && newUserButton}
-                {isManager && adminRequestButton}
             </div>
         )
     }

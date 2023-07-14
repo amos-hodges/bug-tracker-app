@@ -34,7 +34,7 @@ const TicketsList = () => {
     const newTicketButton = (
         <Link
             to={`/dashboard/projects/${projectId}/tickets/new`}
-            className="new-ticket-button">
+            className="button-18">
             New Ticket
         </Link >
     )
@@ -65,10 +65,9 @@ const TicketsList = () => {
             <div className="table">
                 <section className="table__header">
                     {heading}
+                    {!allTickets && newTicketButton}
                 </section>
                 <SortableTable data={ticketsData} config={config} keyFn={keyFn} classes={classes} />
-                {!allTickets && newTicketButton}
-
             </div>
         )
 

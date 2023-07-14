@@ -58,7 +58,7 @@ const Sidebar = ({ isSidebarOpen }) => {
                 </Link>
             </div>
 
-            <p><Link to="/dashboard">{mode} Projects</Link></p>
+            <p><Link to="/dashboard/projects">{mode} Projects</Link></p>
 
             {(isManager || isAdmin)
                 ? <p><Link to="/dashboard/users">User Settings</Link></p>

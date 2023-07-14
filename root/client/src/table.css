@@ -1,7 +1,7 @@
 .table {
     /* width: 82vw; */
     height: 95%;
-    background-color: #fff5;
+    background-color: rgba(255, 255, 255, 0.333);
     /* 
     for background image
     backdrop-filter: blur(7px); */
@@ -11,10 +11,12 @@
 }
 
 .table__header {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     height: 10%;
     background-color: #fff4;
-    padding: .8rem 1rem;
+    padding: 2rem 2rem;
 }
 
 .table__body {

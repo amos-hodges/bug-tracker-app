@@ -13,12 +13,15 @@ const Welcome = () => {
     const message = !isManager && !isAdmin ? 'My Projects' : 'All Projects'
 
     const content = (
-        <section className="welcome">
-            <p>{today}</p>
-            <h1>Welcome {username}</h1>
-            <p>{message}</p>
+        <>
+            {/* <section className="welcome">
+                <p>{today}</p>
+                <h1>Welcome {username}</h1>
+                <p>{message}</p>
+            </section> */}
             <ProjectList />
-        </section>
+        </>
+
     )
 
     return content
