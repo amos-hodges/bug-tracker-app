@@ -27,6 +27,12 @@
 }
 
 /* || UTILITY CLASSES */
+.searchbar {
+  border-radius: 50px;
+  margin: 1rem;
+  padding-left: 1rem;
+}
+
 .navigation-link {
   color: var(--COLOR);
   background: none;

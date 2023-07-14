@@ -30,10 +30,16 @@ const ProjectGrid = () => {
     if (isSuccess) {
 
         const { ids, entities } = projects
-
         const projectData = ids.map((id) => entities[id])
-
-        content = <Grid data={projectData} />
+        const heading = <h2>Projects</h2>
+        content = (
+            <div className="table">
+                <section className="table__header">
+                    {heading}
+                </section>
+                <Grid data={projectData} />
+            </div>
+        )
     }
 
     return content

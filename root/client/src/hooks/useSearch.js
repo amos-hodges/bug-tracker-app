@@ -8,6 +8,7 @@ const useSearch = ({ data, config }) => {
     }
     const searchBar = (
         <input
+            className="searchbar"
             type="text"
             placeholder="Search..."
             value={searchQuery}
