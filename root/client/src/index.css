@@ -241,12 +241,12 @@ a:focus-visible {
 
 /* || PAGES */
 
-/* .public,
+.public,
 .welcome {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-} */
+}
 
 .public {
   padding: 1em;
@@ -669,7 +669,12 @@ a:focus-visible {
 
 
 /* CSS */
+.spaced {
+  margin-left: 1rem;
+}
+
 .button-18 {
+  /* margin-left: 1rem; */
   align-items: center;
   background-color: #0A66C2;
   border: 0;

@@ -31,7 +31,7 @@ const Project = ({ projectId, hideEdit, ticketCount, userCount }) => {
 
                 <td >
                     {project.title}
-                    <button className="button-18" onClick={handleTitleClick}>
+                    <button className="button-18 spaced" onClick={handleTitleClick}>
                         Open
                     </button>
                 </td>
@@ -41,7 +41,7 @@ const Project = ({ projectId, hideEdit, ticketCount, userCount }) => {
                 <td >{ticketCount}</td>
                 <td >
                     {userCount}
-                    <button className="button-18" onClick={handleEmployeesClicked}>
+                    <button className="button-18 spaced" onClick={handleEmployeesClicked}>
                         View Team
                     </button>
                 </td>
