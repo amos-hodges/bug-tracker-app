@@ -336,7 +336,7 @@ a:focus-visible {
 }
 
 /*SIDE BAR CLASSES*/
-
+/* 
 .sidebar {
   width: 0;
   transition: width 0.4s, opacity 0.2s;
@@ -347,7 +347,7 @@ a:focus-visible {
   flex-direction: column;
   align-items: center;
   display: flex;
-}
+} */
 
 .sidebar--open {
   width: 20%;
@@ -392,16 +392,17 @@ a:focus-visible {
   text-align: center;
 }
 
+/* 
 .sidebar p {
   margin-bottom: 50px;
   padding: 8px 12px;
   /* border: 1px solid; */
-  border-radius: 15px;
+/* border-radius: 15px;
   background-color: #0000000b;
   width: 60%;
   display: inline-block;
   text-align: center;
-}
+} */
 
 
 /*REST OF DASH*/
@@ -409,7 +410,7 @@ a:focus-visible {
 .dash-container {
   padding: 1em;
   flex: 1;
-  transition: all 0.3s;
+  transition: all 0.1s;
   margin-left: 20%;
   /* overflow-y: scroll; */
   /* height: 50%; */
@@ -418,6 +419,7 @@ a:focus-visible {
 .dash-container-sidebar {
   padding: 1em;
   flex: 1 1 80%;
+  transition: all 0.3s;
   /* overflow-y: scroll; */
   /* height: 85%; */
 }

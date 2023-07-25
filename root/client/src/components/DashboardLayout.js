@@ -31,7 +31,8 @@ const DashboardLayout = () => {
                 isSidebarOpen={isSidebarOpen}
                 toggleSidebar={() => toggleSidebar()} />
             <div className="content-container">
-                <Sidebar isSidebarOpen={isSidebarOpen} />
+                {/* <Sidebar isSidebarOpen={isSidebarOpen} /> */}
+                {!isSidebarOpen && <Sidebar />}
                 <div className={containerClass}>
                     <Outlet />
                 </div>

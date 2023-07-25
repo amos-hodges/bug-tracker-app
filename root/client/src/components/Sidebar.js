@@ -25,7 +25,7 @@ const Sidebar = ({ isSidebarOpen }) => {
 
     let mode = (isAdmin || isManager) ? 'All' : 'My'
 
-    let sideBarClass = isSidebarOpen ? "sidebar" : "sidebar--open"
+    // let sideBarClass = isSidebarOpen ? "sidebar" : "sidebar--open"
 
     let logoutButton
     if (isLoading) {
@@ -47,22 +47,24 @@ const Sidebar = ({ isSidebarOpen }) => {
     }
     // eventually add logic to close sidebar if user clicks link to current page
     const content = (
-        <div className={sideBarClass}>
+        <div className="sidebar--open">
 
             <div className="sidebar__title">
-                <Link to="/dashboard">
+                < Link to="/dashboard" >
                     <span className="icon-button">
                         <FontAwesomeIcon icon={faBug} />
                     </span>
                     <h2>Bug Tracker</h2>
-                </Link>
-            </div>
+                </Link >
+            </div >
 
             <p><Link to="/dashboard/projects">{mode} Projects</Link></p>
 
-            {(isManager || isAdmin)
-                ? <p><Link to="/dashboard/users">User Settings</Link></p>
-                : <p><Link to="team/all">Collaborate</Link></p>}
+            {
+                (isManager || isAdmin)
+                    ? <p><Link to="/dashboard/users">User Settings</Link></p>
+                    : <p><Link to="team/all">Collaborate</Link></p>
+            }
 
 
             <p><Link to="/dashboard/projects/all/tickets">{mode} Tickets</Link></p>
@@ -73,7 +75,7 @@ const Sidebar = ({ isSidebarOpen }) => {
             <p><Link to="settings">Settings</Link></p>
 
             {logoutButton}
-        </div>
+        </div >
     )
 
     return content

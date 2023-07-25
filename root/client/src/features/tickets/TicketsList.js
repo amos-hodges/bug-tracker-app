@@ -63,10 +63,10 @@ const TicketsList = () => {
 
         content = (
             <div className="table__container">
-                <section className="table__header">
+                {/* <section className="table__header">
                     {heading}
                     {!allTickets && newTicketButton}
-                </section>
+                </section> */}
                 <SortableTable data={ticketsData} config={config} keyFn={keyFn} />
             </div>
         )

@@ -23,7 +23,7 @@
     width: 95%;
     max-height: calc(89%-1.6rem);
     background-color: rgba(228, 228, 228, 0.733);
-    margin: .8rem auto;
+    margin: 2rem auto;
     border-radius: .6rem;
     overflow: auto;
 }
@@ -49,7 +49,6 @@ td {
 }
 
 thead th {
-    /* position: sticky; */
     top: 0;
     left: 0;
     background-color: #d5d1defe;
@@ -90,6 +89,32 @@ tbody tr:hover {
 .status.open {
     background-color: #d893a3;
     color: #b30021;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    /* Width of the scrollbar */
+}
+
+/* Track (the background of the scrollbar) */
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 20px;
+    /* Color of the track */
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Color of the handle */
+    border-radius: 5px;
+    /* Rounded corners for the handle */
+}
+
+/* Handle on hover (when the user hovers over the scrollbar) */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    /* Color of the handle on hover */
 }
 
 @media (max-width:1000px) {
