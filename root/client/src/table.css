@@ -1,4 +1,4 @@
-.table {
+.table__container {
     /* width: 82vw; */
     height: 95%;
     background-color: rgba(255, 255, 255, 0.333);
@@ -7,7 +7,7 @@
     backdrop-filter: blur(7px); */
     box-shadow: 0 .4rem .8rem #0005;
     border-radius: .8rem;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .table__header {
@@ -26,23 +26,6 @@
     margin: .8rem auto;
     border-radius: .6rem;
     overflow: auto;
-}
-
-.table__body::-webkit-scrollbar {
-    width: 0.5rem;
-    height: 0.5rem;
-}
-
-.table__body::-webkit-scrollbar-thumb {
-    border-radius: 0.5rem;
-    background-color: #0004;
-    visibility: hidden;
-}
-
-.table__body:hover::-webkit-scrollbar-thumb {
-    border-radius: 0.5rem;
-    background-color: #0004;
-    visibility: hidden;
 }
 
 table {
@@ -66,12 +49,11 @@ td {
 }
 
 thead th {
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     left: 0;
     background-color: #d5d1defe;
 }
-
 
 .header {
     display: flex;

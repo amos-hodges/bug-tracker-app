@@ -108,7 +108,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
     const modalContent = isModalOpen && (
         <Modal
             className={"modal-overlay"}
-            timeOut={15000}
+            timeOut={150000}
             onClose={handleNotificationsClicked}>
             <div className="modal-content">
                 <NotificationList notifications={notifications} />

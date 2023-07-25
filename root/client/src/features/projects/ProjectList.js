@@ -125,8 +125,9 @@ const ProjectList = () => {
         }
 
         content = (
-            <div className="table">
+            <div className="table__container">
                 <input
+                    className="searchbar"
                     type="text"
                     placeholder="Search..."
                     value={searchQuery}

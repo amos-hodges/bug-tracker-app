@@ -62,7 +62,7 @@ const TicketsList = () => {
         const heading = allTickets ? <h1>All Tickets</h1> : <h1>{projectTitle}</h1>
 
         content = (
-            <div className="table">
+            <div className="table__container">
                 <section className="table__header">
                     {heading}
                     {!allTickets && newTicketButton}

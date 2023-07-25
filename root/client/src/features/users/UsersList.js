@@ -55,7 +55,7 @@ const UsersList = () => {
         const heading = <h2>User Settings</h2>
 
         content = (
-            <div className="table">
+            <div className="table__container">
                 <section className="table__header">
                     {heading}
                     {isAdmin && newUserButton}

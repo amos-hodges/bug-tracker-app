@@ -33,7 +33,7 @@ const ProjectGrid = () => {
         const projectData = ids.map((id) => entities[id])
         const heading = <h2>Projects</h2>
         content = (
-            <div className="table">
+            <div className="table__container">
                 <section className="table__header">
                     {heading}
                 </section>
