@@ -39,9 +39,9 @@ const SortableTable = ({ config, data, ...props }) => {
     return (<>
         {/* {searchBar} */}
 
-        <div className="table__body">
-            <Table data={sortedData} config={updatedConfig} {...props} />
-        </div>
+        {/* <div className="table__body"> */}
+        <Table data={sortedData} config={updatedConfig} {...props} />
+        {/* </div> */}
     </>
     )
 }
