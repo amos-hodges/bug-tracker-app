@@ -1,6 +1,6 @@
 import { Fragment } from "react"
 
-const Table = ({ data, config, keyFn }) => {
+const Table = ({ data, config, keyFn, navFn }) => {
 
     const renderedHeaders = config.map((col) => {
 
@@ -12,6 +12,17 @@ const Table = ({ data, config, keyFn }) => {
     const renderedRows = data.map((rowData) => {
 
         const renderedCells = config.map((col) => {
+            if (col.link) {
+                return (
+                    <td key={col.label}
+                        className="list-link"
+                        onClick={() =>
+                            navFn(col.link(rowData))
+                        }>
+                        {col.render(rowData)}
+                    </td>
+                )
+            }
             return (
                 <td key={col.label}>
                     {col.render(rowData)}

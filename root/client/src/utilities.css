@@ -85,3 +85,13 @@
     padding: 5px;
     border-radius: 4px;
 }
+
+.list-link {
+    cursor: pointer;
+}
+
+.list-link:hover {
+    transform: scale(1.25);
+    transform: translate(5px);
+    font-weight: bold;
+}

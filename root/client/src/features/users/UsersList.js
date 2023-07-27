@@ -1,5 +1,5 @@
 import { useGetUsersQuery } from './usersApiSlice'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import PulseLoader from 'react-spinners/PulseLoader'
 import useAuth from '../../hooks/useAuth'
 import { userListConfig } from '../../config/user-list-config'
@@ -8,7 +8,7 @@ const UsersList = () => {
 
     const { isAdmin, isManager } = useAuth()
     const config = userListConfig
-
+    const navigate = useNavigate()
     const {
         data: users,
         isLoading,
@@ -26,6 +26,9 @@ const UsersList = () => {
         return user.id
     }
 
+    const navFn = (link) => {
+        navigate(link)
+    }
     const adminRequestButton = (
         <Link to={'/dashboard/users/request'}
             className="button-18">
@@ -70,7 +73,9 @@ const UsersList = () => {
                     button={buttonToPass}
                     data={userData}
                     config={config}
-                    keyFn={keyFn} />
+                    keyFn={keyFn}
+                    navFn={navFn}
+                />
             </div>
         )
     }

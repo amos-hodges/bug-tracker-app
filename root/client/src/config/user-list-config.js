@@ -2,7 +2,8 @@ export const userListConfig = [
     {
         label: 'Username',
         render: (user) => user.username,
-        sortValue: (user) => user.username
+        sortValue: (user) => user.username,
+        link: (user) => `/dashboard/users/${user.id}`
     },
     {
         label: 'Role',

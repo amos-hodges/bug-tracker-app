@@ -2,7 +2,8 @@ export const projectListConfig = [
     {
         label: 'Project',
         render: (project) => project.title,
-        sortValue: (project) => project.title
+        sortValue: (project) => project.title,
+        link: (project) => `/dashboard/projects/${project.id}/tickets`
     },
     {
         label: 'Description',

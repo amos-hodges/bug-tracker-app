@@ -1,14 +1,14 @@
 import { useGetProjectsQuery } from './projectsApiSlice'
 import { useGetUsersQuery } from '../users/usersApiSlice'
 import useAuth from '../../hooks/useAuth'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import PulseLoader from 'react-spinners/PulseLoader'
 import SortableTable from '../../components/SortableTable'
 import { projectListConfig } from '../../config/project-list-config'
 const ProjectList = () => {
 
     const { userId, isManager, isAdmin } = useAuth()
-
+    const navigate = useNavigate()
     const { user } = useGetUsersQuery('usersList', {
         selectFromResult: ({ data }) => ({
             user: data?.entities[userId],
@@ -31,6 +31,9 @@ const ProjectList = () => {
         return ticket.id
     }
 
+    const navFn = (link) => {
+        navigate(link)
+    }
     let content
 
     const newProjectButton = (isAdmin || isManager ? (
@@ -67,6 +70,7 @@ const ProjectList = () => {
                     data={projectsData}
                     config={projectListConfig}
                     keyFn={keyFn}
+                    navFn={navFn}
                 />
             </div>
         )

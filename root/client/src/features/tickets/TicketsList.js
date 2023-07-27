@@ -4,14 +4,14 @@ import { useParams, Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import SortableTable from '../../components/SortableTable'
 import { ticketListConfig } from '../../config/ticket-list-config'
-
+import { useNavigate } from 'react-router-dom'
 const TicketsList = () => {
 
     const { projectId } = useParams()
     const { userId, isAdmin, isManager } = useAuth()
 
     const allTickets = (projectId === 'all')
-    //const config = ticketListConfig
+    const navigate = useNavigate()
 
     const {
         data: tickets,
@@ -28,6 +28,10 @@ const TicketsList = () => {
 
     const keyFn = (ticket) => {
         return ticket.id
+    }
+
+    const navFn = (link) => {
+        navigate(link)
     }
 
     const newTicketButton = (
@@ -67,6 +71,7 @@ const TicketsList = () => {
                     data={ticketsData}
                     config={ticketListConfig}
                     keyFn={keyFn}
+                    navFn={navFn}
                 />
             </div>
         )
