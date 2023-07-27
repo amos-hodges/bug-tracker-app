@@ -6,26 +6,38 @@ export const projectListConfig = [
     },
     {
         label: 'Description',
-        render: (project) =>
+        render: (project) => project.description
     },
     {
         label: 'Created',
-        render: (project) =>,
-        sortValue: (project) =>
+        render: (project) => new Date(project.createdAt)
+            .toLocaleString('en-US', {
+                day: 'numeric',
+                month: 'long',
+                hour: 'numeric',
+                minute: 'numeric',
+            }),
+        sortValue: (project) => project.createdAt
     },
     {
         label: 'Last Modified',
-        render: (project) =>,
-        sortValue: (project) =>
+        render: (project) => new Date(project.updatedAt)
+            .toLocaleString('en-US', {
+                day: 'numeric',
+                month: 'long',
+                hour: 'numeric',
+                minute: 'numeric',
+            }),
+        sortValue: (project) => project.updatedAt
     },
     {
         label: 'Tickets',
-        render: (project) =>,
-        sortValue: (project) =>
+        render: (project) => project.ticketCount,
+        sortValue: (project) => project.ticketCount
     },
     {
         label: 'Active Employees',
-        render: (project) =>,
-        sortValue: (project) =>
+        render: (project) => project.userCount,
+        sortValue: (project) => project.userCount
     },
 ]

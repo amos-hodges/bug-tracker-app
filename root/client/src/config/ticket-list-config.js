@@ -1,8 +1,10 @@
+
 export const ticketListConfig = [
     {
         label: 'Title',
         render: (ticket) => ticket.title,
-        sortValue: (ticket) => ticket.title
+        sortValue: (ticket) => ticket.title,
+        link: (ticket) => `/dashboard/projects/${ticket.project}/tickets/${ticket.id}`
     },
     {
         label: 'Project',

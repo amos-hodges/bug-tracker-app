@@ -39,6 +39,13 @@ const UsersList = () => {
             New User
         </Link >
     )
+    const buttonToPass = (
+        isAdmin
+            ? newUserButton
+            : isManager
+                ? adminRequestButton
+                : null
+    )
 
     let content
 
@@ -51,17 +58,19 @@ const UsersList = () => {
     if (isSuccess) {
 
         const { ids, entities } = users
+
         const userData = ids.map((id) => entities[id])
-        const heading = <h2>User Settings</h2>
+
+        const header = <h1>User Settings</h1>
 
         content = (
             <div className="table__container">
-                <section className="table__header">
-                    {heading}
-                    {isAdmin && newUserButton}
-                    {isManager && adminRequestButton}
-                </section>
-                <SortableTable data={userData} config={config} keyFn={keyFn} />
+                <SortableTable
+                    header={header}
+                    button={buttonToPass}
+                    data={userData}
+                    config={config}
+                    keyFn={keyFn} />
             </div>
         )
     }

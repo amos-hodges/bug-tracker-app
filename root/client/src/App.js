@@ -22,8 +22,6 @@ import UserSettings from './features/settings/UserSettings'
 import Team from './features/users/Team'
 import UserRequestForm from './features/users/UserRequestForm'
 import ExtensionRequestForm from './features/tickets/ExtensionRequestForm'
-import ProjectGrid from './features/projects/ProjectGrid'
-
 function App() {
   return (
     <Routes>
@@ -54,7 +52,7 @@ function App() {
                 </Route> {/* End Admin/Manager Only*/}
 
                 <Route path="projects">{/* Project routes */}
-                  <Route index element={<ProjectGrid />} />
+                  <Route index element={<ProjectList />} />
                   <Route path="new" element={<NewProjectForm />} />
                   <Route path=":projectId" element={<EditProject />} />
                   {/* Ticket Routes */}

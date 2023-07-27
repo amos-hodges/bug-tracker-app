@@ -159,16 +159,17 @@ a:focus-visible {
 
 /* || PAGES */
 
-.public,
-.welcome {
+.public {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-.public {
   padding: 1em;
   flex-grow: 1;
+}
+
+.welcome {
+  display: flex;
+  justify-content: space-between;
 }
 
 .panel {
@@ -339,7 +340,7 @@ a:focus-visible {
   border-top: 1px solid var(--BORDER-COLOR);
   display: flex;
   flex-flow: row nowrap;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 1em;
 }
 
@@ -347,6 +348,14 @@ a:focus-visible {
   font-size: 1rem;
   width: auto;
   height: auto;
+}
+
+.user-status {
+  display: flex;
+}
+
+.user-status p {
+  padding-left: 2rem;
 }
 
 /* ||  TICKET */

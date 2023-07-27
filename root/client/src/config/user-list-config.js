@@ -11,7 +11,9 @@ export const userListConfig = [
     },
     {
         label: 'Current Projects',
-        render: (user) => user.projectTitles,
-        sortValue: (user) => user.projectTitles
+        render: (user) => user.projectTitles.map((title) => {
+            return <div className="button-18">{title}</div>
+        }),
+        sortValue: (user) => user.projectTitles.length
     },
 ]

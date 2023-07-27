@@ -31,11 +31,11 @@ const ProjectGrid = () => {
 
         const { ids, entities } = projects
         const projectData = ids.map((id) => entities[id])
-        const heading = <h2>Projects</h2>
+        const header = <h1>Projects</h1>
         content = (
             <div className="table__container">
-                <section className="table__header">
-                    {heading}
+                <section className="page-header">
+                    {header}
                 </section>
                 <Grid data={projectData} />
             </div>

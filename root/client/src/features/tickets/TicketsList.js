@@ -11,7 +11,7 @@ const TicketsList = () => {
     const { userId, isAdmin, isManager } = useAuth()
 
     const allTickets = (projectId === 'all')
-    const config = ticketListConfig
+    //const config = ticketListConfig
 
     const {
         data: tickets,
@@ -56,13 +56,18 @@ const TicketsList = () => {
 
         const ticketsData = filteredIds.map((id) => entities[id])
 
-        //come up with better way to display project title
         const projectTitle = filteredIds.length > 0 ? entities[filteredIds[0]]?.projectTitle : ''
         const header = allTickets ? <h1>All Tickets</h1> : <h1>{projectTitle}</h1>
 
         content = (
             <div className="table__container">
-                <SortableTable header={header} button={newTicketButton} data={ticketsData} config={config} keyFn={keyFn} />
+                <SortableTable
+                    header={header}
+                    button={newTicketButton}
+                    data={ticketsData}
+                    config={ticketListConfig}
+                    keyFn={keyFn}
+                />
             </div>
         )
 

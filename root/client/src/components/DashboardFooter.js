@@ -1,33 +1,20 @@
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faHouse } from '@fortawesome/free-solid-svg-icons'
-// import { useNavigate, useLocation } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
 const DashboardFooter = () => {
 
     const { username, status } = useAuth()
-    //const { pathname } = useLocation()
-    //const navigate = useNavigate()
 
-    // const onGoHomeClicked = () => navigate('/dashboard')
-    // let goHomeButton = null
-    //only appear on other pages
-    // if (pathname !== '/dashboard') {
-    //     goHomeButton = (
-    //         <button
-    //             className="dash-footer__button icon-button"
-    //             title="home"
-    //             onClick={onGoHomeClicked}
-    //         >
-    //             <FontAwesomeIcon icon={faHouse} />
-    //         </button>
-    //     )
-    // }
+    const today = new Intl.DateTimeFormat('en-US', {
+        dateStyle: 'full'
+    }).format(new Date())
+
     const content = (
         <footer className="dash-footer">
-            {/* {goHomeButton} */}
-            <p>Current user: {username}</p>
-            <p>Status: {status} </p>
+            <div className="user-status">
+                <p>Current user: {username}</p>
+                <p>Status: {status} </p>
+            </div>
+            <p>{today}</p>
         </footer>
     )
     return content
