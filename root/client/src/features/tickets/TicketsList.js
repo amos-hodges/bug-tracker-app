@@ -13,7 +13,6 @@ const TicketsList = () => {
     const allTickets = (projectId === 'all')
     const config = ticketListConfig
 
-
     const {
         data: tickets,
         isLoading,
@@ -59,15 +58,11 @@ const TicketsList = () => {
 
         //come up with better way to display project title
         const projectTitle = filteredIds.length > 0 ? entities[filteredIds[0]]?.projectTitle : ''
-        const heading = allTickets ? <h1>All Tickets</h1> : <h1>{projectTitle}</h1>
+        const header = allTickets ? <h1>All Tickets</h1> : <h1>{projectTitle}</h1>
 
         content = (
             <div className="table__container">
-                {/* <section className="table__header">
-                    {heading}
-                    {!allTickets && newTicketButton}
-                </section> */}
-                <SortableTable data={ticketsData} config={config} keyFn={keyFn} />
+                <SortableTable header={header} button={newTicketButton} data={ticketsData} config={config} keyFn={keyFn} />
             </div>
         )
 

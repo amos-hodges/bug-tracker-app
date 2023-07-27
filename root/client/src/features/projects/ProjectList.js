@@ -34,6 +34,10 @@ const ProjectList = () => {
     const [sortOrder, setSortOrder] = useState(null)
     const [searchQuery, setSearchQuery] = useState('')
 
+    const keyFn = (ticket) => {
+        return ticket.id
+    }
+
     if (isLoading) content = <PulseLoader color={"#FFF"} />
 
     if (isError) {
@@ -80,13 +84,6 @@ const ProjectList = () => {
             return (
                 project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 project.description.toLowerCase().includes(searchQuery.toLowerCase())
-                // (projectId === 'all' &&
-                //     (ticket.projectTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                //         ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                //         ticket.username.toLowerCase().includes(searchQuery.toLowerCase()))) ||
-                // (projectId !== 'all' &&
-                //     (ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                //         ticket.username.toLowerCase().includes(searchQuery.toLowerCase())))
             )
         })
 
@@ -126,13 +123,13 @@ const ProjectList = () => {
 
         content = (
             <div className="table__container">
-                <input
+                {/* <input
                     className="searchbar"
                     type="text"
                     placeholder="Search..."
                     value={searchQuery}
                     onChange={handleSearchInputChange}
-                />
+                /> */}
                 <div className="table__body">
                     <table>
                         <thead className="table__thead">

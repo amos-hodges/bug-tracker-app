@@ -1,0 +1,87 @@
+/* || UTILITY CLASSES || */
+
+/* --ICONS-- */
+
+/* --NOTIFICATIONS-- */
+.notify {
+    position: relative;
+    width: fit-content
+}
+
+.notification-bubble {
+    position: absolute;
+    top: 5px;
+    right: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background-color: red;
+    border-radius: 50%;
+    font-size: 12px;
+    color: white;
+}
+
+.notification-content {
+    position: relative;
+    background-color: hsl(221, 39%, 66%);
+    border: 2px;
+    border-color: whitesmoke;
+    border-radius: 3px;
+    padding: 10px;
+    z-index: 9999;
+    margin-bottom: 5px;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 0px;
+    background-color: #ccc;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background-color: #aaa;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 49px;
+    right: 0;
+    height: 30%;
+    max-height: 700px;
+    width: 30%;
+    max-width: 450px;
+    border-radius: 3px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(7px);
+    overflow-y: auto;
+    z-index: 9999;
+}
+
+.modal-content {
+    position: absolute;
+    padding: 15px;
+}
+
+/* --BUTTONS-- */
+
+/* --NAVIGATION-- */
+.project-link {
+    background-color: #7c7c7c;
+    padding: 5px;
+    border-radius: 4px;
+}

@@ -4,7 +4,7 @@ import useSort from '../hooks/useSort'
 import useSearch from '../hooks/useSearch'
 
 
-const SortableTable = ({ config, data, ...props }) => {
+const SortableTable = ({ header, button, config, data, ...props }) => {
 
     const { searchBar, filteredData } = useSearch({ data, config })
     const {
@@ -36,13 +36,17 @@ const SortableTable = ({ config, data, ...props }) => {
         }
     })
 
-    return (<>
-        {/* {searchBar} */}
-
-        {/* <div className="table__body"> */}
-        <Table data={sortedData} config={updatedConfig} {...props} />
-        {/* </div> */}
-    </>
+    return (
+        <>
+            <div className="page-header">
+                {header}
+                {searchBar}
+                {button}
+            </div>
+            {/* <div className="table__body"> */}
+            <Table data={sortedData} config={updatedConfig} {...props} />
+            {/* </div> */}
+        </>
     )
 }
 //convert to arrow

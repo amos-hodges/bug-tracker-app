@@ -39,9 +39,23 @@
 
 thead th {
     position: sticky;
-    top: 0;
+    top: 100px;
+    left: 0;
     z-index: 1;
     background-color: #d5d1defe;
+}
+
+.page-header {
+    position: sticky;
+    height: 100px;
+    top: 0;
+    background-color: #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    /* border-radius: 10px; */
+    /* margin-bottom: 1rem; */
 }
 
 /***************/
@@ -66,11 +80,11 @@ td {
 }
 
 
-thead th {
+/* thead th {
     top: 0;
     left: 0;
     background-color: #d5d1defe;
-}
+} */
 
 .header {
     display: flex;
