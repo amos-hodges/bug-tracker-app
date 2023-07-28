@@ -66,7 +66,7 @@ const Team = () => {
 
         const teamData = teamIds.map((id) => entities[id])
 
-        const header = <h1>{`Team for ${projEntities[projectId].title}`}</h1>
+        const header = <h1>{`Team for ${projEntities[projectId]?.title}`}</h1>
 
         content = (
             <div className="table__container">
