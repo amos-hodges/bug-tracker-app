@@ -72,6 +72,10 @@
     z-index: 9999;
 }
 
+.modal-overlay::-webkit-scrollbar {
+    display: none;
+}
+
 .modal-content {
     position: absolute;
     padding: 15px;
@@ -91,8 +95,9 @@
 /* --NAVIGATION-- */
 
 .list-link {
-    display: flex;
-    justify-content: center;
+    text-align: center;
+    /* display: flex; */
+    /* justify-content: center; */
     cursor: pointer;
     padding: .25rem;
     background-color: #aaaaaa96;

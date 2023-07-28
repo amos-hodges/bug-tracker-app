@@ -1,13 +1,13 @@
 export const projectListConfig = [
     {
         label: 'Project',
-        render: (project) => <div className="list-link">{project.title}</div>,
+        render: (project) => <div className="list-link text_overflow">{project.title}</div>,
         sortValue: (project) => project.title,
         link: (project) => `/dashboard/projects/${project.id}/tickets`
     },
     {
         label: 'Description',
-        render: (project) => <div className="description">{project.description}</div>
+        render: (project) => <div className="text_overflow">{project.description}</div>
     },
     // {
     //     label: 'Created',

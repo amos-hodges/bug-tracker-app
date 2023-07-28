@@ -10,7 +10,7 @@ const priorityMap = {
 export const ticketListConfig = [
     {
         label: 'Title',
-        render: (ticket) => <div className="ticket-link">{ticket.title}</div>,
+        render: (ticket) => <div className="ticket-link text_overflow">{ticket.title}</div>,
         sortValue: (ticket) => ticket.title,
         link: (ticket) => `/dashboard/projects/${ticket.project}/tickets/${ticket.id}`
     },

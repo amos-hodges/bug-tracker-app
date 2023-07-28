@@ -20,7 +20,7 @@ const EditTicket = () => {
         })
     })
 
-    if (!ticket || !users.length) return <PulseLoader color={'#FFF'} />
+    if (!ticket || !users?.length) return <PulseLoader color={'#FFF'} />
 
     const content = <EditTicketForm ticket={ticket} users={users} />
 

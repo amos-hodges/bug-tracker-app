@@ -32,11 +32,12 @@ const Grid = ({ data, keyFn }) => {
             </div>
             {expanded &&
                 <div className="card-content">
+                    <h2>{currentProject.title}</h2>
                     <h4>{currentProject.description}</h4>
                     <div className="card-options">
                         <div>List of users assinged...</div>
                         <div>Visual percentage of closed tickets...</div>
-                        <div>'Open' button</div>
+                        <div className="button-18">Open Project</div>
                     </div>
                 </div>}
         </div>

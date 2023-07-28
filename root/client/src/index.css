@@ -358,23 +358,6 @@ a:focus-visible {
   margin-top: 10px;
 }
 
-.note__created,
-.note__updated,
-.note__username {
-  display: none;
-}
-
-.note__status {
-  font-weight: bold;
-}
-
-.note__status--open {
-  color: var(--STATUS-OPEN);
-}
-
-.note__status--completed {
-  color: var(--STATUS-COMPLETE);
-}
 
 .ticket-title {
   width: 90%;
@@ -383,34 +366,8 @@ a:focus-visible {
   border-radius: 10px;
 }
 
-.critical {
-  background-color: red;
-  color: white;
-}
-
-.high {
-  background-color: orange;
-  color: white;
-}
-
-.medium {
-  background-color: yellow;
-}
-
-.low {
-  background-color: green;
-  color: white;
-}
-
-.lowest {
-  background-color: blue;
-  color: white;
-}
 
 .new-ticket-button {
-  /* position: fixed;
-  bottom: 70px;
-  right: 50px; */
   padding: 20px 40px;
   background-color: #f3a2a2;
   color: #000000;
@@ -420,7 +377,7 @@ a:focus-visible {
 
 /* || FORM - GENERAL */
 .page-container {
-  width: 60%;
+  /* width: 60%; */
   margin: 0 auto;
   border: 2px solid #ccc;
   border-radius: 8px;
