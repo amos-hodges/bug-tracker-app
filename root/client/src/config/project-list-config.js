@@ -7,7 +7,7 @@ export const projectListConfig = [
     },
     {
         label: 'Description',
-        render: (project) => project.description
+        render: (project) => <div className="description">{project.description}</div>
     },
     // {
     //     label: 'Created',

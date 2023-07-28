@@ -125,6 +125,14 @@ tbody tr:hover {
     color: #b30021;
 }
 
+/* Project Table Styles */
+
+.description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
     width: 10px;
