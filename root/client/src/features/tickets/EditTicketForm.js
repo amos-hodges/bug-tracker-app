@@ -131,6 +131,7 @@ const EditTicketForm = ({ ticket, users }) => {
 
     let extensionRequestButton = (
         <button
+            className="button-18"
             onClick={handleExtensionRequest}
         >
             Request Extension

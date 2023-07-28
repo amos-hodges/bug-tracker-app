@@ -1,7 +1,7 @@
 export const projectListConfig = [
     {
         label: 'Project',
-        render: (project) => project.title,
+        render: (project) => <div className="list-link">{project.title}</div>,
         sortValue: (project) => project.title,
         link: (project) => `/dashboard/projects/${project.id}/tickets`
     },
@@ -9,17 +9,17 @@ export const projectListConfig = [
         label: 'Description',
         render: (project) => project.description
     },
-    {
-        label: 'Created',
-        render: (project) => new Date(project.createdAt)
-            .toLocaleString('en-US', {
-                day: 'numeric',
-                month: 'long',
-                hour: 'numeric',
-                minute: 'numeric',
-            }),
-        sortValue: (project) => project.createdAt
-    },
+    // {
+    //     label: 'Created',
+    //     render: (project) => new Date(project.createdAt)
+    //         .toLocaleString('en-US', {
+    //             day: 'numeric',
+    //             month: 'long',
+    //             hour: 'numeric',
+    //             minute: 'numeric',
+    //         }),
+    //     sortValue: (project) => project.createdAt
+    // },
     {
         label: 'Last Modified',
         render: (project) => new Date(project.updatedAt)
@@ -38,7 +38,11 @@ export const projectListConfig = [
     },
     {
         label: 'Active Employees',
-        render: (project) => project.userCount,
-        sortValue: (project) => project.userCount
+        render: (project) => <div key={project.id} className="shared-cell">
+            {project.userCount}
+            <div className="button-18">View Team</div>
+        </div>,
+        sortValue: (project) => project.userCount,
+        link: (project) => `/dashboard/team/${project.id}`
     },
 ]

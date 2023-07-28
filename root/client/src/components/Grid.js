@@ -1,5 +1,5 @@
 import { useState } from "react"
-const Grid = ({ data }) => {
+const Grid = ({ data, keyFn }) => {
 
     const [expanded, setExpanded] = useState(null)
 
@@ -11,16 +11,16 @@ const Grid = ({ data }) => {
     const renderedCards = data.map((rowData) => {
 
         return (
-            <>
-                <div className="card">
-                    <div className="card-header" onClick={() => handleExpand(rowData.id)}>
-                        <div className="card-title">
-                            <h3>{rowData.title}</h3>
-                        </div>
+
+            <div key={keyFn(rowData)} className="card">
+                <div className="card-header" onClick={() => handleExpand(rowData.id)}>
+                    <div className="card-title">
+                        <h3>{rowData.title}</h3>
                     </div>
                 </div>
+            </div>
 
-            </>
+
         )
     })
 

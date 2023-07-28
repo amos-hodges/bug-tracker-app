@@ -1,7 +1,7 @@
 export const userListConfig = [
     {
         label: 'Username',
-        render: (user) => user.username,
+        render: (user) => <div className="list-link">{user.username}</div>,
         sortValue: (user) => user.username,
         link: (user) => `/dashboard/users/${user.id}`
     },
@@ -13,7 +13,7 @@ export const userListConfig = [
     {
         label: 'Current Projects',
         render: (user) => user.projectTitles.map((title) => {
-            return <div className="button-18 row-options">{title}</div>
+            return <div key={title} className="button-18 row-options">{title}</div>
         }),
         sortValue: (user) => user.projectTitles.length
     },

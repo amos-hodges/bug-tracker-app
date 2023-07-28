@@ -62,7 +62,7 @@ const ProjectList = () => {
         const projectsData = filteredProjectIds.map((id) => entities[id])
         const header = <h1>Projects</h1>
 
-        content = (
+        content = filteredProjectIds.length ? (
             <div className="table__container">
                 <SortableTable
                     header={header}
@@ -73,7 +73,7 @@ const ProjectList = () => {
                     navFn={navFn}
                 />
             </div>
-        )
+        ) : <div>No Projects To Display...</div>
     }
     return content
 }

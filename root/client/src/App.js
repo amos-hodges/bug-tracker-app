@@ -20,8 +20,10 @@ import RequireAuth from './features/auth/RequireAuth'
 import UserProfile from './features/settings/UserProfile'
 import UserSettings from './features/settings/UserSettings'
 import Team from './features/users/Team'
+
 import UserRequestForm from './features/users/UserRequestForm'
 import ExtensionRequestForm from './features/tickets/ExtensionRequestForm'
+import NewTeam from './features/users/NewTeam'
 function App() {
   return (
     <Routes>
@@ -62,7 +64,7 @@ function App() {
                   <Route path=":projectId/tickets/:ticketId/extension" element={<ExtensionRequestForm />} />
                 </Route>
 
-                <Route path="team/:projectId" element={<Team />} />
+                <Route path="team/:projectId" element={<NewTeam />} />
                 <Route path="profile" element={<UserProfile />} />
                 <Route path="settings" element={<UserSettings />} />
 

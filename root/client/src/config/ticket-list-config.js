@@ -2,9 +2,16 @@
 export const ticketListConfig = [
     {
         label: 'Title',
-        render: (ticket) => ticket.title,
+        render: (ticket) => <div className="ticket-link">{ticket.title}</div>,
         sortValue: (ticket) => ticket.title,
         link: (ticket) => `/dashboard/projects/${ticket.project}/tickets/${ticket.id}`
+    },
+    {
+        label: 'Importance',
+        render: (ticket) => <div
+            className={`importance ${ticket.importance.toLowerCase()}`}>
+            {ticket.importance}</div>,
+        sortValue: (ticket) => ticket.importance
     },
     {
         label: 'Project',

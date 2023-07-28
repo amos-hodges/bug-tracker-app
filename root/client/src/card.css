@@ -17,6 +17,7 @@
 }
 
 .card-header {
+    height: 100%;
     padding: 16px;
     background-color: #e0e0e0;
     cursor: pointer;

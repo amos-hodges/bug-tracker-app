@@ -590,6 +590,11 @@ a:focus-visible {
 
 
 /* CSS */
+.shared-cell {
+  display: flex;
+  justify-content: space-between;
+}
+
 .spaced {
   margin-left: 1rem;
 }

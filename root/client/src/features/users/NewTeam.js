@@ -5,8 +5,9 @@ import useAuth from '../../hooks/useAuth'
 import { useParams, Link } from 'react-router-dom'
 import { useState } from 'react'
 import SortIndicator from '../../components/SortIndicator'
-
-const Team = () => {
+import SortableTable from '../../components/SortableTable'
+import { userListConfig } from '../../config/user-list-config'
+const NewTeam = () => {
 
     const { userId, isAdmin, isManager } = useAuth()
 
@@ -40,6 +41,10 @@ const Team = () => {
         console.log(`messaging ${username}`)
     }
 
+    const keyFn = (user) => {
+        return user.id
+    }
+
     let content
 
     if (isLoading || isProjectLoading) content = <PulseLoader color={"#FFF"} />
@@ -51,7 +56,6 @@ const Team = () => {
     if (isSuccess && isProjectSuccess) {
 
         const { ids, entities } = users
-        const currentUser = entities[userId]
 
         //-all users when viewing from all projects
         //-only users asigned to project when viewing from a specific project
@@ -61,84 +65,24 @@ const Team = () => {
             return notCurrentUser && (allProjects || userAssignedProject)
         })
 
+        const teamData = teamIds.map((id) => entities[id])
+        console.log(teamData)
 
-        const tableContent = filteredAndSortedIds
-            .filter((user_Id) => user_Id !== currentUser.id
-                && (projectId === 'all'
-                    || (entities[user_Id].projects.includes(projectId)
-                        && user_Id !== userId)))
-            .map((userId) => {
-                const user = entities[userId]
-                return (
-                    <tr key={user.id}>
-                        <td className="table__cell">
-                            {user.username}
-                            <button
-                                className="message-button"
-                                onClick={() => handleMessageClicked(user.username)}
-                            >
-                                Message
-                            </button>
-                        </td>
-                        {projectId === 'all' && (
-                            <td className="table__cell">
-                                {projects.ids
-                                    .filter((projectId) => currentUser.projects.includes(projectId) && user.projects.includes(projectId))
-                                    .map((projectId) => {
-                                        const project = projects.entities[projectId]
-                                        return (
-                                            <span key={project.id} className="project-link">
-                                                <Link to={`/dashboard/projects/${projectId}/tickets`}>
-                                                    {project.title}
-                                                </Link>
-                                            </span>
-                                        )
-                                    })}
-                            </td>
-                        )}
-                    </tr>
-                )
-            })
+        const header = <h1>Teams</h1>
 
         content = (
-            <>
-                <div className="form__title-row">
-                    <h2>{(projectId === 'all') ? 'My Teams' : 'My Team'}</h2>
-                </div>
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChange={handleSearchInputChange}
+            <div className="table__container">
+                <SortableTable
+                    header={header}
+                    data={teamData}
+                    config={userListConfig}
+                    keyFn={keyFn}
                 />
-                <div className="list-container">
-                    <table className={`table ${tableClass}`}>
-                        <thead className="table__head">
-                            <tr>
-                                <th scope="col" className="table__th user__username"
-                                    onClick={() => handleSort("username")}>
-                                    User
-                                    {sortCategory === "username" && <SortIndicator order={sortOrder} />}
-                                </th>
-                                {(projectId === 'all')
-                                    && <th scope="col" className="table__th user__roles">
-                                        Shared Projects
-                                    </th>}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {tableContent}
-                        </tbody>
-                    </table>
-                    {(isAdmin || isManager) && <Link to={'/dashboard/users'} className="new-ticket-button">
-                        Add User to Project
-                    </Link >}
-                </div >
-            </>
+            </div>
         )
     }
 
     return content
 }
 
-export default Team
+export default NewTeam

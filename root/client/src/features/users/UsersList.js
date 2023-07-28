@@ -63,7 +63,7 @@ const UsersList = () => {
         const { ids, entities } = users
 
         const userData = ids.map((id) => entities[id])
-
+        console.log(userData)
         const header = <h1>User Settings</h1>
 
         content = (

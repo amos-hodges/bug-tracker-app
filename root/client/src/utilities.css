@@ -80,18 +80,35 @@
 /* --BUTTONS-- */
 
 /* --NAVIGATION-- */
-.project-link {
-    background-color: #7c7c7c;
-    padding: 5px;
-    border-radius: 4px;
-}
 
 .list-link {
+    display: flex;
+    justify-content: center;
     cursor: pointer;
+    padding: .25rem;
+    background-color: #aaaaaa96;
+    border-radius: 10px;
+    box-shadow: 0 .1rem .2rem;
 }
 
 .list-link:hover {
     transform: scale(1.25);
     transform: translate(5px);
     font-weight: bold;
+}
+
+.ticket-link {
+    display: flex;
+    /* justify-content: center; */
+    cursor: pointer;
+    padding: .75rem;
+    max-width: 50%;
+    /* margin-right: 5rem; */
+    border-radius: 10px;
+    background-color: rgba(195, 250, 250, 0);
+    box-shadow: .0 .05rem .15rem;
+}
+
+.ticket-link:hover {
+    transform: scale(1.025);
 }

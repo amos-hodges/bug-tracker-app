@@ -15,9 +15,9 @@ const ProjectGrid = ({ header, date }) => {
         refetchOnMountOrArgChange: true
     })
 
-    // const keyFn = (project) => {
-    //     return project.id
-    // }
+    const keyFn = (project) => {
+        return project.id
+    }
 
     let content
 
@@ -38,7 +38,7 @@ const ProjectGrid = ({ header, date }) => {
                     {header}
                     {date}
                 </section>
-                <Grid data={projectData} />
+                <Grid data={projectData} keyFn={keyFn} />
             </div>
         )
     }

@@ -13,9 +13,9 @@ const Table = ({ data, config, keyFn, navFn }) => {
 
         const renderedCells = config.map((col) => {
             if (col.link) {
+
                 return (
                     <td key={col.label}
-                        className="list-link"
                         onClick={() =>
                             navFn(col.link(rowData))
                         }>
