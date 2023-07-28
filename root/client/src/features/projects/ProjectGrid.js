@@ -1,7 +1,7 @@
 import PulseLoader from 'react-spinners/PulseLoader'
 import { useGetProjectsQuery } from './projectsApiSlice'
 import Grid from '../../components/Grid'
-const ProjectGrid = () => {
+const ProjectGrid = ({ header, date }) => {
 
     const {
         data: projects,
@@ -31,11 +31,12 @@ const ProjectGrid = () => {
 
         const { ids, entities } = projects
         const projectData = ids.map((id) => entities[id])
-        const header = <h1>Projects</h1>
+
         content = (
             <div className="table__container">
                 <section className="page-header">
                     {header}
+                    {date}
                 </section>
                 <Grid data={projectData} />
             </div>

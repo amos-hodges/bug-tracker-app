@@ -1,6 +1,7 @@
 
 import useAuth from '../../hooks/useAuth'
 import ProjectGrid from '../projects/ProjectGrid'
+import ProjectList from '../projects/ProjectList'
 //This is where current projects will be displayed
 const Welcome = () => {
 
@@ -9,15 +10,11 @@ const Welcome = () => {
     const date = new Date()
 
     const today = new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(date)
-
+    const message = <h1>Welcome {username}</h1>
 
     const content = (
         <>
-            <section className="welcome">
-                <h1>Welcome {username}</h1>
-                <p>{today}</p>
-            </section>
-            <ProjectGrid />
+            <ProjectGrid header={message} date={today} />
         </>
 
     )

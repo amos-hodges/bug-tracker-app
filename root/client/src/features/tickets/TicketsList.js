@@ -34,13 +34,13 @@ const TicketsList = () => {
         navigate(link)
     }
 
-    const newTicketButton = (
+    const newTicketButton = !allTickets ? (
         <Link
             to={`/dashboard/projects/${projectId}/tickets/new`}
             className="button-18">
             New Ticket
         </Link >
-    )
+    ) : null
 
     let content
 

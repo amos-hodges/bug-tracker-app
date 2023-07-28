@@ -13,7 +13,7 @@ export const userListConfig = [
     {
         label: 'Current Projects',
         render: (user) => user.projectTitles.map((title) => {
-            return <div className="button-18">{title}</div>
+            return <div className="button-18 row-options">{title}</div>
         }),
         sortValue: (user) => user.projectTitles.length
     },

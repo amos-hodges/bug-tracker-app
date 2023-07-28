@@ -594,6 +594,10 @@ a:focus-visible {
   margin-left: 1rem;
 }
 
+.row-options {
+  margin-right: 1rem;
+}
+
 .button-18 {
   /* margin-left: 1rem; */
   align-items: center;
