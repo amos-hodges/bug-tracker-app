@@ -6,7 +6,7 @@ import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import PulseLoader from 'react-spinners/PulseLoader'
 import { useEffect } from 'react'
 
-const Sidebar = ({ isSidebarOpen }) => {
+const Sidebar = () => {
 
     const { isAdmin, isManager } = useAuth()
     const navigate = useNavigate()
@@ -24,8 +24,6 @@ const Sidebar = ({ isSidebarOpen }) => {
     }, [isSuccess, navigate])
 
     let mode = (isAdmin || isManager) ? 'All' : 'My'
-
-    // let sideBarClass = isSidebarOpen ? "sidebar" : "sidebar--open"
 
     let logoutButton
     if (isLoading) {
@@ -47,8 +45,7 @@ const Sidebar = ({ isSidebarOpen }) => {
     }
     // eventually add logic to close sidebar if user clicks link to current page
     const content = (
-        <div className="sidebar--open">
-
+        <div className="sidebar">
             <div className="sidebar__title">
                 < Link to="/dashboard" >
                     <span className="icon-button">
@@ -57,22 +54,14 @@ const Sidebar = ({ isSidebarOpen }) => {
                     <h2>Bug Tracker</h2>
                 </Link >
             </div >
-
-            <p><Link to="/dashboard/projects">{mode} Projects</Link></p>
-
-            {
-                (isManager || isAdmin)
-                    ? <p><Link to="/dashboard/users">User Settings</Link></p>
-                    : <p><Link to="team/all">Collaborate</Link></p>
+            <div className="sidebar_button"><Link to="/dashboard/projects">{mode} Projects</Link></div>
+            {(isManager || isAdmin)
+                ? <div className="sidebar_button"><Link to="/dashboard/users">User Settings</Link></div>
+                : <div className="sidebar_button"><Link to="team/all">Collaborate</Link></div>
             }
-
-
-            <p><Link to="/dashboard/projects/all/tickets">{mode} Tickets</Link></p>
-
-
-            <p><Link to="profile">Profile</Link></p>
-
-            <p><Link to="settings">Settings</Link></p>
+            <div className="sidebar_button"><Link to="/dashboard/projects/all/tickets">{mode} Tickets</Link></div>
+            <div className="sidebar_button"><Link to="profile">Profile</Link></div>
+            <div className="sidebar_button"><Link to="settings">Settings</Link></div>
 
             {logoutButton}
         </div >

@@ -79,6 +79,15 @@
 
 /* --BUTTONS-- */
 
+.logout {
+    padding-bottom: 10px;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+}
+
 /* --NAVIGATION-- */
 
 .list-link {
@@ -98,11 +107,12 @@
 }
 
 .ticket-link {
-    display: flex;
-    /* justify-content: center; */
+
+    text-align: center;
+
     cursor: pointer;
     padding: .75rem;
-    max-width: 50%;
+    /* max-width: 50%; */
     /* margin-right: 5rem; */
     border-radius: 10px;
     background-color: rgba(195, 250, 250, 0);

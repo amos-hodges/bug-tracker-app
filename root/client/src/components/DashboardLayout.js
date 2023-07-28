@@ -29,14 +29,13 @@ const DashboardLayout = () => {
 
             <DashboardHeader
                 isSidebarOpen={isSidebarOpen}
-                toggleSidebar={() => toggleSidebar()} />
+                toggleSidebar={() => toggleSidebar()}
+            />
             <div className="content-container">
-                {/* <Sidebar isSidebarOpen={isSidebarOpen} /> */}
                 {!isSidebarOpen && <Sidebar />}
                 <div className={containerClass}>
                     <Outlet />
                 </div>
-
             </div>
             <DashboardFooter />
 

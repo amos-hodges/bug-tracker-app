@@ -63,8 +63,8 @@ const UsersList = () => {
         const { ids, entities } = users
 
         const userData = ids.map((id) => entities[id])
-        console.log(userData)
-        const header = <h1>User Settings</h1>
+
+        const header = <h1>Users</h1>
 
         content = (
             <div className="table__container">

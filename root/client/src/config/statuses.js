@@ -3,5 +3,5 @@ export const STATUS = {
     High: 'High',
     Medium: 'Medium',
     Low: 'Low',
-    Lowest: 'Lowest'
+    Lowest: 'Non-Issue'
 }
