@@ -3,10 +3,9 @@ import { useUpdateUserMutation, useDeleteUserMutation } from './usersApiSlice'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faTrashCan, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { ROLES } from '../../config/roles'
 import Modal from '../../components/Modal'
-
 const USER_REGEX = /^[A-z]{3,20}$/
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/
 
@@ -155,6 +154,7 @@ const EditUserForm = ({ user, projects, tickets }) => {
             className="navigation-link"
             onClick={handleBackClick}
         >
+            <FontAwesomeIcon icon={faArrowLeft} />
             User Settings
         </button>
     )
@@ -223,12 +223,18 @@ const EditUserForm = ({ user, projects, tickets }) => {
                             <label className="form__label" htmlFor="roles">
                                 ASSIGNED ROLES:
                             </label>
-                            {options}
+                            <div className="form__options">
+                                {options}
+                            </div>
+
                         </>)}
                     <label className="form__label" htmlFor="projects">
                         ASSIGNED PROJECTS:
                     </label>
-                    {projectOptions}
+                    <div className="form__options drop-down">
+                        {projectOptions}
+                    </div>
+
 
                 </form>
             </div>

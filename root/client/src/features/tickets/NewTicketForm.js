@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useAddNewTicketMutation } from './ticketsApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { faSave } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { STATUS } from '../../config/statuses'
 
 import DatePicker from 'react-datepicker'
@@ -94,6 +94,7 @@ const NewTicketForm = ({ users }) => {
             className="navigation-link"
             onClick={handleBackClick}
         >
+            <FontAwesomeIcon icon={faArrowLeft} />
             Back to project
         </button>
     )

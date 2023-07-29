@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAddNewProjectMutation } from './projectsApiSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 const NewProjectForm = () => {
 
@@ -51,6 +51,7 @@ const NewProjectForm = () => {
             className="navigation-link"
             onClick={handleBackClick}
         >
+            <FontAwesomeIcon icon={faArrowLeft} />
             Back to Projects
         </button>
     )

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useAddNewUserMutation } from './usersApiSlice'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { ROLES } from '../../config/roles'
 
 
@@ -90,6 +90,7 @@ const NewUserForm = () => {
             className="navigation-link"
             onClick={handleBackClick}
         >
+            <FontAwesomeIcon icon={faArrowLeft} />
             User Settings
         </button>
     )
@@ -138,8 +139,10 @@ const NewUserForm = () => {
 
                     <label className="form__label" htmlFor="roles">
                         ASSIGNED ROLES:</label>
+                    <div className="form__options">
+                        {options}
+                    </div>
 
-                    {options}
 
 
                 </form>

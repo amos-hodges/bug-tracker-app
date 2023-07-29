@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { socket } from '../../components/DashboardHeader'
 
 
@@ -58,6 +58,7 @@ const UserRequestForm = () => {
             className="navigation-link"
             onClick={handleBackClick}
         >
+            <FontAwesomeIcon icon={faArrowLeft} />
             User Settings
         </button>
     )

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useUpdateProjectMutation, useDeleteProjectMutation } from './projectsApiSlice'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faTrashCan, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../hooks/useAuth'
 
 const EditProjectForm = ({ project, tickets, users }) => {
@@ -87,6 +87,7 @@ const EditProjectForm = ({ project, tickets, users }) => {
             className="navigation-link"
             onClick={handleBackClick}
         >
+            <FontAwesomeIcon icon={faArrowLeft} />
             Back to Projects
         </button>
     )

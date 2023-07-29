@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useUpdateTicketMutation, useDeleteTicketMutation } from './ticketsApiSlice'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave, faTrashCan, faCommentMedical } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faTrashCan, faCommentMedical, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../hooks/useAuth'
 import { STATUS } from '../../config/statuses'
 
@@ -125,6 +125,7 @@ const EditTicketForm = ({ ticket, users }) => {
             className="navigation-link"
             onClick={handleBackClick}
         >
+            <FontAwesomeIcon icon={faArrowLeft} />
             Back
         </button>
     )

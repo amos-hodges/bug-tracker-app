@@ -42,8 +42,9 @@
   border: none;
   outline: none;
   cursor: pointer;
-  text-decoration: underline;
-  transition: transform 0.2s;
+  transition: transform 0.3s;
+  position: absolute;
+  padding: 10px;
 }
 
 .navigation-link:hover {
@@ -378,6 +379,7 @@ a:focus-visible {
 /* || FORM - GENERAL */
 .page-container {
   /* width: 60%; */
+  height: 93%;
   margin: 0 auto;
   border: 2px solid #ccc;
   border-radius: 8px;
@@ -411,10 +413,29 @@ a:focus-visible {
   gap: 0.5em;
 }
 
+.form__options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkbox-label {
+  padding-top: 10px;
+}
+
+.drop-down {
+  flex-direction: column;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #d6d6d6;
+  padding: 15px;
+  border-radius: 5px;
+}
+
 .form__title-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 35px;
 }
 
 .form__input,
@@ -438,6 +459,7 @@ a:focus-visible {
   height: 24px;
 }
 
+
 .form__select {
   width: fit-content;
   padding: 0.25em;
@@ -456,12 +478,14 @@ a:focus-visible {
   display: flex;
   flex-flow: row nowrap;
   gap: 2em;
+  overflow-y: auto;
 }
 
 .form__divider {
   display: flex;
   flex-flow: column nowrap;
   gap: 0.5em;
+
 }
 
 @media screen and (max-width: 400px) {

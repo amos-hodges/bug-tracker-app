@@ -2,7 +2,7 @@ import PulseLoader from 'react-spinners/PulseLoader'
 import { useGetUsersQuery } from './usersApiSlice'
 import { useGetProjectsQuery } from '../projects/projectsApiSlice'
 import useAuth from '../../hooks/useAuth'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import SortableTable from '../../components/SortableTable'
 import { userListConfig } from '../../config/user-list-config'
@@ -13,6 +13,7 @@ const Team = () => {
     const { projectId } = useParams()
     const allProjects = (projectId === 'all')
 
+    const navigate = useNavigate()
     const { data: projects,
         isLoading: isProjectLoading,
         isSuccess: isProjectSuccess,
@@ -44,6 +45,10 @@ const Team = () => {
         return user.id
     }
 
+    const navFn = (link) => {
+        navigate(link)
+    }
+
     let content
 
     if (isLoading || isProjectLoading) content = <PulseLoader color={"#FFF"} />
@@ -66,7 +71,11 @@ const Team = () => {
 
         const teamData = teamIds.map((id) => entities[id])
 
-        const header = <h1>{`Team for ${projEntities[projectId]?.title}`}</h1>
+        const header = (
+            allProjects ?
+                <h1>Teams</h1>
+                : <h1>{`Team for ${projEntities[projectId]?.title}`}</h1>
+        )
 
         content = (
             <div className="table__container">
@@ -75,6 +84,7 @@ const Team = () => {
                     data={teamData}
                     config={userListConfig}
                     keyFn={keyFn}
+                    navFn={navFn}
                 />
             </div>
         )
