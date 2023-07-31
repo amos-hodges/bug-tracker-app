@@ -44,6 +44,17 @@ export const ticketListConfig = [
         sortValue: (ticket) => ticket.updatedAt
     },
     {
+        label: 'Due On',
+        render: (ticket) => new Date(ticket.dueDate)
+            .toLocaleString('en-US', {
+                day: 'numeric',
+                month: 'long',
+                hour: 'numeric',
+                minute: 'numeric',
+            }),
+        sortValue: (ticket) => ticket.dueDate
+    },
+    {
         label: 'Status',
         render: (ticket) => ticket.completed
             ? <p className="status completed">Closed</p>

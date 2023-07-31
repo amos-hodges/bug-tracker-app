@@ -5,7 +5,7 @@ import useAuth from '../../hooks/useAuth'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import SortableTable from '../../components/SortableTable'
-import { userListConfig } from '../../config/user-list-config'
+import { teamListConfig } from '../../config/team-list-config'
 const Team = () => {
 
     const { userId, isAdmin, isManager } = useAuth()
@@ -45,8 +45,8 @@ const Team = () => {
         return user.id
     }
 
-    const navFn = (link) => {
-        navigate(link)
+    const navFn = (user) => {
+        handleMessageClicked(user.username)
     }
 
     let content
@@ -82,7 +82,7 @@ const Team = () => {
                 <SortableTable
                     header={header}
                     data={teamData}
-                    config={userListConfig}
+                    config={teamListConfig}
                     keyFn={keyFn}
                     navFn={navFn}
                 />
