@@ -264,7 +264,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
                 <div className="dash-header__container">
                     {sidebarToggle}
                     <Link to="/dashboard">
-                        <h1 className="dash-header__title">Bug Tracker</h1>
+                        <h1 className="dash-header__title text_overflow">Bug Tracker</h1>
                     </Link>
                     <nav className="dash-header__nav">
                         {buttonContent}

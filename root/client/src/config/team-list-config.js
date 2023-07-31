@@ -1,7 +1,12 @@
+import { GoCommentDiscussion } from "react-icons/go"
+
 export const teamListConfig = [
     {
         label: 'Username',
-        render: (user) => <div className="list-link">{user.username}</div>,
+        render: (user) => <div className="list-link team-page">
+            <GoCommentDiscussion />
+            <span className="username text_overflow">{user.username}</span>
+        </div>,
         sortValue: (user) => user.username,
         link: (user) => user
     },
