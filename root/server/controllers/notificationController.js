@@ -63,20 +63,22 @@ const scheduleDueDateNotifications = async (userId, ticket, dueDate) => {
     const user = await User.findById(userId)
     const managers = await User.find({ roles: { $in: ['Manager'] } })
 
-    const reminderDate = new Date(dueDate)
+    //const reminderDate = new Date(dueDate)
+    const reminderDate = new Date()
     const lateDate = new Date(dueDate)
 
     //remind user 1 day before due date
-    reminderDate.setDate(reminderDate.getDate() - 1)
+    //reminderDate.setDate(reminderDate.getDate() - 1)
+    reminderDate.setDate(reminderDate.getSeconds() + 5)
 
     //notify manager 1 min after due date
     lateDate.setSeconds(lateDate.getSeconds() + 60)
 
     const reminderMessage = `The following ticket is due is 24 hours: ${ticket.title}.`
     const lateMessage = `${user.username} did not complete the following ticket by the due date (${dueDate}): ${ticket.title}.`
-
     // Schedule a job to create notifications at the calculated times
     schedule.scheduleJob(reminderDate, async () => {
+        console.log('Scheduling')
         try {
             // Create the notification for the ticket
             await createNewNotification(userId, reminderMessage)
@@ -108,6 +110,7 @@ const scheduleDueDateNotifications = async (userId, ticket, dueDate) => {
 // @desc Notify managers of important ticket updates
 
 const handleImportantTicketNotification = async (userId, role, message) => {
+    console.log('creating notifcation for critical ticket')
     const user = await User.findById(userId)
     const managers = await User.find({ roles: { $in: [role] } })
     const message_with_user = `Notification regarding ${user.username}: ` + message

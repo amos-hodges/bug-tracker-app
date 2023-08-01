@@ -53,7 +53,7 @@ const createNewTicket = async (req, res) => {
         //assign notification to user 
         await handleTicketAssigned(user, ticket._id)
 
-        scheduleDueDateNotifications(user, ticket, dueDate)
+        await scheduleDueDateNotifications(user, ticket, dueDate)
 
         if (ticket.importance === 'Critical') {
             const message = `This user was assigned a ticket with critical importance: ${ticket.title}`
