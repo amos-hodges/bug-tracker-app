@@ -6,12 +6,9 @@ import { faSave, faCommentMedical, faArrowLeft } from '@fortawesome/free-solid-s
 import useAuth from '../../hooks/useAuth'
 
 
-const TicketInfo = ({ ticket, user }) => {
-    const { userId: currentUser, isManager, isAdmin } = useAuth()
+const TicketInfo = ({ ticket, userId }) => {
 
     const { projectId } = useParams()
-
-    const noProject = (projectId === 'all')
 
     const [updateTicket, {
         isLoading,
@@ -26,16 +23,12 @@ const TicketInfo = ({ ticket, user }) => {
 
     useEffect(() => {
         if (isSuccess) {
-            // setTitle('')
-            // setText('')
-            // setImportance('')
-            // setUserId('')
+
             navigate(`/dashboard/projects/${projectId}/tickets`)
         }
     }, [isSuccess, navigate, projectId])
 
     const canSave = [completed].every(Boolean) && !isLoading
-
     const onCompletedChanged = e => setCompleted(prev => !prev)
 
     const handleExtensionRequest = () => {
@@ -52,7 +45,15 @@ const TicketInfo = ({ ticket, user }) => {
     }
 
     const onSaveTicketClicked = async (e) => {
-        await updateTicket({ completed })
+        await updateTicket({
+            id: ticket.id,
+            user: ticket.user,
+            title: ticket.title,
+            text: ticket.text,
+            importance: ticket.importance,
+            completed,
+            dueDate: ticket.dueDate
+        })
     }
 
     const created = new Date(ticket.createdAt).toLocaleString('en-US', {
@@ -135,7 +136,7 @@ const TicketInfo = ({ ticket, user }) => {
                             <label className="form__label form__checkbox-container" htmlFor="note-completed">
                                 WORK COMPLETE:
                             </label>
-                            {(currentUser === ticket.user)
+                            {(userId === ticket.user)
                                 ? <input
                                     className="form__checkbox"
                                     id="note-completed"
@@ -167,7 +168,7 @@ const TicketInfo = ({ ticket, user }) => {
                             <p>Dropdown list of revisions..</p>
                             <p className="form__created">Created:<br />{created}</p>
                             <p className="form__updated">Due On:<br />{dueOn}</p>
-                            {currentUser === ticket.user && extensionRequestButton}
+                            {userId === ticket.user && extensionRequestButton}
                         </div>
                     </div>
                 </form>

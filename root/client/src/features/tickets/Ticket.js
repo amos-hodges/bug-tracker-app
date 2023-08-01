@@ -2,9 +2,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useGetTicketsQuery } from './ticketsApiSlice'
 import { memo } from 'react'
 
-//Need to add fields for priortity and current user
-//Need to change content to handle importance
-
 const Ticket = ({ ticketId }) => {
     const { ticket } = useGetTicketsQuery('ticketsList', {
         selectFromResult: ({ data }) => ({

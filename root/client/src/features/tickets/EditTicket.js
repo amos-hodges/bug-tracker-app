@@ -26,13 +26,11 @@ const EditTicket = () => {
 
     let content
 
-    if (!isAdmin || !isManager) {
-        const user = {}
-        content = <TicketInfo ticket={ticket} user={user} />
-    } else {
+    if (isAdmin || isManager) {
         content = <EditTicketForm ticket={ticket} users={users} />
+    } else {
+        content = <TicketInfo ticket={ticket} userId={userId} />
     }
-
 
     return content
 }

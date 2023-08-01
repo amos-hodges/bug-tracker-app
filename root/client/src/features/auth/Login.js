@@ -68,8 +68,8 @@ const Login = () => {
                 <h1>Employee Login</h1>
             </header>
             <main className="login">
-                <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
                 <form className="form panel" onSubmit={handleSubmit}>
+                    <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
                     <label htmlFor="username">Username:</label>
                     <input
                         className="form__input"
