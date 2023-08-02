@@ -13,7 +13,6 @@ const Table = ({ data, config, keyFn, navFn }) => {
 
         const renderedCells = config.map((col) => {
             if (col.link) {
-
                 return (
                     <td key={col.label}
                         onClick={() =>
@@ -44,7 +43,9 @@ const Table = ({ data, config, keyFn, navFn }) => {
                     {renderedHeaders}
                 </tr>
             </thead>
-            <tbody>{renderedRows}</tbody>
+            <tbody>
+                {renderedRows}
+            </tbody>
         </table>
     )
 }

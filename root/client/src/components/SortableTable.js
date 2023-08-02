@@ -1,5 +1,5 @@
 import Table from "./Table"
-import { GoChevronDown, GoChevronUp } from 'react-icons/go'
+import { GoTriangleDown, GoTriangleUp } from 'react-icons/go'
 import useSort from '../hooks/useSort'
 import useSearch from '../hooks/useSearch'
 
@@ -54,16 +54,18 @@ function getIcons(label, sortBy, sortOrder) {
 
     if (sortOrder === null || label !== sortBy) {
         return <div className="sort__icons">
-            <GoChevronUp />
-            <GoChevronDown />
+            <GoTriangleUp />
+            <GoTriangleDown />
         </div>
     } else if (sortOrder === 'asc') {
         return <div className="sort__icons">
-            <GoChevronUp />
+            <GoTriangleUp />
+            <GoTriangleDown className="invisible" />
         </div>
     } else if (sortOrder === 'desc') {
         return <div className="sort__icons">
-            <GoChevronDown />
+            <GoTriangleUp className="invisible" />
+            <GoTriangleDown />
         </div>
     }
 }

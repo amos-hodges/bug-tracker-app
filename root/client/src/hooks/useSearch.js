@@ -16,9 +16,10 @@ const useSearch = ({ data, config }) => {
         />
     )
 
-    const filteredData = data.filter((ticket) => {
+    const filteredData = data.filter((value) => {
         return config.some((col) => {
-            const searchValue = col.render(ticket)
+            const searchValue = col.searchValue(value)
+            console.log(searchValue)
             if (typeof searchValue === 'string') {
                 //console.log('String: ' + searchValue)
                 return searchValue.toLowerCase().includes(searchQuery.toLowerCase())

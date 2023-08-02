@@ -12,6 +12,7 @@ export const ticketListConfig = [
         label: 'Title',
         render: (ticket) => <div className="ticket-link text_overflow">{ticket.title}</div>,
         sortValue: (ticket) => ticket.title,
+        searchValue: (ticket) => ticket.title,
         link: (ticket) => `/dashboard/projects/${ticket.project}/tickets/${ticket.id}`
     },
     {
@@ -20,17 +21,21 @@ export const ticketListConfig = [
             className={`importance ${ticket.importance.toLowerCase()}`}>
             {ticket.importance}</div>,
         sortValue: (ticket) =>
+            priorityMap[ticket.importance],
+        searchValue: (ticket) =>
             priorityMap[ticket.importance]
     },
     {
         label: 'Project',
         render: (ticket) => ticket.projectTitle,
-        sortValue: (ticket) => ticket.projectTitle
+        sortValue: (ticket) => ticket.projectTitle,
+        searchValue: (ticket) => ticket.projectTitle
     },
     {
         label: 'Owner',
         render: (ticket) => ticket.username,
-        sortValue: (ticket) => ticket.username
+        sortValue: (ticket) => ticket.username,
+        searchValue: (ticket) => ticket.username
     },
     {
         label: 'Last Update',
@@ -41,7 +46,8 @@ export const ticketListConfig = [
                 hour: 'numeric',
                 minute: 'numeric',
             }),
-        sortValue: (ticket) => ticket.updatedAt
+        sortValue: (ticket) => ticket.updatedAt,
+        searchValue: (ticket) => ticket.updatedAt.toLocaleString('en-US', { month: 'long' }).toString(),
     },
     {
         label: 'Due On',
@@ -52,13 +58,16 @@ export const ticketListConfig = [
                 hour: 'numeric',
                 minute: 'numeric',
             }),
-        sortValue: (ticket) => ticket.dueDate
+        sortValue: (ticket) => ticket.dueDate,
+        searchValue: (ticket) => ticket.dueDate
     },
     {
         label: 'Status',
         render: (ticket) => ticket.completed
             ? <p className="status completed">Closed</p>
             : <p className="status open">In Progress</p>,
-        sortValue: (ticket) => ticket.completed
+        sortValue: (ticket) => ticket.completed,
+        searchValue: (ticket) => ticket.completed,
+
     },
 ]
