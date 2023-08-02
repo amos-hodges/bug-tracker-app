@@ -25,7 +25,7 @@ const useSearch = ({ data, config }) => {
                 return searchValue.toLowerCase().includes(searchQuery.toLowerCase())
             } else {
                 // console.log(`${searchValue}`)
-                return searchValue.toString().includes(searchQuery)
+                return searchValue.toString().toLowerCase().includes(searchQuery)
             }
         })
     })

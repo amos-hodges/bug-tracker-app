@@ -47,7 +47,7 @@ export const ticketListConfig = [
                 minute: 'numeric',
             }),
         sortValue: (ticket) => ticket.updatedAt,
-        searchValue: (ticket) => ticket.updatedAt.toLocaleString('en-US', { month: 'long' }).toString(),
+        searchValue: (ticket) => ticket.updatedAt.toLocaleString('en-US', { month: 'long' }),
     },
     {
         label: 'Due On',
@@ -59,7 +59,7 @@ export const ticketListConfig = [
                 minute: 'numeric',
             }),
         sortValue: (ticket) => ticket.dueDate,
-        searchValue: (ticket) => ticket.dueDate
+        searchValue: (ticket) => ticket.dueDate.toLocaleString('en-US', { month: 'long' })
     },
     {
         label: 'Status',
