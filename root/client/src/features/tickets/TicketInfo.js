@@ -3,7 +3,6 @@ import { useUpdateTicketMutation } from './ticketsApiSlice'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faCommentMedical, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import useAuth from '../../hooks/useAuth'
 
 
 const TicketInfo = ({ ticket, userId }) => {

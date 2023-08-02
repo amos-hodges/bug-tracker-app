@@ -77,6 +77,8 @@ tbody tr:hover {
     flex-direction: column;
 }
 
+/* **TICKET TABLE STYLES** */
+
 /* Ticket Importance */
 .importance {
     padding: .4rem 0;
@@ -125,7 +127,35 @@ tbody tr:hover {
     color: #b30021;
 }
 
-/* Project Table Styles */
+/* **PROJECT TABLE STLYES** */
+
+/* **USER TABLE STYLES** */
+.user__status {
+    text-align: center;
+    /* max-width: 25%; */
+    height: 20px;
+}
+
+.profile_img {
+    padding-top: 5px;
+    transform: scale(3);
+}
+
+.profile_thumb {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #888;
+    overflow: hidden;
+}
+
+.inactive {
+    background-color: #66666680;
+    color: #ccc;
+}
 
 .text_overflow {
     white-space: nowrap;
