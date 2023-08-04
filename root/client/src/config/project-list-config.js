@@ -21,7 +21,13 @@ export const projectListConfig = [
                 minute: 'numeric',
             }),
         sortValue: (project) => project.updatedAt,
-        searchValue: (project) => project.updatedAt.toString()
+        searchValue: (project) => {
+            const searchString = new Date(project.updatedAt).toLocaleString('en-US', {
+                day: 'numeric',
+                month: 'long'
+            })
+            return searchString
+        }
     },
     {
         label: 'Tickets',

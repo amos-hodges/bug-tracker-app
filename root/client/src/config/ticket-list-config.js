@@ -20,10 +20,8 @@ export const ticketListConfig = [
         render: (ticket) => <div
             className={`importance ${ticket.importance.toLowerCase()}`}>
             {ticket.importance}</div>,
-        sortValue: (ticket) =>
-            priorityMap[ticket.importance],
-        searchValue: (ticket) =>
-            priorityMap[ticket.importance]
+        sortValue: (ticket) => priorityMap[ticket.importance],
+        searchValue: (ticket) => ticket.importance
     },
     {
         label: 'Project',
@@ -47,7 +45,13 @@ export const ticketListConfig = [
                 minute: 'numeric',
             }),
         sortValue: (ticket) => ticket.updatedAt,
-        searchValue: (ticket) => ticket.updatedAt.toLocaleString('en-US', { month: 'long' }),
+        searchValue: (ticket) => {
+            const searchString = new Date(ticket.updatedAt).toLocaleString('en-US', {
+                day: 'numeric',
+                month: 'long'
+            })
+            return searchString
+        }
     },
     {
         label: 'Due On',
@@ -59,7 +63,13 @@ export const ticketListConfig = [
                 minute: 'numeric',
             }),
         sortValue: (ticket) => ticket.dueDate,
-        searchValue: (ticket) => ticket.dueDate.toLocaleString('en-US', { month: 'long' })
+        searchValue: (ticket) => {
+            const searchString = new Date(ticket.dueDate).toLocaleString('en-US', {
+                day: 'numeric',
+                month: 'long'
+            })
+            return searchString
+        }
     },
     {
         label: 'Status',

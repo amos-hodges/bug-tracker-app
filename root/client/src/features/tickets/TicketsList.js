@@ -61,7 +61,8 @@ const TicketsList = () => {
         const ticketsData = filteredIds.map((id) => entities[id])
 
         const projectTitle = filteredIds.length > 0 ? entities[filteredIds[0]]?.projectTitle : ''
-        const header = allTickets ? <h1>All Tickets</h1> : <h1>{projectTitle}</h1>
+        const headerVal = (isAdmin || isManager) ? 'All' : 'My'
+        const header = allTickets ? <h1>{`${headerVal} Tickets`}</h1> : <h1>{projectTitle}</h1>
 
         content = (
             <div className="table__container">
