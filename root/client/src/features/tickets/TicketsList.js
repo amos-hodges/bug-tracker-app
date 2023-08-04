@@ -60,7 +60,9 @@ const TicketsList = () => {
 
         const ticketsData = filteredIds.map((id) => entities[id])
 
+
         const projectTitle = filteredIds.length > 0 ? entities[filteredIds[0]]?.projectTitle : ''
+        const omitColumn = !allTickets ? 'Project' : (isAdmin || isManager) ? '' : 'Owner'
         const headerVal = (isAdmin || isManager) ? 'All' : 'My'
         const header = allTickets ? <h1>{`${headerVal} Tickets`}</h1> : <h1>{projectTitle}</h1>
 
@@ -69,6 +71,7 @@ const TicketsList = () => {
                 <SortableTable
                     header={header}
                     button={newTicketButton}
+                    omitColumn={omitColumn}
                     data={ticketsData}
                     config={ticketListConfig}
                     keyFn={keyFn}
@@ -76,7 +79,6 @@ const TicketsList = () => {
                 />
             </div>
         )
-
     }
     return content
 }

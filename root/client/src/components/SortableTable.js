@@ -4,7 +4,7 @@ import useSort from '../hooks/useSort'
 import useSearch from '../hooks/useSearch'
 
 
-const SortableTable = ({ header, button, config, data, ...props }) => {
+const SortableTable = ({ header, button, config, data, omitColumn, ...props }) => {
 
     const { searchBar, filteredData } = useSearch({ data, config })
     const {
@@ -16,7 +16,8 @@ const SortableTable = ({ header, button, config, data, ...props }) => {
 
 
     const updatedConfig = config.map((col) => {
-        if (!col.sortValue) {
+
+        if (!col.sortValue || col.label === omitColumn) {
             return col
         }
 
@@ -45,7 +46,7 @@ const SortableTable = ({ header, button, config, data, ...props }) => {
                 </div>
                 {button}
             </div>
-            <Table data={sortedData} config={updatedConfig} {...props} />
+            <Table data={sortedData} config={updatedConfig} omitColumn={omitColumn}{...props} />
         </>
     )
 }
