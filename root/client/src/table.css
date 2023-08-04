@@ -163,7 +163,8 @@ tbody tr:hover {
     display: flex;
     align-items: center;
     padding-left: 10px;
-    max-width: 50%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .username {
