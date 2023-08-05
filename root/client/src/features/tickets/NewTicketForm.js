@@ -140,44 +140,48 @@ const NewTicketForm = ({ users }) => {
                         value={text}
                         onChange={onTextChanged}
                     />
+                    <div>
+                        <label className="form__label form__checkbox-container" htmlFor="username">
+                            ASSIGNED TO:</label>
+                        <select
+                            id="username"
+                            name="username"
+                            className="form__select"
+                            value={userId}
+                            onChange={onUserIdChanged}
+                        >
+                            {options}
+                        </select>
 
-                    <label className="form__label form__checkbox-container" htmlFor="username">
-                        ASSIGNED TO:</label>
-                    <select
-                        id="username"
-                        name="username"
-                        className="form__select"
-                        value={userId}
-                        onChange={onUserIdChanged}
-                    >
-                        {options}
-                    </select>
+                        <label className="form__label form__checkbox-container" htmlFor="importance">
+                            IMPORTANCE:</label>
+                        <select
+                            id="importance"
+                            name="importance"
+                            className="form__select"
+                            value={importance}
+                            onChange={onImportanceChanged}
+                        >
+                            {statusOptions}
+                        </select>
+                    </div>
 
-                    <label className="form__label form__checkbox-container" htmlFor="importance">
-                        IMPORTANCE:</label>
-                    <select
-                        id="importance"
-                        name="importance"
-                        className="form__select"
-                        value={importance}
-                        onChange={onImportanceChanged}
-                    >
-                        {statusOptions}
-                    </select>
+                    <div>
+                        <label className="form__label" htmlFor="dueDate">
+                            Due Date:
+                        </label>
+                        <DatePicker
+                            id="dueDate"
+                            name="dueDate"
+                            selected={dueDate}
+                            onChange={onDueDateChanged}
+                            className="form__input"
+                            placeholderText="Select due date"
+                            minDate={new Date()}
+                            autoComplete="off"
+                        />
+                    </div>
 
-                    <label className="form__label" htmlFor="dueDate">
-                        Due Date:
-                    </label>
-                    <DatePicker
-                        id="dueDate"
-                        name="dueDate"
-                        selected={dueDate}
-                        onChange={onDueDateChanged}
-                        className="form__input"
-                        placeholderText="Select due date"
-                        minDate={new Date()}
-                        autoComplete="off"
-                    />
 
                 </form>
             </div>
