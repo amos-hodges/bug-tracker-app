@@ -1,5 +1,5 @@
 import { useState } from "react"
-const Grid = ({ data, keyFn }) => {
+const Grid = ({ data, keyFn, navFn }) => {
 
     const [expanded, setExpanded] = useState(null)
 
@@ -37,7 +37,7 @@ const Grid = ({ data, keyFn }) => {
                     <div className="card-options">
                         <div>List of users assinged...</div>
                         <div>Visual percentage of closed tickets...</div>
-                        <div className="button-18">Open Project</div>
+                        <div className="button-18" onClick={() => navFn(currentProject.id)}>Open Project</div>
                     </div>
                 </div>}
         </div>

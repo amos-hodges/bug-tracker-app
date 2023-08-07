@@ -8,7 +8,6 @@ const Table = ({ data, config, keyFn, navFn, omitColumn }) => {
             return <Fragment key={col.label}>{col.header()}</Fragment>
         }
         if (col.label === omitColumn) {
-            // console.log('omitting ' + col.label)
             return
         }
         return <th key={col.label}>{col.label}</th>
@@ -17,7 +16,6 @@ const Table = ({ data, config, keyFn, navFn, omitColumn }) => {
 
         const renderedCells = config.map((col) => {
             if (col.label === omitColumn) {
-                // console.log('omitting ' + col.label)
                 return
             }
             if (col.link) {

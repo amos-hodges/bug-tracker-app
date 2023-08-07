@@ -1,7 +1,10 @@
 import PulseLoader from 'react-spinners/PulseLoader'
 import { useGetProjectsQuery } from './projectsApiSlice'
+import { useNavigate } from 'react-router-dom'
 import Grid from '../../components/Grid'
 const ProjectGrid = ({ header, date }) => {
+
+    const navigate = useNavigate()
 
     const {
         data: projects,
@@ -17,6 +20,10 @@ const ProjectGrid = ({ header, date }) => {
 
     const keyFn = (project) => {
         return project.id
+    }
+
+    const navFn = (id) => {
+        navigate(`/dashboard/projects/${id}/tickets`)
     }
 
     let content
@@ -38,7 +45,7 @@ const ProjectGrid = ({ header, date }) => {
                     {header}
                     {date}
                 </section>
-                <Grid data={projectData} keyFn={keyFn} />
+                <Grid data={projectData} keyFn={keyFn} navFn={navFn} />
             </div>
         )
     }

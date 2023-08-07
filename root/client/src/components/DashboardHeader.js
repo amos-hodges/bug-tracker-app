@@ -234,12 +234,12 @@ const DashboardHeader = ({ toggleSidebar }) => {
     // } else {
     buttonContent = (
         <>
-            {newProjectButton}
+            {/* {newProjectButton}
             {newTicketButton}
             {newUserButton}
-            {userSettingsButton}
-            {profileButton}
+            {userSettingsButton} */}
             {notificationButton}
+            {profileButton}
             {settingsButton}
             {/* {logoutButton} */}
         </>
