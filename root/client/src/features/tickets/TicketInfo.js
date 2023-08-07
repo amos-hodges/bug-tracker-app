@@ -27,7 +27,7 @@ const TicketInfo = ({ ticket, userId }) => {
         }
     }, [isSuccess, navigate, projectId])
 
-    const canSave = [completed].every(Boolean) && !isLoading
+    const canSave = !isLoading
     const onCompletedChanged = e => setCompleted(prev => !prev)
 
     const handleExtensionRequest = () => {
@@ -114,16 +114,12 @@ const TicketInfo = ({ ticket, userId }) => {
                 <p className={errClass}>{errContent}</p>
                 <form className="form" onSubmit={e => e.preventDefault()}>
                     <div className="form__title-row">
-                        <h2>Edit Ticket</h2>
+                        <h2>{ticket.title}</h2>
                         <div className="form__action-buttons">
                             {noteButton}
                             {saveButton}
                         </div>
                     </div>
-
-                    <label className="form__label" htmlFor="note-title">
-                        Title:</label>
-                    <p>{ticket.title}</p>
 
                     <label className="form__label" htmlFor="note-text">
                         Description:</label>
@@ -135,7 +131,7 @@ const TicketInfo = ({ ticket, userId }) => {
                             <label className="form__label form__checkbox-container" htmlFor="note-completed">
                                 WORK COMPLETE:
                             </label>
-                            {(userId === ticket.user)
+                            {(userId === ticket.user && !ticket.completed)
                                 ? <input
                                     className="form__checkbox"
                                     id="note-completed"

@@ -218,7 +218,7 @@ const EditTicketForm = ({ ticket, users }) => {
                             <label className="form__label form__checkbox-container" htmlFor="note-completed">
                                 WORK COMPLETE:
                             </label>
-                            {(currentUser === userId)
+                            {(currentUser === userId || isAdmin)
                                 ? <input
                                     className="form__checkbox"
                                     id="note-completed"
