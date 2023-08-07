@@ -1,5 +1,5 @@
 import { useState } from "react"
-const Grid = ({ data, keyFn, navFn }) => {
+const Grid = ({ data, keyFn, navFn, children }) => {
 
     const [expanded, setExpanded] = useState(null)
 

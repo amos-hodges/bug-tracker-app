@@ -1,6 +1,7 @@
 import PulseLoader from 'react-spinners/PulseLoader'
 import { useGetProjectsQuery } from './projectsApiSlice'
 import { useNavigate } from 'react-router-dom'
+import { ProgressBar } from '../../components/ProgressBar'
 import Grid from '../../components/Grid'
 const ProjectGrid = ({ header, date }) => {
 
@@ -39,6 +40,7 @@ const ProjectGrid = ({ header, date }) => {
         const { ids, entities } = projects
         const projectData = ids.map((id) => entities[id])
 
+        console.log(projectData)
         content = (
             <div className="table__container">
                 <section className="page-header">
