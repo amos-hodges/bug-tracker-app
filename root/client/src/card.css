@@ -39,3 +39,20 @@
     display: flex;
     justify-content: space-between;
 }
+
+/* **PROGRESS BAR** */
+.progress-bar-container {
+    /* margin-right: 1rem; */
+    width: 50%;
+    height: 40px;
+    background-color: #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #4caf50;
+    /* border-radius: 20px; */
+    transition: width 0.3s ease;
+}

@@ -1,5 +1,6 @@
 import { useState } from "react"
-const Grid = ({ data, keyFn, navFn, children }) => {
+import { ProgressBar } from './ProgressBar'
+const Grid = ({ data, keyFn, navFn }) => {
 
     const [expanded, setExpanded] = useState(null)
 
@@ -7,6 +8,7 @@ const Grid = ({ data, keyFn, navFn, children }) => {
         setExpanded(cardId === expanded ? null : cardId)
     }
     const currentProject = data.filter(row => row.id === expanded)[0]
+    const percentageComplete = (currentProject?.completeTicketCount / currentProject?.ticketCount * 100).toFixed(2)
 
     const renderedCards = data.map((rowData) => {
 
@@ -24,6 +26,7 @@ const Grid = ({ data, keyFn, navFn, children }) => {
         )
     })
 
+
     return (
         <div>
 
@@ -36,7 +39,8 @@ const Grid = ({ data, keyFn, navFn, children }) => {
                     <h4>{currentProject.description}</h4>
                     <div className="card-options">
                         <div>List of users assinged...</div>
-                        <div>Visual percentage of closed tickets...</div>
+                        <ProgressBar percentage={percentageComplete} />
+                        <div>{`${currentProject?.completeTicketCount || 0}/${currentProject?.ticketCount || 0} tickets completed.`}</div>
                         <div className="button-18" onClick={() => navFn(currentProject.id)}>Open Project</div>
                     </div>
                 </div>}

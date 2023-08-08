@@ -13,7 +13,8 @@ const getAllProjects = async (req, res) => {
     const projectsWithUsersAndTickets = await Promise.all(projects.map(async (project) => {
         const userCount = await User.countDocuments({ 'projects': project._id });
         const ticketCount = await Ticket.countDocuments({ 'project': project._id });
-        return { ...project, userCount, ticketCount }
+        const completeTicketCount = await Ticket.countDocuments({ 'project': project._id, 'completed': true })
+        return { ...project, userCount, ticketCount, completeTicketCount }
     }))
 
     if (!projects?.length) {
