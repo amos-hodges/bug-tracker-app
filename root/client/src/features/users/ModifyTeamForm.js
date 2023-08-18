@@ -1,5 +1,7 @@
-const ModifyTeamForm = ({ }) => {
-    const content = <div>Team form</div>
+import UserCheckbox from "./userCheckbox"
+
+const ModifyTeamForm = ({ users, projectId }) => {
+    const content = <div>Team</div>
     return content
 }
 

@@ -73,14 +73,7 @@ const Team = () => {
         </div>
     )
 
-    const modalContent = isModalOpen && (
-        <Modal
-            className={"team-selection"}
-            timeOut={500000}
-            onClose={handleModifyClicked}>
-            <ModifyTeamForm />
-        </Modal>
-    )
+
 
     const buttonToPass = (
         (isAdmin || isManager)
@@ -109,7 +102,14 @@ const Team = () => {
         })
 
         const teamData = teamIds.map((id) => entities[id])
-
+        const modalContent = isModalOpen && (
+            <Modal
+                className={"team-selection"}
+                timeOut={500000}
+                onClose={handleModifyClicked}>
+                <ModifyTeamForm users={teamData} />
+            </Modal>
+        )
         const header = (
             allProjects ?
                 <h1>Teams</h1>
