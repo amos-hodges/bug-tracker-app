@@ -23,8 +23,8 @@ const ProjectGrid = ({ header, date }) => {
         return project.id
     }
 
-    const navFn = (id) => {
-        navigate(`/dashboard/projects/${id}/tickets`)
+    const navFn = (link) => {
+        navigate(link)
     }
 
     let content

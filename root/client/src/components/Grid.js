@@ -46,14 +46,14 @@ const Grid = ({ data, keyFn, navFn }) => {
                     <h2>{currentProject.title}</h2>
                     <div className="card-section">
                         <h4>{currentProject.description}</h4>
-                        <div className="button-18" onClick={() => navFn(currentProject.id)}>View Users</div>
+
                     </div>
 
                     <div className="card-options">
                         <ProgressBar percentage={percentageComplete} />
                         <div>{`${currentProject?.completeTicketCount || 0}/${currentProject?.ticketCount || 0} tickets completed.`}</div>
-
-                        <div className="button-18" onClick={() => navFn(currentProject.id)}>Open Project</div>
+                        <div className="button-18" onClick={() => navFn(`/dashboard/team/${currentProject.id}`)}>View Team</div>
+                        <div className="button-18" onClick={() => navFn(`/dashboard/projects/${currentProject.id}/tickets`)}>Open Project</div>
                     </div>
                 </div>}
         </div>
