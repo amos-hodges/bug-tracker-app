@@ -2,8 +2,10 @@ import PulseLoader from 'react-spinners/PulseLoader'
 import { useGetUsersQuery } from './usersApiSlice'
 import { useGetProjectsQuery } from '../projects/projectsApiSlice'
 import useAuth from '../../hooks/useAuth'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useState } from 'react'
+import Modal from '../../components/Modal'
+import ModifyTeamForm from './ModifyTeamForm'
 import SortableTable from '../../components/SortableTable'
 import { teamListConfig } from '../../config/team-list-config'
 const Team = () => {
@@ -14,6 +16,9 @@ const Team = () => {
     const allProjects = (projectId === 'all')
 
     const navigate = useNavigate()
+
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     const { data: projects,
         isLoading: isProjectLoading,
         isSuccess: isProjectSuccess,
@@ -41,6 +46,10 @@ const Team = () => {
         console.log(`messaging ${username}`)
     }
 
+    const handleModifyClicked = () => {
+        setIsModalOpen(!isModalOpen)
+    }
+
     const keyFn = (user) => {
         return user.id
     }
@@ -48,6 +57,36 @@ const Team = () => {
     const navFn = (user) => {
         handleMessageClicked(user.username)
     }
+
+    // const modifyTeamButton = (
+    //     <Link to={'/dashboard/users/new'}
+    //         className="button-18">
+    //         Modify
+    //     </Link >
+    // )
+    const modifyTeamButton = (
+        <div
+            className="button-18"
+            onClick={handleModifyClicked}
+        >
+            Modify
+        </div>
+    )
+
+    const modalContent = isModalOpen && (
+        <Modal
+            className={"team-selection"}
+            timeOut={500000}
+            onClose={handleModifyClicked}>
+            <ModifyTeamForm />
+        </Modal>
+    )
+
+    const buttonToPass = (
+        (isAdmin || isManager)
+            ? modifyTeamButton
+            : null
+    )
 
     let content
 
@@ -78,15 +117,21 @@ const Team = () => {
         )
 
         content = (
-            <div className="table__container">
-                <SortableTable
-                    header={header}
-                    data={teamData}
-                    config={teamListConfig}
-                    keyFn={keyFn}
-                    navFn={navFn}
-                />
-            </div>
+            <>
+
+                <div className="table__container">
+
+                    <SortableTable
+                        header={header}
+                        headerContent={modalContent}
+                        button={buttonToPass}
+                        data={teamData}
+                        config={teamListConfig}
+                        keyFn={keyFn}
+                        navFn={navFn}
+                    />
+                </div>
+            </>
         )
     }
 
