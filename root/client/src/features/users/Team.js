@@ -100,14 +100,15 @@ const Team = () => {
             const userAssignedProject = entities[id].projects.includes(projectId)
             return notCurrentUser && (allProjects || userAssignedProject)
         })
-
+        const userData = ids.map((id) => entities[id])
         const teamData = teamIds.map((id) => entities[id])
         const modalContent = isModalOpen && (
             <Modal
                 className={"team-selection"}
                 timeOut={500000}
                 onClose={handleModifyClicked}>
-                <ModifyTeamForm users={teamData} />
+                {/* <ModifyTeamForm users={teamData} /> */}
+                <ModifyTeamForm users={userData} />
             </Modal>
         )
         const header = (
