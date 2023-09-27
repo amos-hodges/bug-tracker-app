@@ -108,7 +108,7 @@ const Team = () => {
                 timeOut={500000}
                 onClose={handleModifyClicked}>
                 {/* <ModifyTeamForm users={teamData} /> */}
-                <ModifyTeamForm users={userData} />
+                <ModifyTeamForm users={userData} projectId={projectId} />
             </Modal>
         )
         const header = (
